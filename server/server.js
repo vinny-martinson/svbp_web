@@ -7,7 +7,10 @@ import bodyParser from 'body-parser';
 import config from './config/config.js';
 import usersRouter from './routes/usersRouter.js';
 import podcastsRouter from './routes/podcastsRouter.js';
+import spotifyRouter from './routes/spotifyRouter.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
 
 
 //connect to database
@@ -40,6 +43,11 @@ app.use(cors());
 
 app.use('/api/web/users', usersRouter);
 app.use('/api/web/podcasts', podcastsRouter);
+app.use('/api/web/spotify', spotifyRouter);
+
+app.use(express.static('./public'))
+   .use(cors())
+   .use(cookieParser());
 
 app.all('/*', (req, res) => {
 	// res.status(201).json({message: "nothing here!"});
