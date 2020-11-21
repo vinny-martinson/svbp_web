@@ -1,0 +1,92 @@
+.App {
+    text-align: center;
+    position: relative;
+}
+
+.App-logo {
+    height: 40vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #09d3ac;
+}
+
+.background{
+    height: 25em;
+}
+
+.bg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card {
+    position: absolute;
+    top: 0px;
+    left: 65%;
+    z-index: 1000;
+}
+
+.container{
+    position: relative;
+}
+
+img.scale {
+    /* corrects small inline gap at bottom of containing div */
+    display: block; 
+    width: 100%; /* corrects obscure Firefox bug */
+    max-width: 100%;
+    /* just in case, to force correct aspect ratio */
+    height: auto !important;
+    display: block; /* corrects small inline gap at bottom of containing div */
+    width: 100%; /* corrects obscure Firefox bug */
+    max-width: 100%;
+    /* just in case, to force correct aspect ratio */
+    height: auto !important;
+    /*width: auto\9; 
+    /* ie8+9 - use modernizr instead of this \9 hack */
+    /* lt ie8 */
+    -ms-interpolation-mode: bicubic;
+    /* optionally force a minimum size if img src size is known: */
+    /* min-height: 320px; /* max-height of .crop-height */
+    /* min-width: 480px; /* proportional to above */ }
+
+.crop-height {
+    /* max-width: 1200px; /* img src width (if known) */
+    max-height: 280px;
+    overflow: hidden; 
+  }
+
+  .flip {
+	-webkit-transform: rotate(180deg);
+	-moz-transform:    rotate(180deg);
+	-ms-transform:     rotate(180deg);
+	-o-transform:      rotate(180deg);
+	transform:         rotate(180deg);
+	/* needed? not sure */
+	zoom: 1; }
+
+img.flip {
+	/* actually, aligns left within .cropheight */
+  float: right;
+    /* clearfix after? */ }
+    
+.icon{
+    width:150px;
+    padding-right: 20px;
+}
+
+img.icon{
+    mix-blend-mode: soft-light;
+}
