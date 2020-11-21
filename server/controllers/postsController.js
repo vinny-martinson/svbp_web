@@ -1,5 +1,5 @@
 import Post from '../models/PostModel.js';
-const { ObjectID } = require('mongodb');
+import ObjectID from 'mongodb';
 
 export const getPost = async (req, res) => {
   Post.find().then(posts => res.json(posts));

@@ -1,4 +1,6 @@
-const PostSchema = new Schema({
+import mongoose from 'mongoose';
+
+const PostSchema = mongoose.Schema({
   text: {
     type: String,
     trim: true,
@@ -9,4 +11,4 @@ const PostSchema = new Schema({
     required: true
   }
 });
-module.exports = mongoose.model('Post', PostSchema);
+export default mongoose.model('Post', PostSchema);
