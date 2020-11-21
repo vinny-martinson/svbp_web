@@ -8,10 +8,9 @@ import config from './config/config.js';
 import usersRouter from './routes/usersRouter.js';
 import podcastsRouter from './routes/podcastsRouter.js';
 import spotifyRouter from './routes/spotifyRouter.js';
+import postRouter from './routes/postsRouter.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
-
 
 //connect to database
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => {
@@ -32,7 +31,6 @@ app.use(bodyParser.urlencoded({
 //parses json files
 app.use(bodyParser.json());
 
-
 //https://enable-cors.org/server_expressjs.html
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "http://localhost:3001"); // update to match the domain you will make the request from
@@ -44,6 +42,7 @@ app.use(cors());
 app.use('/api/web/users', usersRouter);
 app.use('/api/web/podcasts', podcastsRouter);
 app.use('/api/web/spotify', spotifyRouter);
+app.use('/api/web/posts', postRouter);
 
 app.use(express.static('./public'))
    .use(cors())
