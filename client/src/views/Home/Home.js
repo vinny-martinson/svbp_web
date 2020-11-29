@@ -335,7 +335,16 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                         <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                        <NavLink
+                            to="/Categories"
+                            activeStyle={{
+                                fontWeight: "bold",
+                                color: "red"
+                            }}
+                            >
                             Books
+                            </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={BookIcon} />
                     </Paper>
@@ -343,7 +352,16 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Movies
+                    <NavLink
+                        to="/Categories"
+                        activeStyle={{
+                            fontWeight: "bold",
+                            color: "red"
+                        }}
+                        >
+                        Movies
+                        </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={FilmIcon} />
                     </Paper>
@@ -351,7 +369,16 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            TV
+                    <NavLink
+                    to="/Categories"
+                    activeStyle={{
+                        fontWeight: "bold",
+                        color: "red"
+                    }}
+                    >
+                    TV
+                    </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={TVIcon} />
                     </Paper>
@@ -359,7 +386,16 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Podcast
+                    <NavLink
+                        to="/Categories"
+                    activeStyle={{
+                        fontWeight: "bold",
+                        color: "red"
+                    }}
+                    >
+                    Podcast
+                    </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={PodIcon} />
                     </Paper>
@@ -367,7 +403,16 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Music
+                    <NavLink
+                        to="/Categories"
+                        activeStyle={{
+                            fontWeight: "bold",
+                            color: "red"
+                        }}
+                        >
+                        Music
+                        </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={MusicIcon} />
                     </Paper>
