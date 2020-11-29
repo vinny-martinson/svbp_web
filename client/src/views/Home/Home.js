@@ -17,6 +17,7 @@ import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
 import TabNav from '../../components/TabNav'; 
 import { NavLink } from 'react-router-dom';
+import SearchField from 'react-search-field';
 
 const theme = createMuiTheme({
     typography: {
@@ -96,6 +97,7 @@ function Home() {
     const classes = useStyles();
 
     return (
+        
         <div className="App">
             <div class="container">
                 <div class="crop-height flip">
@@ -105,6 +107,14 @@ function Home() {
                     <RegisterCard />
                 </div>
             </div>
+
+            <SearchField
+            placeholder="Search..."
+            //onChange={onChange}
+            searchText="Search for Books, Tv shows, Podcasts, Movies, or Music"
+            classNames="test-class"
+            />
+
             <TabNav> 
        <div label="Music"> 
        <NavLink
@@ -369,6 +379,7 @@ function Home() {
         <Placeholder/>
    
         </div>
+        
     );
 }
 

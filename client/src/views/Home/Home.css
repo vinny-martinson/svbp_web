@@ -108,3 +108,13 @@ img.icon{
     border: solid #ccc;
     border-width: 1px 1px 0 1px;
   }
+
+  .SearchField {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
