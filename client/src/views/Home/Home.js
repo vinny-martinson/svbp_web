@@ -7,6 +7,7 @@ import { Typography } from '@material-ui/core/';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
+import {Button} from 'react';
 import { Grid, Paper } from '@material-ui/core/';
 import BookIcon from '../../assets/book-icon.png';
 import FilmIcon from '../../assets/film-icon.png';
@@ -151,6 +152,9 @@ function Home() {
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
         </Typography>
+        {/* <Button color='red'> 
+
+</Button>  */}
         <Placeholder/>
         </div>
     );
