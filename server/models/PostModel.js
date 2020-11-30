@@ -9,6 +9,18 @@ const PostSchema = mongoose.Schema({
   author: {
     type: String,
     required: true
+  },
+  authorId: {
+    type: String,
+    required: true
+  },
+  avatarColor: {
+    type: Number,
+    required: true
+  },
+  timestamp: {
+    type: Number,
+    required: true
   }
 });
 export default mongoose.model('Post', PostSchema);

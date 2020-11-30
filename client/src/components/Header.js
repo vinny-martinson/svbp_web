@@ -8,7 +8,7 @@ import { IconButton } from '@material-ui/core/';
 import { InputBase } from '@material-ui/core/';
 import MenuIcon from '@material-ui/icons/Menu';
 import Logo from '../assets/meedien.jpg';
-
+//not logged in
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
