@@ -8,6 +8,13 @@ const usersRouter = express.Router();
 usersRouter.get('/callback', spotify.callback);
 usersRouter.get('/auth', spotify.auth);
 usersRouter.get('/podcasts', spotify.podcasts)
+usersRouter.get('/search', spotify.search)
+usersRouter.get('/current_playing', spotify.current_playing)
+usersRouter.get('/playlists', spotify.playlists)
+usersRouter.get('/recommendations', spotify.recommendations)
+usersRouter.get('/genres', spotify.genres)
+
+
 
 
 export default usersRouter;

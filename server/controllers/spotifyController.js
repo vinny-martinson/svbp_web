@@ -33,7 +33,7 @@ export const auth = async (req, res) => {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email user-library-read';
+  var scope = 'playlist-read-collaborative playlist-read-private user-read-private user-read-email user-library-read user-read-currently-playing user-read-playback-state';
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -154,4 +154,124 @@ export const podcasts = async (req, res) => {
     } else { console.log(error) };
   });
 };
+
+export const search = async (req, res) => {
+
+
+  // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
+  let authCode = req.query.code;
+  let media = req.query.media;
+  let type = req.query.type; // types = album , artist, playlist, track, show and episode.
+
+  var authOptions = {
+    url: 'https://api.spotify.com/v1/search?q=' + media + '&type=' + type,
+    headers: { 
+      "Authorization": "Bearer " + authCode,
+      "Accept": "application/json",
+      "Content-Type": "application/json" 
+    },
+    json: true
+  };
+
+  request.get(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      res.json({body});
+    } else { console.log(error) };
+  });
+};
+
+
+export const current_playing = async (req, res) => {
+
+  // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
+  let authCode = req.query.code;
+
+  var authOptions = {
+    url: 'https://api.spotify.com/v1/me/player',
+    headers: { 
+      "Authorization": "Bearer " + authCode,
+      "Accept": "application/json",
+      "Content-Type": "application/json" 
+    },
+    json: true
+  };
+
+  request.get(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      res.json({body});
+    } else { console.log(error) };
+  });
+};
+
+export const playlists = async (req, res) => {
+
+  // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
+  let authCode = req.query.code;
+
+  var authOptions = {
+    url: 'https://api.spotify.com/v1/me/playlists',
+    headers: { 
+      "Authorization": "Bearer " + authCode,
+      "Accept": "application/json",
+      "Content-Type": "application/json" 
+    },
+    json: true
+  };
+
+  request.get(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      res.json({body});
+    } else { console.log(error) };
+  });
+};
+
+export const genres = async (req, res) => {
+
+  // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
+  let authCode = req.query.code;
+
+  var authOptions = {
+    url: 'https://api.spotify.com/v1/recommendations/available-genre-seeds',
+    headers: { 
+      "Authorization": "Bearer " + authCode,
+      "Accept": "application/json",
+      "Content-Type": "application/json" 
+    },
+    json: true
+  };
+
+  request.get(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      res.json({body});
+    } else { console.log(error) };
+  });
+};
+
+export const recommendations = async (req, res) => {
+
+  // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
+  let authCode = req.query.code;
+
+  let seed_artists = req.query.seed_artists
+  let seed_genres = req.query.seed_genres
+  let seed_tracks = req.query.seed_tracks
+
+  var authOptions = {
+    url: 'https://api.spotify.com/v1/recommendations?seed_artists=' + seed_artists + '&seed_genres=' + seed_genres + '&seed_tracks=' + seed_tracks,
+    headers: { 
+      "Authorization": "Bearer " + authCode,
+      "Accept": "application/json",
+      "Content-Type": "application/json" 
+    },
+    json: true
+  };
+
+  request.get(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      res.json({body});
+    } else { console.log(error) };
+  });
+};
+
+
 
