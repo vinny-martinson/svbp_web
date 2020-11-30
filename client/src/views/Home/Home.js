@@ -14,6 +14,8 @@ import TVIcon from '../../assets/television-icon.png';
 import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const theme = createMuiTheme({
     typography: {
@@ -94,6 +96,7 @@ function Home() {
 
     return (
         <div className="App">
+            <Header />
             <div class="container">
                 <div class="crop-height flip">
                     <img class="scale flip" src={Background} />
@@ -117,7 +120,7 @@ function Home() {
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                             Movies
                          </Typography>
                         <img class="icon scale" src={FilmIcon} />
@@ -125,7 +128,7 @@ function Home() {
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                             TV
                          </Typography>
                         <img class="icon scale" src={TVIcon} />
@@ -133,7 +136,7 @@ function Home() {
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                             Podcast
                          </Typography>
                         <img class="icon scale" src={PodIcon} />
@@ -141,7 +144,7 @@ function Home() {
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                             Music
                          </Typography>
                         <img class="icon scale" src={MusicIcon} />
@@ -151,7 +154,7 @@ function Home() {
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
         </Typography>
-        <Placeholder/>
+            <Placeholder />
         </div>
     );
 }

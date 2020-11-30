@@ -4,7 +4,6 @@ import Post from './Post';
 
 class PostList extends Component {
     render() {
-      console.log('PostList this.props', this.props);
       const { posts, deletePost, updatePost } = this.props;
       return (
         <div>
@@ -13,7 +12,10 @@ class PostList extends Component {
               key={post._id}
               _id={post._id}
               author={post.author}
+              authorId={post.authorId}
+              avatarColor={post.avatarColor}
               text={post.text}
+              timestamp={post.timestamp}
               deletePost={id => deletePost(id)}
               updatePost={(id, text, author) => updatePost(id, text, author)}
             />
@@ -31,7 +33,9 @@ PostList.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired
+      text: PropTypes.string.isRequired,
+      authorId: PropTypes.string.isRequired,
+      timestamp: PropTypes.number.isRequired
     })
   ),
   deletePost: PropTypes.func.isRequired
