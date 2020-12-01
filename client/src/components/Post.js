@@ -79,53 +79,57 @@ class Post extends Component {
       timestamp,
       classes,
       deletePost,
+      signedInUserId,
       updatePost
     } = this.props;
+
+    console.log(signedInUserId);
     const { anchorEl, modalOpen } = this.state;
     const open = Boolean(anchorEl);
     const relativeTime = moment(timestamp).fromNow();
 
-    console.log("author " + author);
     return (
       <Card className={classes.card}>
         <CardHeader
           avatar={<UserAvatar author={author} authorId={authorId} avatarColor={avatarColor}/>}
           action={
-            <div>
-              <IconButton
-                aria-label="More"
-                aria-owns={open ? 'long-menu' : null}
-                aria-haspopup="true"
-                onClick={this.handleClick}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="long-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={this.handleClose}
-                PaperProps={{
-                  style: {
-                    maxHeight: ITEM_HEIGHT * 4.5,
-                    width: 200
-                  }
-                }}
-              >
-                {options.map(option => (
-                  <MenuItem
-                    key={option}
-                    onClick={() =>
-                      this.handleClose() ||
-                      (option === 'Delete' ? deletePost(_id) : null) ||
-                      (option === 'Edit' ? this.handleModalOpen() : null)
+            authorId !== signedInUserId ? null : (
+              <div>
+                <IconButton
+                  aria-label="More"
+                  aria-owns={open ? 'long-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="long-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={this.handleClose}
+                  PaperProps={{
+                    style: {
+                      maxHeight: ITEM_HEIGHT * 4.5,
+                      width: 200
                     }
+                  }}
                   >
-                    {option}
-                  </MenuItem>
-                ))}
-              </Menu>
-            </div>
+                    {options.map(option => (
+                      <MenuItem
+                        key={option}
+                        onClick={() =>
+                          this.handleClose()
+                          || (option === 'Delete' ? deletePost(_id) : null)
+                          || (option === 'Edit' ? this.handleModalOpen() : null)
+                        }
+                      >
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </div>
+              )
           }
           title={author}
           subheader={relativeTime}
@@ -176,6 +180,7 @@ Post.propTypes = {
   timestamp: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   avatarColor: PropTypes.number.isRequired,
+  signedInUserId: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   deletePost: PropTypes.func.isRequired,
   updatePost: PropTypes.func.isRequired

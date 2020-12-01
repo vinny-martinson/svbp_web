@@ -37,7 +37,9 @@ function buildPayload(user) {
       email: user.email,
       is_premium: user.is_premium,
       is_admin: user.is_admin,
-      avatarColor: user.avatarColor
+      avatarColor: user.avatarColor,
+      following: user.following,
+      followers: user.followers
     }
   }
 }
@@ -51,7 +53,9 @@ export const signup = async (req, res) => {
     password: req.body.password,
     is_admin: req.body.is_admin,
     is_premium: req.body.is_premium,
-    avatarColor: Math.floor(Math.random() * 18) + 1
+    avatarColor: Math.floor(Math.random() * 18) + 1,
+    following: [],
+    followers: []
   });
 
 
@@ -129,7 +133,7 @@ export const addFollowing = async (req, res) => {
       }
     );
   } catch (e) {
-    return res.status(500).json(err);
+    return res.status(500).json(e);
   }
 
   return res.status(500).json();

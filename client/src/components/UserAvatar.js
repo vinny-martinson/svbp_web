@@ -51,7 +51,7 @@ class UserAvatar extends Component {
       //console.log(author + " " + authorId + " " + avatarColor);
 
       return (
-        <Link style={{ textDecoration: 'none' }} to={`/profile/${authorId}`}>
+        // <Link style={{ textDecoration: 'none' }} to={`/profile/${authorId}`}>
         <Avatar
           aria-label="Initials"
           style={{
@@ -60,7 +60,6 @@ class UserAvatar extends Component {
         >
           {/* {author.charAt(0).toUpperCase()} */}
         </Avatar>
-      </Link>
     );
   }
 }

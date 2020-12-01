@@ -11,6 +11,7 @@ import ProfilePage from './views/ProfilePage';
 import Login from './components/Login'
 import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
+import FollowingPage from './views/FollowingPage';
 
 export const history = createHistory();
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/Profile/:id" component={ProfilePage} />
+        <Route path="/following" component={FollowingPage} />
         <Route path="/discover" component={DiscoverPage} />
         <Route component={NotFound}/>
       </Switch>

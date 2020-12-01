@@ -2,28 +2,25 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post';
 
-class PostList extends Component {
-    render() {
-      const { posts, deletePost, updatePost } = this.props;
-      return (
-        <div>
-          {posts.map(post => (
-            <Post
-              key={post._id}
-              _id={post._id}
-              author={post.author}
-              authorId={post.authorId}
-              avatarColor={post.avatarColor}
-              text={post.text}
-              timestamp={post.timestamp}
-              deletePost={id => deletePost(id)}
-              updatePost={(id, text, author) => updatePost(id, text, author)}
-            />
-          ))}
-        </div>
-      );
-    }
-  }
+const PostList = ({ posts, deletePost, updatePost, user }) => (
+
+  <div>
+    {posts.map(post => (
+      <Post
+        key={post._id}
+        _id={post._id}
+        author={post.author}
+        authorId={post.authorId}
+        avatarColor={post.avatarColor}
+        signedInUserId={user.user_info.id}
+        text={post.text}
+        timestamp={post.timestamp}
+        deletePost={id => deletePost(id)}
+        updatePost={(id, text, author) => updatePost(id, text, author)}
+      />
+    ))}
+  </div>
+);
 
 PostList.defaultProps = {
   posts: []
@@ -33,12 +30,17 @@ PostList.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
       authorId: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
       timestamp: PropTypes.number.isRequired
     })
   ),
-  deletePost: PropTypes.func.isRequired
+  deletePost: PropTypes.func.isRequired,
+  updatePost: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    userId: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default PostList;

@@ -93,15 +93,16 @@ class ProfilePage extends Component {
     };
 
     componentDidMount = () => {
-        //console.log("did mount");
+        console.log("did mount");
         const { history } = this.props;
         if (!localStorage.jwtToken) {
             return history.push('/login');
         }
         const { retrieveUser, match } = this.props;
         const userId = match.params.id;
+        console.log(userId);
         return retrieveUser(userId).then((res) => {
-            // console.log("did retrieve");
+            console.log("did retrieve");
             this.setState({
                 avatarColor: res.payload.user.avatarColor,
                 bio: res.payload.user.bio,

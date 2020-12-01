@@ -12,12 +12,18 @@ const server = axios.create({
   })
 
 /* eslint-disable import/prefer-default-export */
-export const getUser = userId => async (dispatch) => {
-  const result = await server.get(`/api/web/users/${userId}`);
-  dispatch({
+
+export const getFollowing = userId => async (dispatch) => {
+  const result = await server.get(`/api/web/users/profile/${userId}`);
+  return dispatch({
     type: GET_FOLLOWING,
     payload: result.data
   });
+
+};
+
+export const getUser = userId => async (dispatch) => {
+  const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({
     type: GET_USER,
     payload: result.data
@@ -33,6 +39,8 @@ export const getAllUsers = () => async (dispatch) => {
 };
 
 export const followUser = (signedInUserId, idToFollow) => async (dispatch) => {
+  console.log("signed: " + signedInUserId);
+  console.log("to follow:" + idToFollow);
   const result = await server.patch(`/api/web/users/following/${signedInUserId}`, {
     idToFollow
   });
