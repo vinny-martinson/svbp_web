@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import uuid from 'uuid/v1';
+import uuid from 'uuid';
 
 import createStore from './store';
 import setAuthToken from './setAuthToken';
