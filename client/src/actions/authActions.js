@@ -8,9 +8,7 @@ const server = axios.create({
   })
 
 export const registerUser = (user, history) => (dispatch) => {
-  console.log('here!!!');
-  
-  server
+  axios
     .post('/api/web/users/signup', user)
     .then((res) => {
       history.push('/login');
@@ -21,7 +19,7 @@ export const registerUser = (user, history) => (dispatch) => {
 };
 
 export const loginUser = user => (dispatch) => {
-  server
+  axios
     .post('/api/web/users/signin', user)
     .then((res) => {
       const { token } = res.data;
