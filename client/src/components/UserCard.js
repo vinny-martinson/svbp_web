@@ -34,22 +34,16 @@ const styles = theme => ({
 class UserCard extends Component {
   followThisUser = (signedInUserId, listedUserId) => {
     const { followUser } = this.props;
-    followUser(signedInUserId, listedUserId).then((res) => {
-      console.log(res);
-    });
+    followUser(signedInUserId, listedUserId);
   };
 
   unfollowThisUser = (signedInUserId, listedUserId) => {
     const { unfollowUser } = this.props;
-    unfollowUser(signedInUserId, listedUserId).then((res) => {
-      console.log(res);
-    });
+    unfollowUser(signedInUserId, listedUserId);
   };
 
   render() {
     const { classes, isFollowing, listedUser, signedInUser } = this.props;
-    //console.log("signed in user");
-    // console.log(signedInUser.user_info.id);
     return (
       <Card>
         <div className={classNames(classes.container, classes.avatar)}>

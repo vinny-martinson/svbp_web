@@ -189,6 +189,30 @@ export const unfollow = async (req, res) => {
     }
 }
 
+export const unfollowers = async (req, res) => {
+  const { id } = req.params;
+
+  if (!req.body.unfollowerId) {
+    return res.status(404).json({ message: 'No ID found' });
+  }
+
+  try {
+    await User.findByIdAndUpdate(
+      id,
+      { $pull: { followers: req.body.unfollowerId } },
+      { new: true, upsert: true },
+      (err, doc) => {
+        if (err) {
+          return res.status(400).json(err);
+        }
+        return res.status(200).json(doc);
+      }
+    );
+  } catch (e) {
+    return res.status(500).json(err);
+  }
+};
+
 export const updateUser = async (req, res) => {
   const { id } = req.params;
 

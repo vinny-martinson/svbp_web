@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {
-  FOLLOW_USER,
+  GET_FOLLOWERS,
   GET_FOLLOWING,
   GET_USER,
   GET_ALL_USERS,
-  UNFOLLOW_USER
+  UPDATE_FOLLOWERS,
+  UPDATE_FOLLOWING
 } from './actionTypes';
 
 const server = axios.create({
@@ -41,12 +42,22 @@ export const getAllUsers = () => async (dispatch) => {
 export const followUser = (signedInUserId, idToFollow) => async (dispatch) => {
   console.log("signed: " + signedInUserId);
   console.log("to follow:" + idToFollow);
-  const result = await server.patch(`/api/web/users/following/${signedInUserId}`, {
+  const followResult = await server.patch(`/api/web/users/following/${signedInUserId}`, {
     idToFollow
   });
+  const addFollowerResult = await server.patch(
+    `/api/web/users/followers/${idToFollow}`,
+    {
+      followerId: signedInUserId
+    }
+  );
+  dispatch({
+    type: UPDATE_FOLLOWERS,
+    payload: addFollowerResult.data
+  });
   return dispatch({
-    type: FOLLOW_USER,
-    payload: result.data
+    type: UPDATE_FOLLOWING,
+    payload: followResult.data
   });
 };
 
@@ -54,11 +65,32 @@ export const unfollowUser = (
   signedInUserId,
   idToUnfollow
 ) => async (dispatch) => {
-  const result = await server.patch(`/api/web/users/unfollowing/${signedInUserId}`, {
-    idToUnfollow
+    const unfollowResult = await server.patch(
+      `/api/web/users/unfollowing/${signedInUserId}`,
+      {
+        idToUnfollow
+      }
+    );
+    const removeFollowerResult = await server.patch(
+      `/api/web/users/unfollowers/${idToUnfollow}`,
+      {
+        unfollowerId: signedInUserId
+      }
+    );
+    dispatch({
+      type: UPDATE_FOLLOWERS,
+      payload: removeFollowerResult.data
+    });
+    return dispatch({
+      type: UPDATE_FOLLOWING,
+      payload: unfollowResult.data
   });
+};
+
+export const getFollowers = userId => async (dispatch) => {
+  const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({
-    type: UNFOLLOW_USER,
+    type: GET_FOLLOWERS,
     payload: result.data
   });
 };

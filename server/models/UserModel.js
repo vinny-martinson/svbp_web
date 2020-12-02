@@ -9,6 +9,13 @@ const UserSchema = mongoose.Schema({
 	is_premium: { type: Boolean, required: true, default: false },
 	followers: { type: [String] },
 	following: { type: [String] },
+	showEmail: {
+		type: Boolean,
+		required: true
+	  },
+	likedPosts: {
+		type: [String]
+	  },
 	createdAt: { type: Date, default: Date.now() }
 });
 

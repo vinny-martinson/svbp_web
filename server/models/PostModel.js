@@ -18,6 +18,13 @@ const PostSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  likers: {
+    type: [String],
+  },
+  likesCount: {
+    type: Number,
+    required: true
+  },
   timestamp: {
     type: Number,
     required: true

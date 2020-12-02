@@ -11,13 +11,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import LikeIcon from '@material-ui/icons/ThumbUp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Modal from '@material-ui/core/Modal';
-import UpdatePost from './UpdatePost';
+import EditPost from '../components/EditPost';
 import UserAvatar from './UserAvatar';
 
 const options = ['Edit', 'Delete'];
@@ -76,11 +75,14 @@ class Post extends Component {
       author,
       authorId,
       avatarColor,
+      likers,
+      likesCount,
       timestamp,
       classes,
       deletePost,
       signedInUserId,
-      updatePost
+      editPost,
+      updatePostLikes
     } = this.props;
 
     console.log(signedInUserId);
@@ -119,9 +121,9 @@ class Post extends Component {
                       <MenuItem
                         key={option}
                         onClick={() =>
-                          this.handleClose()
-                          || (option === 'Delete' ? deletePost(_id) : null)
-                          || (option === 'Edit' ? this.handleModalOpen() : null)
+                          this.handleClose() ||
+                        (option === 'Delete' ? deletePost(_id) : null) ||
+                        (option === 'Edit' ? this.handleModalOpen() : null)
                         }
                       >
                         {option}
@@ -138,12 +140,23 @@ class Post extends Component {
           <Typography>{text}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Like">
-            <FavoriteIcon />
-            </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
+        <div>
+        <IconButton
+              onClick={() =>
+                (likers.includes(signedInUserId)
+                  ? updatePostLikes('unlike', _id, signedInUserId)
+                  : updatePostLikes('like', _id, signedInUserId))
+              }
+              aria-label="Like"
+            >
+              <LikeIcon
+                style={
+                  likers.includes(signedInUserId) ? { color: '#3f51b5' } : null
+                }
+              />
+              </IconButton>
+              {likesCount}
+          </div>
         </CardActions>
         <Modal
           aria-labelledby="modal-title"
@@ -160,11 +173,11 @@ class Post extends Component {
               Edit this post
             </Typography>
             <Typography variant="subheading" id="modal-description">
-              <UpdatePost
+              <EditPost
                 id={_id}
                 text={text}
                 author={author}
-                updatePost={updatePost}
+                editPost={editPost}
                 handleModalClose={this.handleModalClose}
               />
             </Typography>
@@ -176,13 +189,16 @@ class Post extends Component {
 }
 Post.propTypes = {
   _id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  timestamp: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
   avatarColor: PropTypes.number.isRequired,
   signedInUserId: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
+  likers: PropTypes.array.isRequired,
+  likesCount: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
   deletePost: PropTypes.func.isRequired,
-  updatePost: PropTypes.func.isRequired
+  editPost: PropTypes.func.isRequired,
+  updatePostLikes: PropTypes.func.isRequired
 };
 export default withStyles(styles)(Post);
