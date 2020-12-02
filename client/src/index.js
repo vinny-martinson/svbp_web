@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import createStore from './store';
 import setAuthToken from './setAuthToken';
 import { logoutUser, setCurrentUser } from './actions/authActions';
-import { getPosts } from './actions/postsActions';
+//import { getPosts } from './actions/postsActions';
 
 import './index.css';
 
@@ -28,7 +28,7 @@ if (localStorage.jwtToken) {
    }
 }
 
-store.dispatch(getPosts());
+//store.dispatch(getPosts());
 
 ReactDOM.render(
   <Provider store={store}>

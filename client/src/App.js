@@ -18,12 +18,13 @@ import ProfilePage from './views/ProfilePage';
 import Login from './components/Login'
 import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
+
+import FollowingPage from './views/FollowingPage';
+
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
 
-export const history = createBrowserHistory();
-
-
+//export const history = createBrowserHistory();
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/Profile/:id" component={ProfilePage} />
+        <Route path="/following" component={FollowingPage} />
         <Route path="/discover" component={DiscoverPage} />
         <Route exact path="/Feed" component={PostFeed} />
         <Route exact path="/Categories" component={Categories} />

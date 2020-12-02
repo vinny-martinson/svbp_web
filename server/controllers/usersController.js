@@ -37,7 +37,9 @@ function buildPayload(user) {
       email: user.email,
       is_premium: user.is_premium,
       is_admin: user.is_admin,
-      avatarColor: user.avatarColor
+      avatarColor: user.avatarColor,
+      following: user.following,
+      followers: user.followers
     }
   }
 }
@@ -51,7 +53,9 @@ export const signup = async (req, res) => {
     password: req.body.password,
     is_admin: req.body.is_admin,
     is_premium: req.body.is_premium,
-    avatarColor: Math.floor(Math.random() * 18) + 1
+    avatarColor: Math.floor(Math.random() * 18) + 1,
+    following: [],
+    followers: []
   });
 
 
@@ -129,7 +133,7 @@ export const addFollowing = async (req, res) => {
       }
     );
   } catch (e) {
-    return res.status(500).json(err);
+    return res.status(500).json(e);
   }
 
   return res.status(500).json();
@@ -184,6 +188,30 @@ export const unfollow = async (req, res) => {
       return res.status(500).json(err);
     }
 }
+
+export const unfollowers = async (req, res) => {
+  const { id } = req.params;
+
+  if (!req.body.unfollowerId) {
+    return res.status(404).json({ message: 'No ID found' });
+  }
+
+  try {
+    await User.findByIdAndUpdate(
+      id,
+      { $pull: { followers: req.body.unfollowerId } },
+      { new: true, upsert: true },
+      (err, doc) => {
+        if (err) {
+          return res.status(400).json(err);
+        }
+        return res.status(200).json(doc);
+      }
+    );
+  } catch (e) {
+    return res.status(500).json(err);
+  }
+};
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
