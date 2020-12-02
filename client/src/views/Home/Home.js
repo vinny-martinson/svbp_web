@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css';
+import '../../views/Categories.js';
 import RegisterCard from '../../components/RegisterCard'
 import Background from '../../assets/background.jpg';
 import Header from "../../components/Header"
@@ -14,8 +15,14 @@ import TVIcon from '../../assets/television-icon.png';
 import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
+
+import TabNav from '../../components/TabNav'; 
+import { NavLink } from 'react-router-dom';
+import SearchField from 'react-search-field';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 
 const theme = createMuiTheme({
     typography: {
@@ -95,6 +102,7 @@ function Home() {
     const classes = useStyles();
 
     return (
+        
         <div className="App">
             <Header />
             <div class="container">
@@ -105,6 +113,226 @@ function Home() {
                     <RegisterCard />
                 </div>
             </div>
+
+            <SearchField
+            placeholder="Search..."
+            //onChange={onChange}
+            searchText="Search for Books, Tv shows, Podcasts, Movies, or Music"
+            classNames="test-class"
+            />
+
+            <TabNav> 
+       <div label="Music"> 
+       <NavLink
+        to="/Categories"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Rock,
+        </NavLink>
+          <em> </em> 
+          <NavLink
+        to="/Categories"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >Jazz,</NavLink><em> </em>  
+
+          <NavLink
+        to="/Categories"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Electronic music,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/Categories"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Reggae,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/Categories"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Hip Hop,
+        </NavLink><em> </em> 
+        <NavLink
+        to="/Categories"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Rap
+        </NavLink> <em> </em> 
+
+       </div> 
+       <div label="Podcast"> 
+          <em> </em> 
+          <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Interview,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Monologue,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Conversational,
+        </NavLink><em> </em>  
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Storytelling,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Radio,
+        </NavLink><em> </em> 
+       </div> 
+
+       <div label="TV"> 
+       <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Dramas,
+        </NavLink><em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Daytime,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        News,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Cooking,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Reality Show,
+        </NavLink> <em> </em>  
+       </div> 
+
+       <div label="Books"> 
+       <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Nonfiction,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Fiction,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        History,
+        </NavLink><em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Self-help,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Enciclopedia,
+        </NavLink> <em> </em> 
+        <NavLink
+        to="/https://www.spotify.com/us/"
+        activeStyle={{
+            fontWeight: "bold",
+            color: "red"
+        }}
+        >
+        Horror,
+        </NavLink> <em> </em> 
+       </div> 
+            </TabNav> 
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Categories
         </Typography>
@@ -113,39 +341,84 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                         <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                        <NavLink
+                            to="/Categories"
+                            activeStyle={{
+                                fontWeight: "bold",
+                                color: "red"
+                            }}
+                            >
                             Books
+                            </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={BookIcon} />
                     </Paper>
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Movies
+                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                    <NavLink
+                        to="/Categories"
+                        activeStyle={{
+                            fontWeight: "bold",
+                            color: "red"
+                        }}
+                        >
+                        Movies
+                        </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={FilmIcon} />
                     </Paper>
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            TV
+                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                    <NavLink
+                    to="/Categories"
+                    activeStyle={{
+                        fontWeight: "bold",
+                        color: "red"
+                    }}
+                    >
+                    TV
+                    </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={TVIcon} />
                     </Paper>
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Podcast
+                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                    <NavLink
+                        to="/Categories"
+                    activeStyle={{
+                        fontWeight: "bold",
+                        color: "red"
+                    }}
+                    >
+                    Podcast
+                    </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={PodIcon} />
                     </Paper>
                 </Grid>
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Music
+                    <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                    <NavLink
+                        to="/Categories"
+                        activeStyle={{
+                            fontWeight: "bold",
+                            color: "red"
+                        }}
+                        >
+                        Music
+                        </NavLink> <em> </em> 
+
                          </Typography>
                         <img class="icon scale" src={MusicIcon} />
                     </Paper>
@@ -154,8 +427,10 @@ function Home() {
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
         </Typography>
-            <Placeholder />
+        <Placeholder/>
+   
         </div>
+        
     );
 }
 
