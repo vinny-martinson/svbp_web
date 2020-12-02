@@ -9,7 +9,7 @@ import {
 } from './actionTypes';
 
 const server = axios.create({
-  baseURL: 'http://localhost:3001'
+  baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
 })
 
 export const getPosts = () => dispatch =>

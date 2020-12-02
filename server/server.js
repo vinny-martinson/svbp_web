@@ -44,7 +44,7 @@ app.use('/api/web/podcasts', podcastsRouter);
 app.use('/api/web/spotify', spotifyRouter);
 app.use('/api/web/posts', postRouter);
 
-// app.use(express.static('./../client/build'))
+// app.use(express.static('./public'))
 //    .use(cors())
 //    .use(cookieParser());
 
