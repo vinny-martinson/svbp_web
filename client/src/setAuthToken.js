@@ -1,10 +1,15 @@
 import axios from 'axios';
 
+const server = axios.create({
+  baseURL: 'http://localhost:3001'
+})
+
+
 const setAuthToken = (token) => {
   if (token) {
-    axios.defaults.headers.common.Authorization = token;
+    server.defaults.headers.common.Authorization = token;
   } else {
-    delete axios.defaults.headers.common.Authorization;
+    delete server.defaults.headers.common.Authorization;
   }
 };
 
