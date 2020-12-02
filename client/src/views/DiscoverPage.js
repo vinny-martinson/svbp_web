@@ -12,6 +12,7 @@ import Loading from '../components/Loading';
 import Header2 from '../components/Header2';
 import UserCard from '../components/UserCard';
 import {
+  getFollowing,
   getUser,
   followUser,
   getAllUsers,
@@ -20,17 +21,17 @@ import {
 
 
 const styles = theme => ({
-    cardGrid: {
-      padding: `${theme.spacing.unit * 8}px 0`
-    },
-    layout: {
-      width: 'auto',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3
-      }
+  cardGrid: {
+    padding: `${theme.spacing.unit * 8}px 0`
+  },
+  layout: {
+    width: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 3,
+      marginRight: theme.spacing.unit * 3
     }
-  });
+  }
+});
 
 export class DiscoverPage extends Component {
   state = {
@@ -55,7 +56,6 @@ export class DiscoverPage extends Component {
   componentDidUpdate(prevProps) {
     const { userReducer } = this.props;
     if (!equal(userReducer.following, prevProps.userReducer.following)) {
-      console.log('called componentDidUpdate');
       this.updateFollowing();
     }
   }
@@ -63,7 +63,8 @@ export class DiscoverPage extends Component {
   // Set "following" to the list of people the logged in user is following
   updateFollowing = () => {
     const { authReducer, getCurrUser } = this.props;
-    getCurrUser(authReducer.user.userId).then(res => {
+
+    getCurrUser(authReducer.user.user_info.id).then((res) => {
       this.setState({
         following: res.payload.user.following
       });
@@ -79,31 +80,38 @@ export class DiscoverPage extends Component {
       unfollowThisUser
     } = this.props;
     const { following, loading } = this.state;
-
+    // console.log("auth id");
+    // console.log(authReducer.user.user_info.id);
     return loading ? (
-      <Loading />
-    ) : (
       <div>
-        <Header2 />
-        <main>
-          <div className={classNames(classes.layout, classes.cardGrid)}>
-            <Grid container justify="center" spacing={40}>
-              {userReducer.allUsers.map(user => (
-                <Grid item key={user.id} sm={6} md={3} lg={2}>
-                  <UserCard
-                    isFollowing={following.includes(user._id)}
-                    followUser={followThisUser}
-                    listedUser={user}
-                    signedInUser={authReducer.user}
-                    unfollowUser={unfollowThisUser}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        </main>
+      <Header2 />
+      <Loading />
       </div>
-    );
+    ) : (
+        <div>
+          <Header2 />
+          <main>
+            <div className={classNames(classes.layout, classes.cardGrid)}>
+              <Grid container justify="center" spacing={40}>
+              {userReducer.allUsers.map(
+                user =>
+                  (user._id === authReducer.user.userId ? null : (
+                    <Grid item key={user._id} sm={6} md={3} lg={2}>
+                      <UserCard
+                        isFollowing={following.includes(user._id)}
+                        followUser={followThisUser}
+                        listedUser={user}
+                        signedInUser={authReducer.user}
+                        unfollowUser={unfollowThisUser}
+                      />
+                    </Grid>
+                  ))
+              )}
+              </Grid>
+            </div>
+          </main>
+        </div>
+      );
   }
 }
 
@@ -125,6 +133,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getCurrUser: id => dispatch(getUser(id)),
+  getFollowingUsers: id => dispatch(getFollowing(id)),
   followThisUser: (signedInUserId, idToFollow) =>
     dispatch(followUser(signedInUserId, idToFollow)),
   retrieveAllUsers: () => dispatch(getAllUsers()),
@@ -133,9 +142,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default compose(
-    withStyles(styles),
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )
-  )(DiscoverPage);
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(DiscoverPage);

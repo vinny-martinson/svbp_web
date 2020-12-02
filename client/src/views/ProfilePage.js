@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import compose from 'recompose/compose';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -12,12 +13,13 @@ import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import PostFeed from '../components/PostFeed';
 
 import Loading from '../components/Loading';
 import defaultImage from '../assets/background.jpg';
 import Header2 from '../components/Header2';
 import UserAvatar from '../components/UserAvatar';
-import { getUser } from '../actions/userActions';
+import { getFollowers, getFollowing, getUser } from '../actions/userActions';
 import { updateCurrentUser } from '../actions/authActions';
 
 //import UserAvatar from '../components/UserAvatar';
@@ -83,8 +85,12 @@ class ProfilePage extends Component {
         bio: '',
         displayedBio: '',
         email: '',
+        followers: [],
+        following: [],
         displayedEmail: '',
-        loading: true,
+        loadingFollowing: true,
+        loadingFollowers: true,
+        loadingUser: true,
         name: '',
         modalOpen: false,
         profileId: '',
@@ -93,22 +99,43 @@ class ProfilePage extends Component {
     };
 
     componentDidMount = () => {
-        //console.log("did mount");
         const { history } = this.props;
         if (!localStorage.jwtToken) {
             return history.push('/login');
         }
-        const { retrieveUser, match } = this.props;
+        const {
+            getUsersYouAreFollowing,
+            getYourFollowers,
+            retrieveUser,
+            match
+        } = this.props;
         const userId = match.params.id;
+        //console.log(userId);
+
+        getUsersYouAreFollowing(userId).then((res) => {
+            this.setState({
+                following: res.payload.user.following,
+                loadingFollowing: false
+            });
+        });
+
+        getYourFollowers(userId).then((res) => {
+            console.log(res);
+            this.setState({
+                followers: res.payload.user.followers,
+                loadingFollowers: false
+            });
+        });
+
         return retrieveUser(userId).then((res) => {
-            // console.log("did retrieve");
+            console.log("did retrieve");
             this.setState({
                 avatarColor: res.payload.user.avatarColor,
                 bio: res.payload.user.bio,
                 displayedBio: res.payload.user.bio,
                 email: res.payload.user.email,
                 displayedEmail: res.payload.user.email,
-                loading: false,
+                loadingUser: false,
                 name: res.payload.user.name,
                 displayedName: res.payload.user.username,
                 profileId: res.payload.user._id
@@ -143,19 +170,28 @@ class ProfilePage extends Component {
     };
 
     render() {
-        const { classes, signedInUser } = this.props;
+        const { classes, history, signedInUser } = this.props;
         const {
             avatarColor,
             displayedBio,
             displayedEmail,
             displayedName,
-            loading,
+            following,
+            followers,
+            loadingFollowers,
+            loadingFollowing,
+            loadingUser,
             modalOpen,
             profileId
         } = this.state;
 
-        return loading ? (
-            <Loading />
+        //console.log(following);
+
+        return loadingFollowers || loadingFollowing || loadingUser ? (
+            <div>
+                <Header2 />
+                <Loading />
+            </div>
         ) : (<div>
             {/* <NavbarContainer /> */}
             <Header2 />
@@ -194,20 +230,23 @@ class ProfilePage extends Component {
                 <Grid item xs={12}>
                     <Grid container justify="center">
                         <Paper className={classes.paper}>
-                            <Typography variant="display1">235</Typography>
+                            <Typography variant="display1">{following.length}</Typography>
                             <Typography variant="headline">Following</Typography>
                         </Paper>
                         <Paper className={classes.paper}>
-                            <Typography variant="display1">629</Typography>
+                            <Typography variant="display1">{followers.length}</Typography>
                             <Typography variant="headline">Followers</Typography>
                         </Paper>
                         <Paper className={classes.paper}>
-                            <Typography variant="display1">52.4k</Typography>
-                            <Typography variant="headline">Views</Typography>
+                        <Typography variant="display1" className={classes.date}>
+                  {moment(signedInUser.createdAt).format('l')}
+                </Typography>
+                <Typography variant="headline">Joined</Typography>
                         </Paper>
                     </Grid>
                 </Grid>
             </Grid>
+            <PostFeed onProfilePage history={history} />
             <Modal
                 aria-labelledby="modal-title"
                 aria-describedby="modal-description"
@@ -282,11 +321,18 @@ class ProfilePage extends Component {
 
 ProfilePage.propTypes = {
     classes: PropTypes.object.isRequired,
+    getUsersYouAreFollowing: PropTypes.func.isRequired,
+    getYourFollowers: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     updateUser: PropTypes.func.isRequired,
-    signedInUser: PropTypes.object.isRequired,
-    retrieveUser: PropTypes.func.isRequired
+    signedInUser: PropTypes.shape({
+        createdAt: PropTypes.number.isRequired,
+        email: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        userId: PropTypes.string.isRequired
+      }).isRequired,
+      retrieveUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -294,6 +340,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    getUsersYouAreFollowing: id => dispatch(getFollowing(id)),
+    getYourFollowers: id => dispatch(getFollowers(id)),
     retrieveUser: userId => dispatch(getUser(userId)),
     updateUser: (bio, email, name, id) =>
         dispatch(updateCurrentUser(bio, email, name, id))
