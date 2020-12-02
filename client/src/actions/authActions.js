@@ -4,7 +4,7 @@ import setAuthToken from '../setAuthToken';
 import * as types from './actionTypes';
 
 const server = axios.create({
-  baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
+  baseURL: 'http://localhost:3001'
   })
 
 export const registerUser = (user, history) => (dispatch) => {
