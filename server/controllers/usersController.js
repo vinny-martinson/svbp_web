@@ -39,7 +39,8 @@ function buildPayload(user) {
       is_admin: user.is_admin,
       avatarColor: user.avatarColor,
       following: user.following,
-      followers: user.followers
+      followers: user.followers,
+      showEmail: user.showEmail
     }
   }
 }
@@ -53,6 +54,7 @@ export const signup = async (req, res) => {
     password: req.body.password,
     is_admin: req.body.is_admin,
     is_premium: req.body.is_premium,
+    showEmail: true,
     avatarColor: Math.floor(Math.random() * 18) + 1,
     following: [],
     followers: []
@@ -223,7 +225,8 @@ export const updateUser = async (req, res) => {
         $set: {
           bio: req.body.bio || '',
           email: req.body.email,
-          name: req.body.name
+          name: req.body.name,
+          showEmail: req.body.showEmail
         }
       },
       { new: true, upsert: true, setDefaultsOnInsert: true },
@@ -246,7 +249,8 @@ export const updateUser = async (req, res) => {
         bio: user.bio,
         name: user.name,
         email: user.email,
-        userId: user._id
+        userId: user._id,
+        showEmail: req.body.showEmail
       },
       process.env.REACT_APP_JWT_KEY || require('../secrets').jwtKey,
       {

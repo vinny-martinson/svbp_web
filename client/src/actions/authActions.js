@@ -4,8 +4,8 @@ import setAuthToken from '../setAuthToken';
 import * as types from './actionTypes';
 
 const server = axios.create({
-    baseURL: 'http://localhost:3001'
-  })
+  baseURL: 'http://localhost:3001'
+})
 
 export const registerUser = (user, history) => (dispatch) => {
   server
@@ -46,18 +46,20 @@ export const logoutUser = () => (dispatch) => {
   window.location.href = '/login';
 };
 
-export const updateCurrentUser = (bio, email, name, userId) => (dispatch) => {
-  server.patch(`/users/${userId}`, { bio, email, name })
-  .then((res) => {
+export const updateCurrentUser = (
+  bio,
+  email,
+  name,
+  userId,
+  showEmail
+) => (dispatch) => {
+  server.patch(`/users/${userId}`, { bio, email, name, showEmail })
+    .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
       const decoded = jwtDecode(token);
       dispatch(setCurrentUser(decoded));
     })
-    .catch(err =>
-      dispatch({
-        type: types.GET_ERRORS,
-        payload: err.response.data
-      }));
+    .catch(err => console.log(err));
 };

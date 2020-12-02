@@ -14,6 +14,8 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import PostFeed from '../components/PostFeed';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 import Loading from '../components/Loading';
 import defaultImage from '../assets/background.jpg';
@@ -87,15 +89,16 @@ class ProfilePage extends Component {
         email: '',
         followers: [],
         following: [],
-        displayedEmail: '',
         loadingFollowing: true,
         loadingFollowers: true,
         loadingUser: true,
         name: '',
+        displayedEmail: '',
+        displayedName: '',
         modalOpen: false,
         profileId: '',
-        displayedName: ''
-
+        showEmail: false,
+        showEmailSavedResult: false
     };
 
     componentDidMount = () => {
@@ -134,11 +137,13 @@ class ProfilePage extends Component {
                 bio: res.payload.user.bio,
                 displayedBio: res.payload.user.bio,
                 email: res.payload.user.email,
+                displayedName: res.payload.user.name,
                 displayedEmail: res.payload.user.email,
                 loadingUser: false,
                 name: res.payload.user.name,
-                displayedName: res.payload.user.username,
-                profileId: res.payload.user._id
+                profileId: res.payload.user._id,
+                showEmail: res.payload.user.showEmail,
+                showEmailSavedResult: res.payload.user.showEmail
             });
         });
     };
@@ -156,21 +161,29 @@ class ProfilePage extends Component {
         this.setState(() => ({ [name]: value }));
     };
 
+    handleSwitchChange = (e) => {
+        const { value } = e.target;
+        this.setState({
+            [value]: e.target.checked
+        });
+    };
+
     handleSubmit = (e) => {
         e.preventDefault();
         const { updateUser, signedInUser } = this.props;
-        const { bio, email, name } = this.state;
-        updateUser(bio, email, name, signedInUser.userId);
+        const { bio, email, name, showEmail } = this.state;
+        updateUser(bio, email, name, signedInUser.userId, showEmail);
         this.setState({
             displayedBio: bio,
             displayedEmail: email,
-            displayedName: name
+            displayedName: name,
+            showEmailSavedResult: showEmail
         });
         this.handleModalClose();
     };
 
     render() {
-        const { classes, history, signedInUser } = this.props;
+        const { classes, match, signedInUser } = this.props;
         const {
             avatarColor,
             displayedBio,
@@ -182,7 +195,9 @@ class ProfilePage extends Component {
             loadingFollowing,
             loadingUser,
             modalOpen,
-            profileId
+            profileId,
+            showEmail,
+            showEmailSavedResult
         } = this.state;
 
         //console.log(following);
@@ -221,8 +236,9 @@ class ProfilePage extends Component {
                             avatarColor={avatarColor}
                         />
                         <Typography variant="headline">{displayedName}</Typography>
-                        <Typography>{displayedEmail}</Typography>
-                        <Typography>{displayedBio}</Typography>
+                        {showEmailSavedResult ? (
+                            <Typography>{displayedEmail}</Typography>
+                        ) : null}                        <Typography>{displayedBio}</Typography>
                     </CardContent>
                 </Card>
             </div>
@@ -238,15 +254,15 @@ class ProfilePage extends Component {
                             <Typography variant="headline">Followers</Typography>
                         </Paper>
                         <Paper className={classes.paper}>
-                        <Typography variant="display1" className={classes.date}>
-                  {moment(signedInUser.createdAt).format('l')}
-                </Typography>
-                <Typography variant="headline">Joined</Typography>
+                            <Typography variant="display1" className={classes.date}>
+                                {moment(signedInUser.createdAt).format('l')}
+                            </Typography>
+                            <Typography variant="headline">Joined</Typography>
                         </Paper>
                     </Grid>
                 </Grid>
             </Grid>
-            <PostFeed onProfilePage history={history} />
+            <PostFeed onProfilePage match={match} />
             <Modal
                 aria-labelledby="modal-title"
                 aria-describedby="modal-description"
@@ -294,13 +310,24 @@ class ProfilePage extends Component {
                             fullWidth
                             multiline
                             className={classes.textField}
-                            defaultValue={signedInUser.bio}
+                            defaultValue={displayedBio}
                             id="bio"
                             label="Bio"
                             margin="normal"
                             name="bio"
                             onChange={this.handleChange}
                             placeholder="Describe yourself."
+                        />
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={showEmail}
+                                    onChange={this.handleSwitchChange}
+                                    color="primary"
+                                    value="showEmail"
+                                />
+                            }
+                            label="Show email"
                         />
                         <Button
                             fullWidth
@@ -331,8 +358,8 @@ ProfilePage.propTypes = {
         email: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         userId: PropTypes.string.isRequired
-      }).isRequired,
-      retrieveUser: PropTypes.func.isRequired
+    }).isRequired,
+    retrieveUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -343,8 +370,8 @@ const mapDispatchToProps = dispatch => ({
     getUsersYouAreFollowing: id => dispatch(getFollowing(id)),
     getYourFollowers: id => dispatch(getFollowers(id)),
     retrieveUser: userId => dispatch(getUser(userId)),
-    updateUser: (bio, email, name, id) =>
-        dispatch(updateCurrentUser(bio, email, name, id))
+    updateUser: (bio, email, name, id, showEmail) =>
+    dispatch(updateCurrentUser(bio, email, name, id, showEmail))
 });
 
 export default compose(

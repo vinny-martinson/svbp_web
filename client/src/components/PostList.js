@@ -26,11 +26,11 @@ class PostList extends Component {
     followingList,
     onProfilePage,
     postAuthorId,
-    signedInUserId,
-    history
+    signedInUserId
   ) => {
     if (onProfilePage) {
-      const userProfileId = history.location.pathname.split('/').pop();
+      const { match } = this.props;
+      const userProfileId = match.params.id;
       return postAuthorId === userProfileId;
     }
     return (
@@ -114,10 +114,10 @@ PostList.propTypes = {
   deletePost: PropTypes.func.isRequired,
   updatePostLikes: PropTypes.func.isRequired,
   getPosts: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired
-    }).isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string
+    })
   }),
   onProfilePage: PropTypes.bool,
   getFollowing: PropTypes.func.isRequired,

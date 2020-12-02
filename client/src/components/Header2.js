@@ -110,7 +110,9 @@ class Header2 extends Component {
                                 <Link className={classes.link} to={`/profile/${user.user_info.id}`}>
                                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                                 </Link>
-                                <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                                <Link className={classes.link} to="/discover">
+                                    <MenuItem onClick={this.handleClose}>Discover</MenuItem>
+                                </Link>
                                 <MenuItem onClick={logoutUser}>Logout</MenuItem>
                             </Menu>
                         </div>                    </Toolbar>
