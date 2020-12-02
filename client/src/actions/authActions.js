@@ -4,10 +4,12 @@ import setAuthToken from '../setAuthToken';
 import * as types from './actionTypes';
 
 const server = axios.create({
-    baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
+  baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
   })
 
 export const registerUser = (user, history) => (dispatch) => {
+  console.log('here!!!');
+  
   server
     .post('/api/web/users/signup', user)
     .then((res) => {

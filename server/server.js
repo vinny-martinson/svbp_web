@@ -48,7 +48,7 @@ app.use('/api/web/posts', postRouter);
 //    .use(cors())
 //    .use(cookieParser());
 
-app.use('/', express.static('../client/build'));
+app.use('/', express.static('../client/build')).use(cors()).use(cookieParser());
 app.use(express.static('../client/build')).use(cors()).use(cookieParser());
 
 app.all('/*', (req, res) => {
