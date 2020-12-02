@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 import '../../views/Categories.js';
+import './AboutUs.js';
 import RegisterCard from '../../components/RegisterCard'
 import Background from '../../assets/background.jpg';
 import Header from "../../components/Header"
@@ -327,6 +328,8 @@ function Home() {
         </NavLink> <em> </em> 
        </div> 
             </TabNav> 
+
+           
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Categories
         </Typography>
@@ -421,7 +424,21 @@ function Home() {
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
         </Typography>
+
+       
         <Placeholder/>
+        <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
+                
+                <NavLink
+                        to="/AboutUs"
+                        activeStyle={{
+                            fontWeight: "bold",
+                            color: "red"
+                        }}
+                        >
+                        About Us
+                        </NavLink> <em> </em> 
+        </Typography>
    
         </div>
         
