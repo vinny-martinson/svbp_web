@@ -47,7 +47,7 @@ export const logoutUser = () => (dispatch) => {
 };
 
 export const updateCurrentUser = (bio, email, name, userId) => (dispatch) => {
-  server.patch(`/users/${userId}`, { bio, email, name })
+  axios.patch(`/users/${userId}`, { bio, email, name })
   .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
