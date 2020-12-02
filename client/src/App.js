@@ -18,9 +18,9 @@ export const history = createBrowserHistory();
 
 const App = () => {
   return (
-    <div>
-      <Header />
-      <Router history={createBrowserHistory()}>
+   
+      //<Router history={history}>
+        <Router history={createBrowserHistory()}>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/Feed" component={PostFeed} />
@@ -29,7 +29,7 @@ const App = () => {
         <Route component={NotFound}/>
       </Switch>
       </Router>
-    </div>
+
   );
 }
 
