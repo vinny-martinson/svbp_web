@@ -28,7 +28,7 @@ export const history = createBrowserHistory();
 const App = () => {
   return (
     <div>
-      //<Router history={history}>
+      {/* <Router history={history}> */}
         <Router history={createBrowserHistory()}>
       <Switch>
         <Route exact path="/" component={Home} />
