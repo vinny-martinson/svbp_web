@@ -18,8 +18,11 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
 import SettingsPage from './views/SettingsPage';
-
 import FollowingPage from './views/FollowingPage';
+
+import MainPage from './views/MainPage';
+import DetailPage from './views/DetailPage';
+import AddPage from './views/AddPage';
 
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
@@ -31,8 +34,13 @@ const App = () => {
     <div>
         <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/Landing" component={Home} />
         <Route path="/Feed" component={PostFeed} />
+
+        <Route path="/" component={MainPage} />
+        <Route path="/shows/:id" component={DetailPage} />
+        <Route path="/add" component={AddPage} />
+
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/profile/:id" component={ProfilePage} />
