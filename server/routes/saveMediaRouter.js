@@ -4,6 +4,6 @@ import validateToken from '../utils/auth.js';
 const saveMediaRouter = express.Router();
 
 
-saveMediaRouter.post('/comment', saveMedia.save)
+saveMediaRouter.post('/save', saveMedia.save)
 
 export default saveMediaRouter;
