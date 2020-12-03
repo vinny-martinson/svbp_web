@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import LeftMenu from './LeftMenu';
 import { Link } from 'react-router-dom';
+import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
 
 //logged in
 const styles = {
@@ -51,8 +52,9 @@ const styles = {
         color: "#FFFFFF"
     },
     menuButton: {
-        color: '#fff',
-        fontSize: '18px',
+        background: "white",
+        color: '#FF7D63',
+        fontSize: '14px',
         marginRight: '-15px',
         textTransform: 'none'
     }
@@ -99,7 +101,8 @@ class Header2 extends Component {
                                 className={classes.menuButton}
                                 onClick={this.handleClick}
                             >
-                                {user.username}
+                                {/* {user.username} */}
+                                {"what"}
                             </Button>
                             <Menu
                                 id="right-menu"
@@ -113,7 +116,8 @@ class Header2 extends Component {
                                 <MenuItem onClick={this.handleClose}>My account</MenuItem>
                                 <MenuItem onClick={logoutUser}>Logout</MenuItem>
                             </Menu>
-                        </div>                    </Toolbar>
+                        </div>
+                    </Toolbar>
                 </AppBar>
             </div>
         );

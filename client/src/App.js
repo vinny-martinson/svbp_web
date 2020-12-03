@@ -1,14 +1,14 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
-import Home from "./views/Home/Home"
-import NotFound from "./views/NotFound"
-import Header from "./components/Header"
+import Home from "./views/Home/Home";
+import NotFound from "./views/NotFound";
+import Header from "./components/Header";
 import 'fontsource-roboto';
-import 'semantic-ui-css/semantic.min.css'
+import 'semantic-ui-css/semantic.min.css';
 import PostFeed from './views/PostFeedView';
 import ProfilePage from './views/ProfilePage';
-import Login from './components/Login'
-import Signup from './components/Signup'
+import Login from './components/Login';
+import Signup from './components/Signup';
 import DiscoverPage from './views/DiscoverPage';
 
 import { createBrowserHistory } from "history";

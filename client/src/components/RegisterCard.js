@@ -55,23 +55,23 @@ const useStyles = makeStyles({
     borderWidth: '1px',
     border: "solid",
     borderRadius: "2px",
-},
-inputRoot: {
-  flexGrow: 1,
-  marginBottom: "0.5em"
-},
-button: {
-  background: "#FF7D63",
-  borderColor: "#FFFFFF",
-  borderRadius: "20px",
-  marginLeft: "1em",
-  alignSelf: "center",
-  color: "#FFFFFF",
-  marginLeft: "5.5em"
-},
-pos: {
-  marginBottom: 12,
-},
+  },
+  inputRoot: {
+    flexGrow: 1,
+    marginBottom: "0.5em"
+  },
+  button: {
+    background: "#FF7D63",
+    borderColor: "#FFFFFF",
+    borderRadius: "20px",
+    marginLeft: "1em",
+    alignSelf: "center",
+    color: "#FFFFFF",
+    marginLeft: "5.5em"
+  },
+  pos: {
+    marginBottom: 12,
+  },
 });
 
 export default function RegisterCard() {
@@ -81,7 +81,7 @@ export default function RegisterCard() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      
+
       <div className={classes.root}>
         <Grid container spacing={0}>
           <Grid item xs>
