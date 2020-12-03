@@ -115,14 +115,14 @@ class ProfilePage extends Component {
         const userId = match.params.id;
         //console.log(userId);
 
-        getUsersYouAreFollowing(userId).then((res) => {
+        getUsersYouAreFollowing(userId).then(res => {
             this.setState({
                 following: res.payload.user.following,
                 loadingFollowing: false
             });
         });
 
-        getYourFollowers(userId).then((res) => {
+        getYourFollowers(userId).then(res => {
             console.log(res);
             this.setState({
                 followers: res.payload.user.followers,
@@ -130,17 +130,17 @@ class ProfilePage extends Component {
             });
         });
 
-        return retrieveUser(userId).then((res) => {
+        return retrieveUser(userId).then(res => {
             console.log("did retrieve");
             this.setState({
                 avatarColor: res.payload.user.avatarColor,
                 bio: res.payload.user.bio,
                 displayedBio: res.payload.user.bio,
                 email: res.payload.user.email,
-                displayedName: res.payload.user.name,
+                displayedName: res.payload.user.username,
                 displayedEmail: res.payload.user.email,
                 loadingUser: false,
-                name: res.payload.user.name,
+                name: res.payload.user.username,
                 profileId: res.payload.user._id,
                 showEmail: res.payload.user.showEmail,
                 showEmailSavedResult: res.payload.user.showEmail
@@ -156,19 +156,19 @@ class ProfilePage extends Component {
         this.setState({ modalOpen: false });
     };
 
-    handleChange = (e) => {
+    handleChange = e => {
         const { name, value } = e.target;
         this.setState(() => ({ [name]: value }));
     };
 
-    handleSwitchChange = (e) => {
+    handleSwitchChange = e => {
         const { value } = e.target;
         this.setState({
             [value]: e.target.checked
         });
     };
 
-    handleSubmit = (e) => {
+    handleSubmit = e => {
         e.preventDefault();
         const { updateUser, signedInUser } = this.props;
         const { bio, email, name, showEmail } = this.state;
@@ -183,7 +183,7 @@ class ProfilePage extends Component {
     };
 
     render() {
-        const { classes, match, signedInUser } = this.props;
+        const { classes, getTheUser, match, signedInUser } = this.props;
         const {
             avatarColor,
             displayedBio,
@@ -234,6 +234,7 @@ class ProfilePage extends Component {
                             author={displayedName}
                             authorId={profileId}
                             avatarColor={avatarColor}
+                            getUser={getTheUser}
                         />
                         <Typography variant="headline">{displayedName}</Typography>
                         {showEmailSavedResult ? (
@@ -353,6 +354,7 @@ ProfilePage.propTypes = {
     history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     updateUser: PropTypes.func.isRequired,
+    getTheUser: PropTypes.func.isRequired,
     signedInUser: PropTypes.shape({
         createdAt: PropTypes.number.isRequired,
         email: PropTypes.string.isRequired,
@@ -368,6 +370,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getUsersYouAreFollowing: id => dispatch(getFollowing(id)),
+    getTheUser: id => dispatch(getUser(id)),
     getYourFollowers: id => dispatch(getFollowers(id)),
     retrieveUser: userId => dispatch(getUser(userId)),
     updateUser: (bio, email, name, id, showEmail) =>

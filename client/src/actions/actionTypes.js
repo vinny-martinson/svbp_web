@@ -17,3 +17,8 @@ export const UPDATE_FOLLOWING = 'UPDATE_FOLLOWING';
 
 export const GET_ERRORS = 'GET_ERRORS';
 export const INDICATE_NO_ERRORS = 'INDICATE_NO_ERRORS';
+
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const GET_COMMENTS = 'GET_COMMENTS';

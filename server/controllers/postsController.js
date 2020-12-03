@@ -11,8 +11,8 @@ export const getPost = async (req, res) => {
 export const postPost = async (req, res) => {
   const newPost = new Post({
     text: req.body.text,
-    author: req.body.author || 'Anonymous',
     avatarColor: req.body.avatarColor || 0,
+    comments: [],
     authorId: req.body.authorId,
     likers: [],
     likesCount: 0,
@@ -81,10 +81,76 @@ export const editPost = async (req, res) => {
     }
   }
 
+  if (req.body.action === 'addComment') {
+    try {
+      return Post.findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            comments: {
+              commenterId: req.body.commenterId,
+              text: req.body.text,
+              timestamp: new Date().getTime()
+            }
+          }
+        },
+        { new: true },
+        (err, post) => {
+          if (err) return res.status(400).send(err);
+          return res.send(post);
+        }
+      );
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  }
+
+  if (req.body.action === 'deleteComment') {
+    try {
+      return Post.findByIdAndUpdate(
+        id,
+        {
+          $pull: {
+            comments: {
+              _id: req.body.commentId
+            }
+          }
+        },
+        { new: true },
+        (err, post) => {
+          if (err) return res.status(400).send(err);
+          return res.send(post);
+        }
+      );
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  }
+
+  if (req.body.action === 'editComment') {
+    try {
+      return Post.findById(id, (err, post) => {
+        const { comments } = post;
+        const theComment = comments.find(comment =>
+          comment._id.equals(req.body.commentId));
+
+        if (!theComment) return res.status(404).send('Comment not found');
+        theComment.text = req.body.text;
+
+        return post.save((error) => {
+          if (error) return res.status(500).send(error);
+          return res.status(200).send(post);
+        });
+      });
+    } catch (err) {
+      return res.status(400).send(err);
+    }
+  }
+
   try {
     return Post.findByIdAndUpdate(
       id,
-      { $set: { text: req.body.text, author: req.body.author } },
+      { $set: { text: req.body.text } },
       { new: true },
       (err, post) => {
         if (err) return res.status(400).send(err);

@@ -41,8 +41,12 @@ class PostList extends Component {
   render() {
     const {
       posts,
+      addComment,
+      getUser,
+      deleteComment,
       deletePost,
       editPost,
+      editComment,
       history,
       updatePostLikes,
       user,
@@ -61,7 +65,7 @@ class PostList extends Component {
             following,
             onProfilePage,
             post.authorId,
-            user.userId,
+            user.user_info.id,
             history
           ) ? (
               <Post
@@ -71,11 +75,22 @@ class PostList extends Component {
                 authorId={post.authorId}
                 avatarColor={post.avatarColor}
                 likers={post.likers}
+                comments={post.comments}
                 likesCount={post.likesCount}
                 signedInUserId={user.user_info.id}
                 text={post.text}
                 timestamp={post.timestamp}
+                addComment={(action, commenterId, postId, text, timestamp) =>
+                  addComment(action, commenterId, postId, text, timestamp)
+                }
+                deleteComment={(action, commentId, postId) =>
+                  deleteComment(action, commentId, postId)
+                }
+                getUser={id => getUser(id)}
                 deletePost={id => deletePost(id)}
+                editComment={(action, commentId, postId, text) =>
+                  editComment(action, commentId, postId, text)
+                }
                 editPost={(id, text, author) => editPost(id, text, author)}
                 updatePostLikes={(action, postId, likerId) =>
                   updatePostLikes(action, postId, likerId)
@@ -90,7 +105,11 @@ class PostList extends Component {
 
 
 PostList.defaultProps = {
-  posts: [],
+  posts: [
+    {
+      comments: []
+    }
+  ],
   history: {
     location: {
       pathname: ''
@@ -100,19 +119,11 @@ PostList.defaultProps = {
 };
 
 PostList.propTypes = {
-  posts: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      authorId: PropTypes.string.isRequired,
-      likers: PropTypes.array.isRequired,
-      likesCount: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-      timestamp: PropTypes.number.isRequired
-    })
-  ),
+  addComment: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
-  updatePostLikes: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
+  editPost: PropTypes.func.isRequired,
+  editComment: PropTypes.func.isRequired,
   getPosts: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -120,6 +131,18 @@ PostList.propTypes = {
     })
   }),
   onProfilePage: PropTypes.bool,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      authorId: PropTypes.string.isRequired,
+      comments: PropTypes.array,
+      likers: PropTypes.array.isRequired,
+      likesCount: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+      timestamp: PropTypes.number.isRequired
+    })
+  ),
+  getUser: PropTypes.func.isRequired,
   getFollowing: PropTypes.func.isRequired,
   user: PropTypes.shape({
     userId: PropTypes.string.isRequired
