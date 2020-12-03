@@ -72,13 +72,14 @@ class Header extends Component {
       email: '',
       password: ''
     };
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange = ({target}) => {
-    this.setState({ [target.name]: target.value});
+    this.setState(()=> ({ [target.name]: target.value}));
   }
+  
   //make axios call to back end
   handleSubmit = (e) => {
     console.log("hey");
@@ -122,7 +123,7 @@ class Header extends Component {
                 value={this.state.email}
                 name="email"
                 // onChange={(e)=>setUserLogin({email: e.target.value})}
-                onChange={evt => this.handleChange(evt)}
+                onChange={this.handleChange}
                 inputProps={{ 'aria-label': 'search' }}
               />
 
@@ -136,30 +137,31 @@ class Header extends Component {
                 type="password"
                 value={this.state.password}
                 // onChange={(e)=>setUserLogin({password: e.target.value})}
-                onChange={evt => this.handleChange(evt)}
+                onChange={this.handleChange}
 
                 inputProps={{ 'aria-label': 'search' }}
               />
               {/* {console.log(this.password)}
             {console.log(this.email)} */}
             </div>
-            <Button variant="contained" onSubmit={this.handleSubmit} className={classes.button}>Login</Button>
+            <Button variant="contained" onClick={this.handleSubmit} className={classes.button}>Login</Button>
           </Toolbar>
         </AppBar>
       </div>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  auth: state.authReducer
-});
-
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   signInUser: PropTypes.func.isRequired
 };
+
+const mapStateToProps = state => ({
+  auth: state.authReducer
+});
+
+
 
 const mapDispatchToProps = dispatch => ({
   signInUser: user => dispatch(loginUser(user))
