@@ -63,49 +63,46 @@ const styles = theme => ({
 });
 
 
-// const mapDispatchToProps = dispatch => ({
-//     loginUser: () => dispatch(loginUser())
-// });
-
-// const mapStateToProps = state => ({
-//   user: state.authReducer.user
-// });
 
 class Header extends Component {
-  state = {
-    email: '',
-    password: ''
-  };
-  // const { signInUser } = this.props;
 
-  // const[email, setEmail] = useState("");
-  // const[password, setPassword] = useState("");
-  // const[userLogin, setUserLogin] = useState({
-  //   email:"",
-  //   password: ""
-  // });
-  handleInputChange = (e) => {
-    const {name, value} = e.target;
-    this.setState(() => ({ [name]: value }));
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
+    // this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange = ({target}) => {
+    this.setState({ [target.name]: target.value});
+  }
   //make axios call to back end
-  submitUser = (e) => {
+  handleSubmit = (e) => {
+    console.log("hey");
     e.preventDefault();
     const { email, password } = this.state;
     const user = {
       email,
       password
     };
+    console.log(user.email);
+    console.log(user.password);
+    
     const {signInUser} = this.props;
     signInUser(user);
   };
 
+  
 
   //const classes = useStyles();
   // props
   // const { user } = this.props;
   // const { anchorEl } = this.state;
   render() {
+    
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -122,7 +119,10 @@ class Header extends Component {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                value={this.state.email}
+                name="email"
                 // onChange={(e)=>setUserLogin({email: e.target.value})}
+                onChange={evt => this.handleChange(evt)}
                 inputProps={{ 'aria-label': 'search' }}
               />
 
@@ -132,13 +132,18 @@ class Header extends Component {
                   root: classes.inputRoot,
                   input: classes.inputInput,
                 }}
+                name="password"
+                type="password"
+                value={this.state.password}
                 // onChange={(e)=>setUserLogin({password: e.target.value})}
+                onChange={evt => this.handleChange(evt)}
+
                 inputProps={{ 'aria-label': 'search' }}
               />
-              {/* {console.log(userLogin.password)}
-            {console.log(userLogin.email)} */}
+              {/* {console.log(this.password)}
+            {console.log(this.email)} */}
             </div>
-            <Button variant="contained" onSubmit={()=>null} className={classes.button}>Login</Button>
+            <Button variant="contained" onSubmit={this.handleSubmit} className={classes.button}>Login</Button>
           </Toolbar>
         </AppBar>
       </div>
