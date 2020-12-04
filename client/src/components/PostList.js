@@ -52,7 +52,8 @@ class PostList extends Component {
       user,
       onProfilePage
     } = this.props;  
-    
+    console.log("getUser", getUser);
+    console.log("user", user);
     const { following, loading } = this.state;
 
     return loading ? (

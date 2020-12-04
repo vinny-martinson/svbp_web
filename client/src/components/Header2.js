@@ -82,7 +82,7 @@ class Header2 extends Component {
 
     render() {
         let { classes, logoutUser, user } = this.props;
-        user = {"user_info": 1}
+        // user = {"user_info": 1}
         const { anchorEl } = this.state;
         return (
             <div className={classes.root}>

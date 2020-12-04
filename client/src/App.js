@@ -3,6 +3,7 @@ import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
 
 //import createHistory from 'history/createBrowserHistory';
 import { createBrowserHistory } from 'history'
+// import createHistory from 'history/createBrowserHistory';
 
 //import createHistory from 'history/createBrowserHistory';
 
@@ -42,7 +43,6 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/Feed" component={PostFeed} />
 
-        <Route exact path="/" component={MainPage} />
         <Route path="/shows/:id" component={DetailPage} />
         <Route path="/add" component={AddPage} />
         <Route path="/detail" component={DetailPage} />

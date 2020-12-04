@@ -30,6 +30,7 @@ export const registerUser = (user, history) => (dispatch) => {
  * @method
  */
 export const loginUser = user => (dispatch) => {
+  console.log("here ,========")
   axios
     .post('/api/web/users/signin', user)
     .then((res) => {
