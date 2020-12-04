@@ -1,7 +1,8 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
 
-import createHistory from 'history/createBrowserHistory';
+//import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history'
 
 //import createHistory from 'history/createBrowserHistory';
 
@@ -27,7 +28,8 @@ import AddPage from './views/AddPage';
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
 
-export const history = createHistory();
+//export const history = createHistory();
+export const history = createBrowserHistory();
 
 const App = () => {
   return (

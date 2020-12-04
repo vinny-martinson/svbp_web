@@ -15,9 +15,10 @@ import TVIcon from '../../assets/television-icon.png';
 import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
+import Footer from '../../components/Footer'
 
 import TabNav from '../../components/TabNav'; 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import SearchField from 'react-search-field';
 
 import { connect } from 'react-redux';
@@ -97,10 +98,20 @@ const useStyles = makeStyles({
     }
 });
 
+console.log('-> href ' + window.location.href)
+let token = window.location.href
+let found = token.search("#access_token=");
+console.log('-> found_token? ' + found)
+if (found != -1) {
+    token = token.split("#access_token=")[1].split("&refresh_token=")[0]
+    localStorage.setItem('spotify_token', token)
+} else { 
+    console.log("No token!");
+}
+
 
 function Home() {
     const classes = useStyles();
-
     return (
         
         <div className="App">
@@ -110,7 +121,7 @@ function Home() {
                     <img class="scale flip" src={Background} />
                 </div>
                 <div className="card">
-                    <RegisterCard />
+                    {/* <RegisterCard /> */}
                 </div>
             </div>
 
@@ -428,6 +439,7 @@ function Home() {
                 Popular reviews
         </Typography>
         <Placeholder/>
+        <Footer/>
    
         </div>
         
