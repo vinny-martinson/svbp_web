@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Home.css';
 import RegisterCard from '../../components/RegisterCard'
 import Background from '../../assets/background.jpg';
@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core/';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
-import {Button} from 'react';
+import { Button } from 'react';
 import { Grid, Paper } from '@material-ui/core/';
 import BookIcon from '../../assets/book-icon.png';
 import FilmIcon from '../../assets/film-icon.png';
@@ -17,7 +17,9 @@ import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
+import compose from 'recompose/compose';
 const theme = createMuiTheme({
     typography: {
         fontFamily: ['Montserrat'].join(','),
@@ -30,7 +32,7 @@ const theme = createMuiTheme({
     }
 });
 
-const useStyles = makeStyles({
+const styles = theme => ({
     root: {
         flexGrow: 1,
         width: "100%"
@@ -92,73 +94,80 @@ const useStyles = makeStyles({
 });
 
 
-function Home() {
-    const classes = useStyles();
+class Home extends Component {
 
-    return (
-        <div className="App">
-            <Header />
-            <div class="container">
-                <div class="crop-height flip">
-                    <img class="scale flip" src={Background} />
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <div className="App">
+                <Header />
+                <div class="container">
+                    <div class="crop-height flip">
+                        <img class="scale flip" src={Background} />
+                    </div>
+                    <div className="card">
+                        <RegisterCard />
+                    </div>
                 </div>
-                <div className="card">
-                    <RegisterCard />
-                </div>
+                <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
+                    Categories
+                </Typography>
+
+                <Grid container spacing={3} alignItems="stretch" justify="space-evenly">
+                    <Grid item xs={2}>
+                        <Paper className={classes.paper}>
+                            <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                                Books
+                         </Typography>
+                            <img class="icon scale" src={BookIcon} />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Paper className={classes.paper}>
+                            <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                                Movies
+                         </Typography>
+                            <img class="icon scale" src={FilmIcon} />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Paper className={classes.paper}>
+                            <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                                TV
+                         </Typography>
+                            <img class="icon scale" src={TVIcon} />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Paper className={classes.paper}>
+                            <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                                Podcast
+                         </Typography>
+                            <img class="icon scale" src={PodIcon} />
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Paper className={classes.paper}>
+                            <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
+                                Music
+                         </Typography>
+                            <img class="icon scale" src={MusicIcon} />
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
+                    Popular reviews
+        </Typography>
+
+                <Placeholder />
             </div>
-            <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
-                Categories
-        </Typography>
-
-            <Grid container spacing={3} alignItems="stretch" justify="space-evenly">
-                <Grid item xs={2}>
-                    <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Books
-                         </Typography>
-                        <img class="icon scale" src={BookIcon} />
-                    </Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Movies
-                         </Typography>
-                        <img class="icon scale" src={FilmIcon} />
-                    </Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            TV
-                         </Typography>
-                        <img class="icon scale" src={TVIcon} />
-                    </Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Podcast
-                         </Typography>
-                        <img class="icon scale" src={PodIcon} />
-                    </Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper}>
-                        <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                            Music
-                         </Typography>
-                        <img class="icon scale" src={MusicIcon} />
-                    </Paper>
-                </Grid>
-            </Grid>
-            <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
-                Popular reviews
-        </Typography>
-
-        <Placeholder/>
-        </div>
-    );
+        );
+    }
 }
 
-export default Home;
+
+export default compose(
+    withStyles(styles),
+)(Home);
+//export default Home;

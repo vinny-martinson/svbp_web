@@ -81,7 +81,7 @@ export class DiscoverPage extends Component {
     const { following, loading } = this.state;
 
     return loading ? (
-      <Loading />
+      <Loading /> //login
     ) : (
       <div>
         <Header2 />

@@ -155,7 +155,7 @@ class ProfilePage extends Component {
         } = this.state;
 
         return loading ? (
-            <Loading />
+            <Loading /> //login
         ) : (<div>
             {/* <NavbarContainer /> */}
             <Header2 />
