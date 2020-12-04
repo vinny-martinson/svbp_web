@@ -1,3 +1,8 @@
+/**
+ * Constant Keys.
+ * @global
+ */
+
 export default {
   db: {
     uri: 'mongodb+srv://admin:admin@cluster0.uxiab.mongodb.net/Cluster0?retryWrites=true&w=majority'

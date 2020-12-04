@@ -20,12 +20,13 @@ import reviewRouter from './routes/reviewRouter.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-//connect to database
+/** connect to database */
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => {
 	console.log(`Successfully connected to mongoose database.`)
 });
 
-//initialize app
+//
+/** initialize app */
 const app = express();
 
 //enable request logging for development debugging
@@ -70,6 +71,7 @@ app.all('/*', (req, res) => {
 	res.sendFile(path.resolve("../client/build/index.html"));
 });
 
-
+/** App PORT */
 const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => console.log(`App now listening on port ${PORT}`));

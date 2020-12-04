@@ -11,9 +11,16 @@ import {
   UPDATE_POST_LIKES
 } from './actionTypes';
 
+/** @module  */
+
 const server = axios.create({
   baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
 })
+
+/** 
+ * Get all posts
+ * @method
+ */
 
 export const getPosts = () => dispatch =>
 axios.get('/api/web/posts').then(res => 
@@ -22,7 +29,10 @@ axios.get('/api/web/posts').then(res =>
       payload: res.data
     }));
 
-
+/** 
+ * Create new post
+ * @method
+ */
 export const createPost = (text, user) => dispatch =>
   server.post('/api/web/posts', {
     text,
@@ -35,7 +45,10 @@ export const createPost = (text, user) => dispatch =>
       payload: res.data
     }));
 
-
+/** 
+ * Edit post
+ * @method
+ */
 export const editPost = (id, text, author) => dispatch =>
   server.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
     dispatch({
@@ -45,6 +58,10 @@ export const editPost = (id, text, author) => dispatch =>
       author
     }));
 
+/** 
+ * Delete post
+ * @method
+ */
 export const deletePost = id => {
   return dispatch => {
     server.delete(`/api/web/posts/${id}`).then(res =>
@@ -55,6 +72,10 @@ export const deletePost = id => {
   };
 };
 
+/** 
+ * Delete comment
+ * @method
+ */
 export const deleteComment = (action, commentId, postId) => dispatch =>
   server.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
     dispatch({
@@ -62,6 +83,10 @@ export const deleteComment = (action, commentId, postId) => dispatch =>
       payload: res.data
     }));
 
+/** 
+ * Edit comment
+ * @method
+ */   
 export const editComment = (action, commentId, postId, text) => dispatch =>
   server.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
     dispatch({
@@ -69,6 +94,10 @@ export const editComment = (action, commentId, postId, text) => dispatch =>
       payload: res.data
     }));
 
+/** 
+ * Update likes
+ * @method
+ */    
 export const updatePostLikes = (action, postId, likerId) => dispatch =>
 axios.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
     dispatch({
@@ -76,6 +105,10 @@ axios.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
       payload: res.data
     }));
 
+/** 
+ * Add comment
+ * @method
+ */      
 export const addComment = (
   action,
   commenterId,

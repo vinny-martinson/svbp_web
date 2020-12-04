@@ -7,13 +7,18 @@ import querystring from 'querystring';
 import cookieParser from 'cookie-parser';
 import request from 'request'; 
 
+/** @module  */
+
 function initMongoose() {
   mongoose.connect(config.db.uri, {useNewUrlParser: true});
   let db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
 }
 
-
+/**
+ * Generate random string for access token.
+ * @method
+ */
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -27,6 +32,14 @@ var generateRandomString = function(length) {
 var stateKey = 'spotify_auth_state';
 let authKey = 'spotify_key_code'
 
+/**
+ * Generate access token from Spotify.
+ * @method
+ * @param {string} client_id - Spotify's Developer Client ID.
+ * @param {string} scope - Permissions given by the user.
+ * @param {string} state - State of local authentication.
+ * @param {string} redirect_uri - Redirect URL after authentication.
+ */
 export const auth = async (req, res) => {
 
   var state = generateRandomString(16);
@@ -44,6 +57,13 @@ export const auth = async (req, res) => {
     }));
 };
 
+/**
+ * Return after authentication.
+ * @method
+ * @param {string} code - Spotify's Developer Client ID.
+ * @param {string} state - State of local authentication.
+ * @param {string} storedState - State of local authentication.
+ */
 export const callback = async (req, res) => {
 
   // your application requests refresh and access tokens
@@ -109,6 +129,11 @@ export const callback = async (req, res) => {
   // res.json({code})
 };
 
+/**
+ * Refresh auth token.
+ * @method
+ * @param {string} refresh_token - Spotify's Access Token.
+ */
 export const refresh_token = async (req, res) => {
 
   // requesting access token from refresh token
@@ -133,6 +158,11 @@ export const refresh_token = async (req, res) => {
   });
 };
 
+/**
+ * Return list of podcasts saved by the user.
+ * @method
+ * @param {string} code - Spotify's Access Token.
+ */
 export const podcasts = async (req, res) => {
 
   // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
@@ -155,6 +185,13 @@ export const podcasts = async (req, res) => {
   });
 };
 
+/**
+ * Search into Spotify's database.
+ * @method
+ * @param {string} code - Spotify's Access Token.
+ * @param {string} media - Media title.
+ * @param {string} type - Media type.
+ */
 export const search = async (req, res) => {
 
 
@@ -180,7 +217,11 @@ export const search = async (req, res) => {
   });
 };
 
-
+/**
+ * Returns metadata of what is currently playing in the User's devices
+ * @method
+ * @param {string} code - Spotify's Access Token.
+ */
 export const current_playing = async (req, res) => {
 
   // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
@@ -203,6 +244,11 @@ export const current_playing = async (req, res) => {
   });
 };
 
+/**
+ * Return list of playlists saved by the user.
+ * @method
+ * @param {string} code - Spotify's Access Token.
+ */
 export const playlists = async (req, res) => {
 
   // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
@@ -225,6 +271,11 @@ export const playlists = async (req, res) => {
   });
 };
 
+/**
+ * Return list of genres of Spotify.
+ * @method
+ * @param {string} code - Spotify's Access Token.
+ */
 export const genres = async (req, res) => {
 
   // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;
@@ -247,6 +298,14 @@ export const genres = async (req, res) => {
   });
 };
 
+/**
+ * Return recommendations by Spotify.
+ * @method
+ * @param {string} code - Spotify's Access Token.
+ * @param {string} seed_genres - Genres (alt-rock, jazz, etc).
+ * @param {string} seed_artists - Artist ID.
+ * @param {string} seed_tracks - Track ID.
+ */
 export const recommendations = async (req, res) => {
 
   // let authCode = req.cookies[authKey] ? req.cookies[authKey] : req.query.code;

@@ -3,11 +3,17 @@ import jwtDecode from 'jwt-decode';
 import setAuthToken from '../setAuthToken';
 import * as types from './actionTypes';
 
+/** @module  */
+
 const server = axios.create({
   baseURL: 'http://localhost:3001'
 })
 
 
+/** 
+ * Register User
+ * @method
+ */
 export const registerUser = (user, history) => (dispatch) => {
   axios
     .post('/api/web/users/signup', user)
@@ -19,6 +25,10 @@ export const registerUser = (user, history) => (dispatch) => {
     });
 };
 
+/** 
+ * Login User
+ * @method
+ */
 export const loginUser = user => (dispatch) => {
   axios
     .post('/api/web/users/signin', user)
@@ -35,11 +45,19 @@ export const loginUser = user => (dispatch) => {
     });
 };
 
+/** 
+ * Decode User
+ * @method
+ */
 export const setCurrentUser = decoded => ({
   type: types.SET_CURRENT_USER,
   payload: decoded
 });
 
+/** 
+ * Logout User
+ * @method
+ */
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('jwtToken');
   setAuthToken(false);
@@ -48,6 +66,10 @@ export const logoutUser = () => (dispatch) => {
 };
 
 
+/** 
+ * Update User
+ * @method
+ */
 export const updateCurrentUser = (
   bio,
   email,
