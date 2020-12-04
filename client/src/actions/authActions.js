@@ -7,8 +7,9 @@ const server = axios.create({
   baseURL: 'http://localhost:3001'
 })
 
+
 export const registerUser = (user, history) => (dispatch) => {
-  server
+  axios
     .post('/api/web/users/signup', user)
     .then((res) => {
       history.push('/login');
@@ -19,7 +20,7 @@ export const registerUser = (user, history) => (dispatch) => {
 };
 
 export const loginUser = user => (dispatch) => {
-  server
+  axios
     .post('/api/web/users/signin', user)
     .then((res) => {
       const { token } = res.data;
@@ -45,6 +46,7 @@ export const logoutUser = () => (dispatch) => {
   dispatch(setCurrentUser({}));
   window.location.href = '/login';
 };
+
 
 export const updateCurrentUser = (
   bio,

@@ -10,7 +10,12 @@ import podcastsRouter from './routes/podcastsRouter.js';
 import spotifyRouter from './routes/spotifyRouter.js';
 import postRouter from './routes/postsRouter.js';
 import imdbRouter from './routes/imdbRouter.js';
+
 // import mediaRouter from './routes/mediaRouter.js';
+
+
+import saveMediaRouter from './routes/saveMediaRouter.js';
+import reviewRouter from './routes/reviewRouter.js';
 
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -46,16 +51,23 @@ app.use('/api/web/users', usersRouter);
 app.use('/api/web/podcasts', podcastsRouter);
 app.use('/api/web/spotify', spotifyRouter);
 app.use('/api/web/posts', postRouter);
+
 // app.use('/api/web/media', mediaRouter);
-app.use('/api/web/imdb', imdbRouter);
+
+app.use('/api/web/save_media', saveMediaRouter);
+app.use('/api/web/reviews', reviewRouter);
 
 
-app.use(express.static('./public'))
-   .use(cors())
-   .use(cookieParser());
+// app.use(express.static('./public'))
+//    .use(cors())
+//    .use(cookieParser());
+
+app.use('/', express.static('../client/build')).use(cors()).use(cookieParser());
+app.use(express.static('../client/build')).use(cors()).use(cookieParser());
 
 app.all('/*', (req, res) => {
 	// res.status(201).json({message: "nothing here!"});
+	res.sendFile(path.resolve("../client/build/index.html"));
 });
 
 
