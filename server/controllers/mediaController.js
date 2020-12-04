@@ -3,58 +3,53 @@ import pkg from 'mongodb';
 
 const { ObjectID } = pkg.ObjectID;
 
-// mediaRouter.get('/shows', media.getAll);
-
-export const getAll = async (req, res) => {
-    const posts = await Post.find();
-    res.status(200).json(posts);
-};
-
-// mediaRouter.post('/shows', media.add);
-// mediaRouter.put('/shows', media.updateAll);
-// mediaRouter.delete('/shows', media.deleteAll);
-
-// mediaRouter.get('/shows/:id', media.getShow);
-// export const getShow = async (req, res) => {
-//     const posts = await Post.find();
-//     res.status(200).json(posts);
-// };
-
-// mediaRouter.put('/shows/:id', media.editShow);
-// mediaRouter.delete('/shows/:id', media.deleteShow);
-
-
-
-export const postPost = async (req, res) => {
-  const newPost = new Post({
-    text: req.body.text,
-    avatarColor: req.body.avatarColor || 0,
-    comments: [],
-    authorId: req.body.authorId,
-    likers: [],
-    likesCount: 0,
-    timestamp: new Date().getTime()
-  });
-
+export const addMedia = async (req, res) => {
+  console.log(req.query);
   try {
-    const post = await newPost.save();
-    return res.status(201).json(post);
+    const obj = await Media.findOne({ imdbID: req.body.imdbID });
+    if (obj) {
+      //console.log(obj);
+      res.json({ obj });
+    } else {
+      console.log("post")
+      const newMedium = new Media({
+        imdbID: req.body.imdbID,
+        title: req.body.title,
+        reviews: [],
+        likers: [],
+        likesCount: 0,
+        type: req.body.type
+      });
+    
+      try {
+        const post = await newMedium.save();
+        return res.status(201).json(post);
+      } catch (err) {
+        console.log(err);
+        return res.status(400).send(err);
+      }
+    }
   } catch (err) {
-    return res.status(400).send(err);
+    res.status(500).json({ err });
+    console.log(err)
   }
 };
 
-export const deletePost = async (req, res) => {
+export const getMedia = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const post = await Post.findById(req.params.id);
-    await post.remove();
-    return res.json({ success: true });
+    const medium = await Media.findOne({ imdbID: id });
+    if (medium) {
+      res.json({ medium });
+    } else {
+      res.status(404).json({ message: 'medium not found' });
+    }
   } catch (err) {
-    return res.status(404).send(err);
+    res.status(500).json({ err });
   }
 };
-
-export const editPost = async (req, res) => {
+export const editMedia = async (req, res) => {
   const { id } = req.params;
 
   if (!ObjectID.isValid(id)) {
@@ -63,7 +58,7 @@ export const editPost = async (req, res) => {
 
   if (req.body.action === 'like') {
     try {
-      return Post.findByIdAndUpdate(
+      return Media.findByIdAndUpdate(
         id,
         {
           $inc: { likesCount: 1 },
@@ -81,7 +76,7 @@ export const editPost = async (req, res) => {
   }
   if (req.body.action === 'unlike') {
     try {
-      return Post.findByIdAndUpdate(
+      return Media.findByIdAndUpdate(
         id,
         {
           $inc: { likesCount: -1 },
@@ -98,74 +93,8 @@ export const editPost = async (req, res) => {
     }
   }
 
-  if (req.body.action === 'addComment') {
-    try {
-      return Post.findByIdAndUpdate(
-        id,
-        {
-          $push: {
-            comments: {
-              commenterId: req.body.commenterId,
-              text: req.body.text,
-              timestamp: new Date().getTime()
-            }
-          }
-        },
-        { new: true },
-        (err, post) => {
-          if (err) return res.status(400).send(err);
-          return res.send(post);
-        }
-      );
-    } catch (err) {
-      return res.status(400).send(err);
-    }
-  }
-
-  if (req.body.action === 'deleteComment') {
-    try {
-      return Post.findByIdAndUpdate(
-        id,
-        {
-          $pull: {
-            comments: {
-              _id: req.body.commentId
-            }
-          }
-        },
-        { new: true },
-        (err, post) => {
-          if (err) return res.status(400).send(err);
-          return res.send(post);
-        }
-      );
-    } catch (err) {
-      return res.status(400).send(err);
-    }
-  }
-
-  if (req.body.action === 'editComment') {
-    try {
-      return Post.findById(id, (err, post) => {
-        const { comments } = post;
-        const theComment = comments.find(comment =>
-          comment._id.equals(req.body.commentId));
-
-        if (!theComment) return res.status(404).send('Comment not found');
-        theComment.text = req.body.text;
-
-        return post.save((error) => {
-          if (error) return res.status(500).send(error);
-          return res.status(200).send(post);
-        });
-      });
-    } catch (err) {
-      return res.status(400).send(err);
-    }
-  }
-
   try {
-    return Post.findByIdAndUpdate(
+    return Media.findByIdAndUpdate(
       id,
       { $set: { text: req.body.text } },
       { new: true },

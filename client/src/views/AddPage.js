@@ -41,7 +41,7 @@ class SearchPage extends Component {
             `http://www.omdbapi.com/?s=${val}&apikey=81c75ea2`
         );
         const result = await res.data.Search;
-        console.log(result);
+        // console.log(result);
         this.setState({ search: result, loading: false });
     };
 
@@ -83,10 +83,11 @@ class SearchPage extends Component {
                     {this.state.search ? (this.state.search.map((show) =>
                         <Grid item xs={3}>
                             <MediaCard
-                                title={show.Title}
-                                year={show.Year}
-                                poster={show.Poster}
-                                type={show.Type}
+                                // title={show.Title}
+                                // year={show.Year}
+                                // poster={show.Poster}
+                                // type={show.Type}
+                                media={show}
                             />
                         </Grid>
                     )) : console.log("empty")}

@@ -1,4 +1,7 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, ThemeProvider } from '@material-ui/core/';
@@ -12,7 +15,7 @@ import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
-
+import { addMedia } from '../actions/mediaActions';
 
 const theme = createMuiTheme({
     typography: {
@@ -39,8 +42,14 @@ const useStyles = makeStyles({
     },
 });
 
-export default function MediaCard(props) {
+
+
+function MediaCard(props) {
     const classes = useStyles();
+    const {
+        media,
+        dispatch
+    } = props;
 
     return (
         <ThemeProvider theme={theme}>
@@ -49,24 +58,52 @@ export default function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={props.poster}
-                        title={props.title}
+                        image={media.Poster}
+                        title={media.Title}
                     />
                     <CardContent>
                         <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                            {props.title} ({props.year})
+                            {media.Title} ({media.Year})
                         </Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary">
-                        {props.type}
+                        {media.Type}
                     </Button>
-                    <Button size="small" color="primary">
+                    <Link to={{
+                        pathname: '/detail',
+                        state: {
+                            media: media
+                        }
+                    }}>
+                    <Button 
+                        size="small" 
+                        color="primary" 
+                        onClick={() => {
+                            console.log("clicked");
+                            dispatch(addMedia(media));
+                        }}>
                         More...
                     </Button>
+                    </Link>
                 </CardActions> 
             </Card>
         </ThemeProvider>
     );
 }
+
+MediaCard.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    media: PropTypes.object.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+    addMedia: media => dispatch(addMedia(media)),
+});
+
+export default 
+    connect(
+        mapDispatchToProps
+    )
+(MediaCard);
