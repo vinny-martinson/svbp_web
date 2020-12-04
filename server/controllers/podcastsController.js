@@ -11,7 +11,6 @@ function initMongoose() {
   db.on('error', console.error.bind(console, 'connection error:'));
 }
 
-
 export const search = async (req, res) => {
   const search = req.body.name
   console.log(search);

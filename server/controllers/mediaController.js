@@ -1,12 +1,29 @@
-import Post from '../models/PostModel.js';
+import Media from '../models/MediaModel.js';
 import pkg from 'mongodb';
 
 const { ObjectID } = pkg.ObjectID;
 
-export const getPost = async (req, res) => {
-  const posts = await Post.find().sort({ timestamp: -1 });
-  res.status(200).json(posts);
+// mediaRouter.get('/shows', media.getAll);
+
+export const getAll = async (req, res) => {
+    const posts = await Post.find();
+    res.status(200).json(posts);
 };
+
+// mediaRouter.post('/shows', media.add);
+// mediaRouter.put('/shows', media.updateAll);
+// mediaRouter.delete('/shows', media.deleteAll);
+
+// mediaRouter.get('/shows/:id', media.getShow);
+// export const getShow = async (req, res) => {
+//     const posts = await Post.find();
+//     res.status(200).json(posts);
+// };
+
+// mediaRouter.put('/shows/:id', media.editShow);
+// mediaRouter.delete('/shows/:id', media.deleteShow);
+
+
 
 export const postPost = async (req, res) => {
   const newPost = new Post({

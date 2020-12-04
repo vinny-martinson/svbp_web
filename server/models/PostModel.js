@@ -6,16 +6,22 @@ const PostSchema = mongoose.Schema({
     trim: true,
     required: true
   },
-  author: {
-    type: String,
-    required: true
-  },
   authorId: {
     type: String,
     required: true
   },
   avatarColor: {
     type: Number,
+    required: true
+  },
+  comments: {
+    type: [
+      {
+        commenterId: String,
+        text: String,
+        timestamp: Number
+      }
+    ],
     required: true
   },
   likers: {

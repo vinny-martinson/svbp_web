@@ -58,7 +58,6 @@ export class FollowingPage extends Component {
     updateFollowing = () => {
         const { getCurrUser, userReducer } = this.props;
         // console.log("current");
-        // console.log(getCurrUser);
         // console.log("reducer");
         // console.log(userReducer);
         let idsOfUsersYouAreFollowing = [];
@@ -91,7 +90,8 @@ export class FollowingPage extends Component {
             authReducer,
             classes,
             followThisUser,
-            unfollowThisUser
+            unfollowThisUser,
+            getCurrUser
         } = this.props;
         const { followingIds, followingUsers, loading } = this.state;
         console.log(followingUsers);
@@ -114,6 +114,7 @@ export class FollowingPage extends Component {
                                                     isFollowing={followingIds.includes(user._id)}
                                                     followUser={followThisUser}
                                                     listedUser={user}
+                                                    getUser={getCurrUser}
                                                     signedInUser={authReducer.user}
                                                     unfollowUser={unfollowThisUser}
                                                 />

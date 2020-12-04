@@ -55,8 +55,6 @@ function saveMedia(result) {
   });
 
   
+
 }
-
-
-
 

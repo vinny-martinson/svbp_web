@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import * as moment from 'moment';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -15,8 +14,13 @@ import LikeIcon from '@material-ui/icons/ThumbUp';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Modal from '@material-ui/core/Modal';
-import EditPost from '../components/EditPost';
+import Collapse from '@material-ui/core/Collapse';
+import CommentIcon from '@material-ui/icons/Comment';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import Comments from './Comments';
+import classnames from 'classnames';
+import EditModal from './EditModal';
 import UserAvatar from './UserAvatar';
 
 const options = ['Edit', 'Delete'];
@@ -30,34 +34,50 @@ const styles = theme => ({
   actions: {
     display: 'flex'
   },
-  paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    top: '50%',
-    left: '50%',
-    outline: 'none',
-    transform: 'translate(-50%, -50%)'
+  expand: {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest
+    }),
+    marginLeft: 'auto',
+    [theme.breakpoints.up('sm')]: {
+      marginRight: -8
+    }
   },
-  spacing: {
-    marginBottom: '10px'
+  expandOpen: {
+    transform: 'rotate(180deg)'
   }
 });
 
 class Post extends Component {
   state = {
     anchorEl: null,
-    modalOpen: false
+    avatarColor: 18,
+    expanded: false,
+    modalOpen: false,
+    name: ''
   };
 
-  handleClick = event => {
+  componentDidMount = () => {
+    const { authorId, getUser } = this.props;
+    getUser(authorId).then((res) => {
+      this.setState({
+        avatarColor: res.payload.user.avatarColor,
+        name: res.payload.user.username
+      });
+    });
+  };
+
+  handleClick = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleExpandClick = () => {
+    this.setState(state => ({ expanded: !state.expanded }));
   };
 
   handleModalOpen = () => {
@@ -67,33 +87,37 @@ class Post extends Component {
   handleModalClose = () => {
     this.setState({ modalOpen: false });
   };
-  
+
   render() {
     const {
-      text,
       _id,
       author,
+      addComment,
+      deleteComment,
+      editComment,
       authorId,
-      avatarColor,
+      classes,
+      getUser,
+      deletePost,
+      editPost,
+      comments,
       likers,
       likesCount,
-      timestamp,
-      classes,
-      deletePost,
       signedInUserId,
-      editPost,
+      text,
+      timestamp,
       updatePostLikes
     } = this.props;
 
-    console.log(signedInUserId);
-    const { anchorEl, modalOpen } = this.state;
+
+    const { anchorEl, avatarColor, expanded, modalOpen, name } = this.state;
     const open = Boolean(anchorEl);
     const relativeTime = moment(timestamp).fromNow();
 
     return (
       <Card className={classes.card}>
         <CardHeader
-          avatar={<UserAvatar author={author} authorId={authorId} avatarColor={avatarColor}/>}
+          avatar={<UserAvatar author={name} authorId={authorId} avatarColor={avatarColor} getUser={getUser} />}
           action={
             authorId !== signedInUserId ? null : (
               <div>
@@ -116,32 +140,36 @@ class Post extends Component {
                       width: 200
                     }
                   }}
-                  >
-                    {options.map(option => (
-                      <MenuItem
-                        key={option}
-                        onClick={() =>
-                          this.handleClose() ||
+                >
+                  {options.map(option => (
+                    <MenuItem
+                      key={option}
+                      onClick={() =>
+                        this.handleClose() ||
                         (option === 'Delete' ? deletePost(_id) : null) ||
                         (option === 'Edit' ? this.handleModalOpen() : null)
-                        }
-                      >
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
-              )
+                      }
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
+            )
           }
-          title={author}
+          title={
+            <Link className={classes.link} to={`/profile/${authorId}`}>
+              {name}
+            </Link>
+          }
           subheader={relativeTime}
         />
         <CardContent>
           <Typography>{text}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-        <div>
-        <IconButton
+          <div>
+            <IconButton
               onClick={() =>
                 (likers.includes(signedInUserId)
                   ? updatePostLikes('unlike', _id, signedInUserId)
@@ -154,47 +182,65 @@ class Post extends Component {
                   likers.includes(signedInUserId) ? { color: '#3f51b5' } : null
                 }
               />
-              </IconButton>
-              {likesCount}
+            </IconButton>
+            {likesCount}
           </div>
+          <div style={{ marginLeft: '20px' }}>
+            <IconButton onClick={this.handleExpandClick}>
+              <CommentIcon />
+            </IconButton>
+            {comments.length}
+          </div>
+          <IconButton
+            className={classnames(classes.expand, {
+              [classes.expandOpen]: expanded
+            })}
+            onClick={this.handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="Show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
         </CardActions>
-        <Modal
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
-          open={modalOpen}
-          onClose={this.handleModalClose}
-        >
-          <div className={classes.paper}>
-            <Typography
-              variant="title"
-              id="modal-title"
-              className={classes.spacing}
-            >
-              Edit this post
-            </Typography>
-            <Typography variant="subheading" id="modal-description">
-              <EditPost
-                id={_id}
-                text={text}
-                author={author}
-                editPost={editPost}
-                handleModalClose={this.handleModalClose}
-              />
-            </Typography>
-          </div>
-        </Modal>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <Comments
+            editComment={editComment}
+            addComment={addComment}
+            comments={comments}
+            commenterId={signedInUserId}
+            deleteComment={deleteComment}
+            getUser={getUser}
+            postId={_id}
+            signedInUserId={signedInUserId}
+          />
+        </Collapse>
+        <EditModal
+          _id={_id}
+          editPost={editPost}
+          handleModalClose={this.handleModalClose}
+          modalOpen={modalOpen}
+          text={text}
+        />
       </Card>
     );
   }
 }
+
+Post.defaultProps = {
+  comments: []
+};
+
 Post.propTypes = {
   _id: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
+  addComment: PropTypes.func.isRequired,
+  comments: PropTypes.array,
   classes: PropTypes.object.isRequired,
-  avatarColor: PropTypes.number.isRequired,
+  deleteComment: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
   signedInUserId: PropTypes.string.isRequired,
   likers: PropTypes.array.isRequired,
   likesCount: PropTypes.number.isRequired,
+  editComment: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
   deletePost: PropTypes.func.isRequired,

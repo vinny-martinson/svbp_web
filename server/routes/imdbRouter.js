@@ -6,4 +6,6 @@ const dbRouter = express.Router();
 
 dbRouter.get('/search', imdb.search)
 
+
 export default dbRouter;
+
