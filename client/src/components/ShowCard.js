@@ -1,65 +1,72 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import { Card, ThemeProvider } from '@material-ui/core/';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-import UserAvatar from './UserAvatar';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import { createMuiTheme } from '@material-ui/core/';
+import { CssBaseline } from '@material-ui/core/';
 
-const styles = theme => ({
+import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
+
+
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: ['Montserrat'].join(','),
+        h5: {
+            "fontWeight": 700,
+        },
+        h6: {
+            "fontWeight": 400,
+        },
+    }
+});
+
+const useStyles = makeStyles({
     root: {
-        flexGrow: 1,
+        maxWidth: 345,
     },
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
+    media: {
+        height: 140,
+    },
+    title: {
+        fontSize: 14,
+        color: "#2138A0",
     },
 });
 
-class ShowCard extends Component {
-    render() {
-        const { classes } = this.props;
+export default function MediaCard(props) {
+    const classes = useStyles();
 
-        return (
-            <div className={classes.root}>
-                <Grid container spacing={3}>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>xs=6 sm=3</Paper>
-                    </Grid>
-                </Grid>
-            </div>
-        );
-    }
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Card className={classes.root}>
+                <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        image={props.poster}
+                        title={props.title}
+                    />
+                    <CardContent>
+                        <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
+                            {props.title} ({props.year})
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                <CardActions>
+                    <Button size="small" color="primary">
+                        {props.type}
+                    </Button>
+                    <Button size="small" color="primary">
+                        More...
+                    </Button>
+                </CardActions> 
+            </Card>
+        </ThemeProvider>
+    );
 }
-
-
-
-export default withStyles(styles)(ShowCard);

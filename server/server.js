@@ -9,7 +9,8 @@ import usersRouter from './routes/usersRouter.js';
 import podcastsRouter from './routes/podcastsRouter.js';
 import spotifyRouter from './routes/spotifyRouter.js';
 import postRouter from './routes/postsRouter.js';
-import mediaRouter from './routes/mediaRouter.js';
+import imdbRouter from './routes/imdbRouter.js';
+// import mediaRouter from './routes/mediaRouter.js';
 
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -45,7 +46,9 @@ app.use('/api/web/users', usersRouter);
 app.use('/api/web/podcasts', podcastsRouter);
 app.use('/api/web/spotify', spotifyRouter);
 app.use('/api/web/posts', postRouter);
-app.use('/api/web/media', mediaRouter);
+// app.use('/api/web/media', mediaRouter);
+app.use('/api/web/imdb', imdbRouter);
+
 
 app.use(express.static('./public'))
    .use(cors())

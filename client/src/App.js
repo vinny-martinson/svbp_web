@@ -37,10 +37,10 @@ const App = () => {
         <Route exact path="/Landing" component={Home} />
         <Route path="/Feed" component={PostFeed} />
 
-        <Route path="/" component={MainPage} />
+        <Route exact path="/" component={MainPage} />
         <Route path="/shows/:id" component={DetailPage} />
         <Route path="/add" component={AddPage} />
-
+        <Route path="/detail" component={DetailPage} />
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/profile/:id" component={ProfilePage} />
