@@ -6,10 +6,16 @@ import {
   GET_COMMENTS
 } from './actionTypes';
 
+/** @module  */
+
 const server = axios.create({
     baseURL: 'http://localhost:3001'
   })
 
+/** 
+ * Get all comments
+ * @method
+ */
 export const getComments = postId => dispatch =>
   server.get(`/api/web/posts/${postId}`).then((res) => {
     dispatch({
@@ -18,6 +24,10 @@ export const getComments = postId => dispatch =>
     });
   });
 
+/** 
+ * Add new comment
+ * @method
+ */
 export const addComment = (postId, commenterId, text, timestamp) => dispatch =>
   server.patch(`/api/web/posts${postId}`, { commenterId, text, timestamp }).then(res =>
     dispatch({

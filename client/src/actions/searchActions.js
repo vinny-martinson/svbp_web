@@ -4,6 +4,12 @@ const server = axios.create({
   baseURL: 'http://localhost:3001'
 })
 
+/** @module  */
+
+/** 
+ * Search in IMDB
+ * @method
+ */
 export const search = (req) => dispatch =>
   server.get('/api/web/imdb/search', {params: {title: req}}).then(res =>
     dispatch({

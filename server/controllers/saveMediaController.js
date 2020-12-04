@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import request from 'request'; 
 import SaveMedia from '../models/SavedMediaModel.js';
 
+/** @module  */
 
 function initMongoose() {
   mongoose.connect(config.db.uri, { useNewUrlParser: true });
@@ -14,6 +15,13 @@ function initMongoose() {
   db.on('error', console.error.bind(console, 'connection error:'));
 }
 
+/**
+ * Save sent (POST) media into MongoDB.
+ * @method
+ * @param {string} title - The title of the media.
+ * @param {string} id - The id of the media.
+ * @param {string} type - The type of the media.
+ */
 export const save = async (req, res) => {
 
   let title = req.body.title;
