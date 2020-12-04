@@ -34,7 +34,7 @@ axios.get('/api/web/posts').then(res =>
  * @method
  */
 export const createPost = (text, user) => dispatch =>
-  server.post('/api/web/posts', {
+  axios.post('/api/web/posts', {
     text,
     author: user.user_info.username,
     authorId: user.user_info.id,
@@ -50,7 +50,7 @@ export const createPost = (text, user) => dispatch =>
  * @method
  */
 export const editPost = (id, text, author) => dispatch =>
-  server.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
+  axios.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
     dispatch({
       type: EDIT_POST,
       id,
@@ -64,7 +64,7 @@ export const editPost = (id, text, author) => dispatch =>
  */
 export const deletePost = id => {
   return dispatch => {
-    server.delete(`/api/web/posts/${id}`).then(res =>
+    axios.delete(`/api/web/posts/${id}`).then(res =>
       dispatch({
         type: DELETE_POST,
         id
@@ -77,7 +77,7 @@ export const deletePost = id => {
  * @method
  */
 export const deleteComment = (action, commentId, postId) => dispatch =>
-  server.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
+  axios.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
     dispatch({
       type: DELETE_COMMENT,
       payload: res.data
@@ -88,7 +88,7 @@ export const deleteComment = (action, commentId, postId) => dispatch =>
  * @method
  */   
 export const editComment = (action, commentId, postId, text) => dispatch =>
-  server.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
+  axios.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
     dispatch({
       type: EDIT_COMMENT,
       payload: res.data
@@ -116,7 +116,7 @@ export const addComment = (
   text,
   timestamp
 ) => dispatch =>
-    server
+    axios
       .patch(`/api/web/posts/${postId}`, { action, commenterId, text, timestamp })
       .then(res =>
         dispatch({

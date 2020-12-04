@@ -17,7 +17,7 @@ const server = axios.create({
  * @method
  */
 export const getComments = postId => dispatch =>
-  server.get(`/api/web/posts/${postId}`).then((res) => {
+  axios.get(`/api/web/posts/${postId}`).then((res) => {
     dispatch({
       type: GET_COMMENTS,
       payload: res.data
@@ -29,7 +29,7 @@ export const getComments = postId => dispatch =>
  * @method
  */
 export const addComment = (postId, commenterId, text, timestamp) => dispatch =>
-  server.patch(`/api/web/posts${postId}`, { commenterId, text, timestamp }).then(res =>
+  axios.patch(`/api/web/posts${postId}`, { commenterId, text, timestamp }).then(res =>
     dispatch({
       type: ADD_COMMENT,
       commenterId,

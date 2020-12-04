@@ -11,7 +11,7 @@ const server = axios.create({
  * @method
  */
 export const search = (req) => dispatch =>
-  server.get('/api/web/imdb/search', {params: {title: req}}).then(res =>
+  axios.get('/api/web/imdb/search', {params: {title: req}}).then(res =>
     dispatch({
       type: "SEARCH_OMDB",
       payload: res.data
