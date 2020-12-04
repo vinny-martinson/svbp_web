@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: server/controllers/reviewController</title>
+    <title>JSDoc: Source: server/server.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,239 +17,95 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: server/controllers/reviewController</h1>
+    <h1 class="page-title">Source: server/server.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".save"><span class="type-signature">(static) </span>save<span class="signature">(comment, media_id, username)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Saves a review.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>comment</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Review comment.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>media_id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Media ID.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>username</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">User's login credential.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_controllers_reviewController.js.html">server/controllers/reviewController.js</a>, <a href="server_controllers_reviewController.js.html#line29">line 29</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//dependencies
+import path from 'path';
+import express from 'express';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import config from './config/config.js';
+import usersRouter from './routes/usersRouter.js';
+import podcastsRouter from './routes/podcastsRouter.js';
+import spotifyRouter from './routes/spotifyRouter.js';
+import postRouter from './routes/postsRouter.js';
+import imdbRouter from './routes/imdbRouter.js';
+
+// import mediaRouter from './routes/mediaRouter.js';
+
+
+import saveMediaRouter from './routes/saveMediaRouter.js';
+import reviewRouter from './routes/reviewRouter.js';
+
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+
+/** connect to database */
+mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => {
+	console.log(`Successfully connected to mongoose database.`)
+});
+
+//
+/** initialize app */
+const app = express();
+
+//enable request logging for development debugging
+app.use(morgan('dev'));
+
+//body parsing middleware
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+
+//parses json files
+app.use(bodyParser.json());
+
+//https://enable-cors.org/server_expressjs.html
+app.use(function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "http://localhost:3001"); // update to match the domain you will make the request from
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
+app.use(cors());
+
+app.use('/api/web/users', usersRouter);
+app.use('/api/web/podcasts', podcastsRouter);
+app.use('/api/web/spotify', spotifyRouter);
+app.use('/api/web/posts', postRouter);
+
+// app.use('/api/web/media', mediaRouter);
+
+app.use('/api/web/save_media', saveMediaRouter);
+app.use('/api/web/reviews', reviewRouter);
+
+
+// app.use(express.static('./public'))
+//    .use(cors())
+//    .use(cookieParser());
+
+app.use('/', express.static('../client/build')).use(cors()).use(cookieParser());
+app.use(express.static('../client/build')).use(cors()).use(cookieParser());
+
+app.all('/*', (req, res) => {
+	// res.status(201).json({message: "nothing here!"});
+	res.sendFile(path.resolve("../client/build/index.html"));
+});
+
+/** App PORT */
+const PORT = process.env.PORT || 3001;
+
+app.listen(PORT, () => console.log(`App now listening on port ${PORT}`));
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -263,7 +119,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Dec 03 2020 23:59:40 GMT-0500 (Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Dec 03 2020 23:59:39 GMT-0500 (Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
