@@ -19,6 +19,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
 import SettingsPage from './views/SettingsPage';
+import SpotifyPage from './views/SpotifyPage';
 import FollowingPage from './views/FollowingPage';
 
 import MainPage from './views/MainPage';
@@ -38,7 +39,7 @@ const App = () => {
         <Router history={history}>
 
       <Switch>
-        <Route exact path="/Landing" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route path="/Feed" component={PostFeed} />
 
         <Route exact path="/" component={MainPage} />
@@ -50,6 +51,7 @@ const App = () => {
         <Route path="/profile/:id" component={ProfilePage} />
         <Route path="/following" component={FollowingPage} />
         <Route path="/discover" component={DiscoverPage} />
+        <Route path="/spotify" component={SpotifyPage} />
         <Route path="/settings" component={SettingsPage} />
         <Route component={NotFound}/>
       </Switch>

@@ -103,6 +103,7 @@ let token = window.location.href
 let found = token.search("#access_token=");
 console.log('-> found_token? ' + found)
 if (found != -1) {
+    console.log("SAVED!")
     token = token.split("#access_token=")[1].split("&refresh_token=")[0]
     localStorage.setItem('spotify_token', token)
 } else { 
@@ -121,16 +122,16 @@ function Home() {
                     <img class="scale flip" src={Background} />
                 </div>
                 <div className="card">
-                    {/* <RegisterCard /> */}
+                    <RegisterCard />
                 </div>
             </div>
-
-            <SearchField
+            <br/>
+            {/* <SearchField
             placeholder="Search..."
             //onChange={onChange}
             searchText="Search for Books, Tv shows, Podcasts, Movies, or Music"
             classNames="test-class"
-            />
+            /> */}
 
             <TabNav> 
        <div label="Music"> 
@@ -438,9 +439,10 @@ function Home() {
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
         </Typography>
-        <Placeholder/>
+
         <Footer/>
-   
+        <Placeholder/>
+
         </div>
         
     );

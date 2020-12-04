@@ -10,10 +10,14 @@ import Background from '../assets/background.jpg';
 import { logoutUser } from '../actions/authActions';
 import Header2 from '../components/Header2';
 import axios from 'axios';
+import Footer from '../components/Footer'
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    width: "500px",
+    height: "50px",
+    fontSize: "15px"
   },
   container: {
     alignItems: 'center',
@@ -31,9 +35,6 @@ const styles = theme => ({
   }
 });
 
-const spotify_token = async val => {
-  
-};
 
 const SettingsPage = ({ classes, logout }) => (
   <div>
@@ -58,11 +59,11 @@ const SettingsPage = ({ classes, logout }) => (
         variant="contained"
         color="primary"
         className={classes.button}
-        onClick="http://localhost:3001/api/web/spotify/auth"
       >
         Connect to Spotify
       </Button>
     </Paper>
+    <Footer/>
   </div>
 );
 
