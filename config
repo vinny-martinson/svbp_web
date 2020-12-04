@@ -1,0 +1,8 @@
+OUTPUT_DIRECTORY = "/Users/vinny/Desktop/senior_uf/svbp_web/Docs"
+INPUT = "/Users/vinny/Desktop/senior_uf/svbp_web/server"
+RECURSIVE = YES
+FILE_PATTERNS = *.js \ 
+*.md
+EXTENSION_MAPPING = js=Javascript
+GENERATE_LATEX = NO
+EXCLUDE_PATTERNS = */node_modules/*

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
 
-import createHistory from 'history/createBrowserHistory';
+//import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history'
 
 //import createHistory from 'history/createBrowserHistory';
 
@@ -18,6 +19,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
 import SettingsPage from './views/SettingsPage';
+import SpotifyPage from './views/SpotifyPage';
 import FollowingPage from './views/FollowingPage';
 
 import MainPage from './views/MainPage';
@@ -27,7 +29,8 @@ import AddPage from './views/AddPage';
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
 
-export const history = createHistory();
+//export const history = createHistory();
+export const history = createBrowserHistory();
 
 const App = () => {
   return (
@@ -36,7 +39,7 @@ const App = () => {
         <Router history={history}>
 
       <Switch>
-        <Route exact path="/Landing" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route path="/Feed" component={PostFeed} />
 
         <Route exact path="/" component={MainPage} />
@@ -48,6 +51,7 @@ const App = () => {
         <Route path="/profile/:id" component={ProfilePage} />
         <Route path="/following" component={FollowingPage} />
         <Route path="/discover" component={DiscoverPage} />
+        <Route path="/spotify" component={SpotifyPage} />
         <Route path="/settings" component={SettingsPage} />
         <Route component={NotFound}/>
       </Switch>

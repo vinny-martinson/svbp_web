@@ -3,9 +3,12 @@ import express from 'express';
 import validateToken from '../utils/auth.js';
 const mediaRouter = express.Router();
 
+/** @module */
+
 //logon routes
 mediaRouter.get('/get/:id', media.getMedia);
 mediaRouter.post('/get', media.addMedia);
 
 
+/** Routing /shows | /shows/:id */
 export default mediaRouter;

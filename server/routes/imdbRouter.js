@@ -4,8 +4,11 @@ import validateToken from '../utils/auth.js';
 const dbRouter = express.Router();
 
 
+/** @module */
+
+
 dbRouter.get('/search', imdb.search)
 
-
+/** /search - GET */
 export default dbRouter;
 
