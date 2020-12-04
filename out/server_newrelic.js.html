@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: server/models/PostModel.js</title>
+    <title>JSDoc: Source: server/newrelic.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: server/models/PostModel.js</h1>
+    <h1 class="page-title">Source: server/newrelic.js</h1>
 
     
 
@@ -26,49 +26,76 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import mongoose from 'mongoose';
-
+            <pre class="prettyprint source linenums"><code>'use strict'
 /**
- * Post Database Schema.
- * @global
+ * New Relic agent configuration.
+ *
+ * See lib/config/default.js in the agent distribution for a more complete
+ * description of configuration variables and their potential values.
  */
-const PostSchema = mongoose.Schema({
-  text: {
-    type: String,
-    trim: true,
-    required: true
+exports.config = {
+  /**
+   * Array of application names.
+   */
+  app_name: ['meedien'],
+  /**
+   * Your New Relic license key.
+   */
+  license_key: '9d6151507d78ceb9ce46e4e89292f94aff9aNRAL',
+  /**
+   * This setting controls distributed tracing.
+   * Distributed tracing lets you see the path that a request takes through your
+   * distributed system. Enabling distributed tracing changes the behavior of some
+   * New Relic features, so carefully consult the transition guide before you enable
+   * this feature: https://docs.newrelic.com/docs/transition-guide-distributed-tracing
+   * Default is true.
+   */
+  distributed_tracing: {
+    /**
+     * Enables/disables distributed tracing.
+     *
+     * @env NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+     */
+    enabled: true
   },
-  authorId: {
-    type: String,
-    required: true
+  logging: {
+    /**
+     * Level at which to log. 'trace' is most useful to New Relic when diagnosing
+     * issues with the agent, 'info' and higher will impose the least overhead on
+     * production applications.
+     */
+    level: 'info'
   },
-  avatarColor: {
-    type: Number,
-    required: true
-  },
-  comments: {
-    type: [
-      {
-        commenterId: String,
-        text: String,
-        timestamp: Number
-      }
-    ],
-    required: true
-  },
-  likers: {
-    type: [String],
-  },
-  likesCount: {
-    type: Number,
-    required: true
-  },
-  timestamp: {
-    type: Number,
-    required: true
+  /**
+   * When true, all request headers except for those listed in attributes.exclude
+   * will be captured for all traces, unless otherwise specified in a destination's
+   * attributes include/exclude lists.
+   */
+  allow_all_headers: true,
+  attributes: {
+    /**
+     * Prefix of attributes to exclude from all destinations. Allows * as wildcard
+     * at end.
+     *
+     * NOTE: If excluding headers, they must be in camelCase form to be filtered.
+     *
+     * @env NEW_RELIC_ATTRIBUTES_EXCLUDE
+     */
+    exclude: [
+      'request.headers.cookie',
+      'request.headers.authorization',
+      'request.headers.proxyAuthorization',
+      'request.headers.setCookie*',
+      'request.headers.x*',
+      'response.headers.cookie',
+      'response.headers.authorization',
+      'response.headers.proxyAuthorization',
+      'response.headers.setCookie*',
+      'response.headers.x*'
+    ]
   }
-});
-export default mongoose.model('Post', PostSchema);</code></pre>
+}
+</code></pre>
         </article>
     </section>
 
