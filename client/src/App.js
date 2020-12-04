@@ -32,7 +32,9 @@ export const history = createHistory();
 const App = () => {
   return (
     <div>
+
         <Router history={history}>
+
       <Switch>
         <Route exact path="/Landing" component={Home} />
         <Route path="/Feed" component={PostFeed} />

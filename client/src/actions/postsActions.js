@@ -12,15 +12,16 @@ import {
 } from './actionTypes';
 
 const server = axios.create({
-  baseURL: 'http://localhost:3001'
+  baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
 })
 
 export const getPosts = () => dispatch =>
-  server.get('/api/web/posts').then(res =>
+axios.get('/api/web/posts').then(res => 
     dispatch({
       type: GET_POSTS,
       payload: res.data
     }));
+
 
 export const createPost = (text, user) => dispatch =>
   server.post('/api/web/posts', {
@@ -69,7 +70,7 @@ export const editComment = (action, commentId, postId, text) => dispatch =>
     }));
 
 export const updatePostLikes = (action, postId, likerId) => dispatch =>
-  server.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
+axios.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
     dispatch({
       type: UPDATE_POST_LIKES,
       payload: res.data

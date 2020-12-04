@@ -5,13 +5,14 @@ const UserSchema = mongoose.Schema({
 	email: { type: String, required: true },
 	password: { type: String, required: true },
 	bio: { type: String },
-	avatarColor: { type: Number, required: true },
+	avatarColor: { type: Number, required: true, default: false },
 	is_premium: { type: Boolean, required: true, default: false },
 	followers: { type: [String] },
 	following: { type: [String] },
 	showEmail: {
 		type: Boolean,
-		required: true
+		required: true,
+		default: false
 	  },
 	likedPosts: {
 		type: [String]
