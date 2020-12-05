@@ -109,15 +109,13 @@ export const getMedia = async (req, res) => {
  */
 export const editMedia = async (req, res) => {
   const { id } = req.params;
-
-  if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
-  }
+  console.log(req.params);
+  console.log(req.body);
 
   if (req.body.action === 'like') {
     try {
-      return Media.findByIdAndUpdate(
-        id,
+      return Media.findOneAndUpdate(
+        {imdbID: id},
         {
           $inc: { likesCount: 1 },
           $addToSet: { likers: req.body.id }
@@ -134,8 +132,8 @@ export const editMedia = async (req, res) => {
   }
   if (req.body.action === 'unlike') {
     try {
-      return Media.findByIdAndUpdate(
-        id,
+      return Media.findOneAndUpdate(
+        {imdbID: id},
         {
           $inc: { likesCount: -1 },
           $pull: { likers: req.body.id }
@@ -152,8 +150,8 @@ export const editMedia = async (req, res) => {
   }
 
   try {
-    return Media.findByIdAndUpdate(
-      id,
+    return Media.Media.findOneAndUpdate(
+      {imdbID: id},
       { $set: { text: req.body.text } },
       { new: true },
       (err, post) => {

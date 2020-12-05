@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Collapse from '@material-ui/core/Collapse';
 import CommentIcon from '@material-ui/icons/Comment';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Rating from '@material-ui/lab/Rating';
 
 import Comments from './Comments';
 import classnames from 'classnames';
@@ -91,6 +92,11 @@ class Post extends Component {
   render() {
     const {
       _id,
+      reviewId,
+      reviewTitle,
+      type,
+      date,
+      rating,
       author,
       addComment,
       deleteComment,
@@ -108,8 +114,6 @@ class Post extends Component {
       timestamp,
       updatePostLikes
     } = this.props;
-
-
     const { anchorEl, avatarColor, expanded, modalOpen, name } = this.state;
     const open = Boolean(anchorEl);
     const relativeTime = moment(timestamp).fromNow();
@@ -157,15 +161,15 @@ class Post extends Component {
               </div>
             )
           }
-          title={
-            <Link className={classes.link} to={`/profile/${authorId}`}>
-              {name}
-            </Link>
-          }
+          title={((type === 'movie' || type === 'series') ?  (<Link className={classes.link} to={`/profile/${authorId}`}>
+          {name} reviewed {reviewTitle} </Link>): (<Link className={classes.link} to={`/profile/${authorId}`}>
+      {name} </Link>))}
           subheader={relativeTime}
         />
         <CardContent>
-          <Typography>{text}</Typography>
+        {rating ? (<Rating name="half-rating-read" defaultValue={rating} precision={0.5} size="small" readOnly />
+        ) : (null)}
+        <Typography>{text}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <div>
@@ -232,6 +236,7 @@ Post.defaultProps = {
 
 Post.propTypes = {
   _id: PropTypes.string.isRequired,
+  reviewId: PropTypes.string,
   addComment: PropTypes.func.isRequired,
   comments: PropTypes.array,
   classes: PropTypes.object.isRequired,
