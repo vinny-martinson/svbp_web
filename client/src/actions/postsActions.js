@@ -11,9 +11,16 @@ import {
   UPDATE_POST_LIKES
 } from './actionTypes';
 
+/** @module  */
+
 const server = axios.create({
   baseURL: 'http://localhost:3001'
 })
+
+/** 
+ * Get all posts
+ * @method
+ */
 
 export const getPosts = () => dispatch =>
   server.get('/api/web/posts').then(res =>
@@ -22,9 +29,12 @@ export const getPosts = () => dispatch =>
       payload: res.data
     }));
 
-
+/** 
+ * Create new post
+ * @method
+ */
 export const createPost = (text, user) => dispatch =>
-  server.post('/api/web/posts', {
+  axios.post('/api/web/posts', {
     text,
     author: user.user_info.username,
     authorId: user.user_info.id,
@@ -34,6 +44,7 @@ export const createPost = (text, user) => dispatch =>
       type: CREATE_POST,
       payload: res.data
     }));
+
 
 export const createReview = (text, user, date, rating, medium) => dispatch =>  {
 console.log(medium.type);
@@ -55,8 +66,14 @@ console.log(medium.reviewTitle);
     }));
   }
 
+
+/** 
+ * Edit post
+ * @method
+ */
+
 export const editPost = (id, text, author) => dispatch =>
-  server.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
+  axios.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
     dispatch({
       type: EDIT_POST,
       id,
@@ -64,9 +81,13 @@ export const editPost = (id, text, author) => dispatch =>
       author
     }));
 
+/** 
+ * Delete post
+ * @method
+ */
 export const deletePost = id => {
   return dispatch => {
-    server.delete(`/api/web/posts/${id}`).then(res =>
+    axios.delete(`/api/web/posts/${id}`).then(res =>
       dispatch({
         type: DELETE_POST,
         id
@@ -74,20 +95,32 @@ export const deletePost = id => {
   };
 };
 
+/** 
+ * Delete comment
+ * @method
+ */
 export const deleteComment = (action, commentId, postId) => dispatch =>
-  server.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
+  axios.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
     dispatch({
       type: DELETE_COMMENT,
       payload: res.data
     }));
 
+/** 
+ * Edit comment
+ * @method
+ */   
 export const editComment = (action, commentId, postId, text) => dispatch =>
-  server.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
+  axios.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
     dispatch({
       type: EDIT_COMMENT,
       payload: res.data
     }));
 
+/** 
+ * Update likes
+ * @method
+ */    
 export const updatePostLikes = (action, postId, likerId) => dispatch =>
   server.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
     dispatch({
@@ -95,6 +128,10 @@ export const updatePostLikes = (action, postId, likerId) => dispatch =>
       payload: res.data
     }));
 
+/** 
+ * Add comment
+ * @method
+ */      
 export const addComment = (
   action,
   commenterId,
@@ -102,7 +139,7 @@ export const addComment = (
   text,
   timestamp
 ) => dispatch =>
-    server
+    axios
       .patch(`/api/web/posts/${postId}`, { action, commenterId, text, timestamp })
       .then(res =>
         dispatch({

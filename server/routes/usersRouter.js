@@ -3,6 +3,8 @@ import express from 'express';
 import validateToken from '../utils/auth.js';
 const usersRouter = express.Router();
 
+/** @module */
+
 //logon routes
 usersRouter.post('/signup', users.signup);
 usersRouter.post('/signin', users.signin);

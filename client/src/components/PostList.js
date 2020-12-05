@@ -71,7 +71,8 @@ class PostList extends Component {
       onDetailPage,
       onMyActivity
     } = this.props;  
-    
+    console.log("getUser", getUser);
+    console.log("user", user);
     const { following, loading } = this.state;
 
     return loading ? (

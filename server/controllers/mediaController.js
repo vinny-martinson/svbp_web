@@ -1,8 +1,55 @@
 import Media from '../models/MediaModel.js';
 import pkg from 'mongodb';
 
+
+
 const { ObjectID } = pkg.ObjectID;
 
+// mediaRouter.get('/shows', media.getAll);
+
+/** @module  */
+/**
+ * Get all media.
+ * @method
+ * @param {string} text - Post text
+ * @param {string} avatarColor - Avatar.
+ * @param {string} comments - String comments.
+ * @param {string} authorId - Author.
+ * @param {string} likers - Who liked this post.
+ * @param {string} likesCount - Number of likes.
+ * @param {string} timestamp - Time and data.
+ * @return {string} The blended color.
+ */
+export const getAll = async (req, res) => {
+    const posts = await Post.find();
+    res.status(200).json(posts);
+};
+
+// mediaRouter.post('/shows', media.add);
+// mediaRouter.put('/shows', media.updateAll);
+// mediaRouter.delete('/shows', media.deleteAll);
+
+// mediaRouter.get('/shows/:id', media.getShow);
+// export const getShow = async (req, res) => {
+//     const posts = await Post.find();
+//     res.status(200).json(posts);
+// };
+
+// mediaRouter.put('/shows/:id', media.editShow);
+// mediaRouter.delete('/shows/:id', media.deleteShow);
+
+
+/**
+ * Creat new post.
+ * @method
+ * @param {string} text - Post text
+ * @param {string} avatarColor - Avatar.
+ * @param {string} comments - String comments.
+ * @param {string} authorId - Author.
+ * @param {string} likers - Who liked this post.
+ * @param {string} likesCount - Number of likes.
+ * @param {string} timestamp - Time and data.
+ */
 export const addMedia = async (req, res) => {
   console.log(req.query);
   try {
@@ -35,9 +82,13 @@ export const addMedia = async (req, res) => {
   }
 };
 
-export const getMedia = async (req, res) => {
-  const { id } = req.params;
 
+/**
+ * Delete post.
+ * @method
+ * @param {string} id - Post id
+ */
+export const getMedia = async (req, res) => {
   try {
     const medium = await Media.findOne({ imdbID: id });
     if (medium) {
@@ -49,6 +100,13 @@ export const getMedia = async (req, res) => {
     res.status(500).json({ err });
   }
 };
+
+/**
+ * Edit post.
+ * @method
+ * @param {string} id - Post id
+ * @param {string} action - Like, unline, add, delete.
+ */
 export const editMedia = async (req, res) => {
   const { id } = req.params;
   console.log(req.params);

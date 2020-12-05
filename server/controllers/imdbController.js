@@ -7,7 +7,13 @@ import cookieParser from 'cookie-parser';
 import request from 'request'; 
 import { title } from 'process';
 
+/** @module  */
 
+/** 
+ * Search title string in IMDB.
+ * @method
+ * @param {string} title - The title of the media.
+ */
 export const search = async (req, res) => {
 
   // http://www.omdbapi.com/?s=Avengers&apikey=81c75ea2
@@ -31,6 +37,13 @@ export const search = async (req, res) => {
   });
 };
 
+/**
+ * Save recent media into MongoDB.
+ * @method
+ * @param {string} title - The title of the media.
+ * @param {string} imdbID - The id of the media.
+ * @param {string} type - The type of the media.
+ */
 function saveMedia(result) {
 
   result.Search.forEach(m => {

@@ -8,12 +8,18 @@ import {
   UPDATE_FOLLOWING
 } from './actionTypes';
 
+/** @module  */
+
 const server = axios.create({
     baseURL: 'http://localhost:3001'
   })
 
 /* eslint-disable import/prefer-default-export */
 
+/** 
+ * Get following for a user
+ * @method
+ */
 export const getFollowing = userId => async (dispatch) => {
   const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({
@@ -23,6 +29,10 @@ export const getFollowing = userId => async (dispatch) => {
 
 };
 
+/** 
+ * Get specific User
+ * @method
+ */
 export const getUser = userId => async (dispatch) => {
   const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({
@@ -31,6 +41,10 @@ export const getUser = userId => async (dispatch) => {
   });
 };
 
+/** 
+ * Get all users
+ * @method
+ */
 export const getAllUsers = () => async (dispatch) => {
   const result = await server.get('/api/web/users');
   return dispatch({
@@ -39,6 +53,10 @@ export const getAllUsers = () => async (dispatch) => {
   });
 };
 
+/** 
+ * Follow another user
+ * @method
+ */
 export const followUser = (signedInUserId, idToFollow) => async (dispatch) => {
   console.log("signed: " + signedInUserId);
   console.log("to follow:" + idToFollow);
@@ -61,6 +79,10 @@ export const followUser = (signedInUserId, idToFollow) => async (dispatch) => {
   });
 };
 
+/** 
+ * Unfollow user
+ * @method
+ */
 export const unfollowUser = (
   signedInUserId,
   idToUnfollow
@@ -87,6 +109,10 @@ export const unfollowUser = (
   });
 };
 
+/** 
+ * Get followers for a user
+ * @method
+ */
 export const getFollowers = userId => async (dispatch) => {
   const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({

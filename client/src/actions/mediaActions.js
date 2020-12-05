@@ -12,7 +12,7 @@ const server = axios.create({
 
 export const addMedia = (med) => dispatch => {
   console.log(med)
-  server.post('/api/web/av/get', {
+  axios.post('/api/web/av/get', {
     imdbID: med.imdbID,
     title: med.Title,
     type: med.Type
@@ -24,7 +24,7 @@ export const addMedia = (med) => dispatch => {
 };
 
 export const getMedia = id => async (dispatch) => {
-  const result = await server.get(`/api/web/av/get/${id}`);
+  const result = await axios.get(`/api/web/av/get/${id}`);
   return dispatch({
     type: GET_MEDIA,
     payload: result.data

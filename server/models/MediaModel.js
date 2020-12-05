@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+/**
+ * Media Database Schema.
+ * @global
+ */
 const MediaSchema = new mongoose.Schema({
     imdbID: String,
     title: String,
