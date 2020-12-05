@@ -20,7 +20,7 @@ exports.config = {
    * distributed system. Enabling distributed tracing changes the behavior of some
    * New Relic features, so carefully consult the transition guide before you enable
    * this feature: https://docs.newrelic.com/docs/transition-guide-distributed-tracing
-   * Default is true.
+   * Default is false.
    */
   distributed_tracing: {
     /**
@@ -28,7 +28,7 @@ exports.config = {
      *
      * @env NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
      */
-    enabled: true
+    enabled: false
   },
   logging: {
     /**
