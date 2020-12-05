@@ -46,12 +46,20 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Discover" />
       </ListItem>
     </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/feed`} to="/feed">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Feed" />
+      </ListItem>
+    </Link>
   </div>
 );
 
 export const otherFolderListItems = (
   <div>
-    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/discover`} to="/settings">
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/settings`} to="/settings">
       <ListItem button>
         <ListItemIcon>
           <SettingsIcon />
