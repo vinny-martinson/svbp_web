@@ -13,9 +13,18 @@ import {
 
 /** @module  */
 
-const server = axios.create({
+let dev = 0 // dev = 1 => LOCAL
+            // dev = 0 => HEROKU
+
+let server_dev = axios.create({
   baseURL: 'http://localhost:3001'
 })
+
+let server_heroku = axios.create({
+  baseURL: ''
+})
+
+let server = (dev) ? server_dev : server_heroku
 
 /** 
  * Get all posts
@@ -34,7 +43,7 @@ export const getPosts = () => dispatch =>
  * @method
  */
 export const createPost = (text, user) => dispatch =>
-  axios.post('/api/web/posts', {
+  server.post('/api/web/posts', {
     text,
     author: user.user_info.username,
     authorId: user.user_info.id,
@@ -73,7 +82,7 @@ console.log(medium.reviewTitle);
  */
 
 export const editPost = (id, text, author) => dispatch =>
-  axios.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
+  server.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
     dispatch({
       type: EDIT_POST,
       id,
@@ -87,7 +96,7 @@ export const editPost = (id, text, author) => dispatch =>
  */
 export const deletePost = id => {
   return dispatch => {
-    axios.delete(`/api/web/posts/${id}`).then(res =>
+    server.delete(`/api/web/posts/${id}`).then(res =>
       dispatch({
         type: DELETE_POST,
         id
@@ -100,7 +109,7 @@ export const deletePost = id => {
  * @method
  */
 export const deleteComment = (action, commentId, postId) => dispatch =>
-  axios.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
+  server.patch(`/api/web/posts/${postId}`, { action, commentId }).then(res =>
     dispatch({
       type: DELETE_COMMENT,
       payload: res.data
@@ -111,7 +120,7 @@ export const deleteComment = (action, commentId, postId) => dispatch =>
  * @method
  */   
 export const editComment = (action, commentId, postId, text) => dispatch =>
-  axios.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
+  server.patch(`/api/web/posts/${postId}`, { action, commentId, text }).then(res =>
     dispatch({
       type: EDIT_COMMENT,
       payload: res.data
@@ -139,7 +148,7 @@ export const addComment = (
   text,
   timestamp
 ) => dispatch =>
-    axios
+    server
       .patch(`/api/web/posts/${postId}`, { action, commenterId, text, timestamp })
       .then(res =>
         dispatch({

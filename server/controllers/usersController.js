@@ -145,6 +145,7 @@ export const getUser = async (req, res) => {
     if (user) {
       res.json({ user });
     } else {
+      console.log(`User ${id} not found.`)
       res.status(404).json({ message: 'User not found' });
     }
   } catch (err) {

@@ -33,8 +33,15 @@
 
 .card {
     position: absolute;
-    top: 0px;
+    top: 50px;
     left: 65%;
+    z-index: 1000;
+}
+
+.about_card {
+    position: absolute;
+    top: 50px;
+    left: 5%;
     z-index: 1000;
 }
 

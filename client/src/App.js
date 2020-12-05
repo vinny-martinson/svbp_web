@@ -1,6 +1,7 @@
 import React from 'react';
-import { Router, Redirect, withRouter, BrowserRouter  } from 'react-router-dom';
-import { Route, Switch   } from 'react-router';
+import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
+
+// import createHistory from 'history/createBrowserHistory';
 
 // import createHistory from 'history/createBrowserHistory';
 import { createBrowserHistory } from 'history'
@@ -38,7 +39,6 @@ const App = () => {
     <div>
 
         <Router history={history}>
-        <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/Feed" component={PostFeed} />
@@ -55,7 +55,6 @@ const App = () => {
         <Route exact path="/settings" component={SettingsPage} />
         <Route component={NotFound}/>
       </Switch>
-      </BrowserRouter>
       </Router>
     </div>
   );

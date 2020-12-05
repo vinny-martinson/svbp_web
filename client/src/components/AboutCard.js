@@ -17,10 +17,10 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: ['Montserrat'].join(','),
     h5: {
-      "fontWeight": 800,
+      "fontWeight": 500,
     },
     h6: {
-      "fontWeight": 400,
+      "fontWeight": 200,
     },
   }
 });
@@ -31,8 +31,8 @@ const useStyles = makeStyles({
     width: "100%"
   },
   rootCard: {
-    minWidth: 275,
-    maxWidth: 275,
+    minWidth: 475,
+    maxWidth: 775,
     position: "absolute",
     alignItems: "center"
   },
@@ -42,11 +42,11 @@ const useStyles = makeStyles({
     transform: 'scale(0.8)',
   },
   title: {
-    fontSize: 32,
+    fontSize: 25,
     color: "#3E61FF",
   },
   subtitle: {
-    fontSize: 28,
+    fontSize: 15,
     color: "#828282",
   },
   inputInput: {
@@ -64,9 +64,10 @@ button: {
   background: "#FF7D63",
   borderColor: "#FFFFFF",
   borderRadius: "20px",
+  marginLeft: "-1.2em",
   alignSelf: "center",
   color: "#FFFFFF",
-  marginLeft: "7em"
+  marginLeft: "5.5em"
 },
 pos: {
   marginBottom: 12,
@@ -91,38 +92,12 @@ export default function RegisterCard() {
             <Card className={classes.rootCard}>
               <CardContent>
                 <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                  New Here?
+                  Meedien is where people connect to find the best media today.
         </Typography>
-                <Typography variant="h6" className={classes.subtitle}>
-                  {/* Create account! */}
+                <Typography variant="h6" className={classes.subtitle}> Review what is trending now.
         </Typography>
-                {/* <InputBase
-                  placeholder="Username"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-                <InputBase
-                  placeholder="Email address"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-                <InputBase
-                  placeholder="Password"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                /> */}
               </CardContent>
               <CardActions>
-                <Button size="medium" href="/signup" variant="contained" className={classes.button}>Sign Up</Button>
               </CardActions>
             </Card>
           </Grid>

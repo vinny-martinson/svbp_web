@@ -93,6 +93,26 @@ class Header2 extends Component {
                         <Typography variant="h6" className={classes.title}>
                         </Typography>
 
+                        <div className={classes.search}>
+                            <InputBase
+                            placeholder="Email address"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                            <InputBase
+                            placeholder="Password"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                        <Button variant="contained" className={classes.button}>Login</Button>
+
                         <div>
                             <Button
                                 aria-owns={anchorEl ? 'right-menu' : null}
@@ -102,6 +122,7 @@ class Header2 extends Component {
                             >
                                 {user.username}
                             </Button>
+                            
                             <Menu
                                 id="right-menu"
                                 anchorEl={anchorEl}

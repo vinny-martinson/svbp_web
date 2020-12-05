@@ -2,8 +2,9 @@ import React from 'react';
 import './Home.css';
 import '../../views/Categories.js';
 import RegisterCard from '../../components/RegisterCard'
+import AboutCard from '../../components/AboutCard'
 import Background from '../../assets/background.jpg';
-import Header from "../../components/Header"
+import Header from "../../components/Header2"
 import { Typography } from '@material-ui/core/';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
@@ -123,6 +124,9 @@ function Home() {
                 </div>
                 <div className="card">
                     <RegisterCard />
+                </div>
+                <div className="about_card">
+                    <AboutCard />
                 </div>
             </div>
             <br/>
