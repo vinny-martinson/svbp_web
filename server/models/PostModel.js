@@ -35,6 +35,21 @@ const PostSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  type: { 
+    type: String,
+  },
+  reviewId: {
+    type: String,
+  },
+  reviewTitle: {
+    type: String
+  },
+  rating: {
+    type: Number
+  },
+  date: {
+    type: Date
+  },
   timestamp: {
     type: Number,
     required: true

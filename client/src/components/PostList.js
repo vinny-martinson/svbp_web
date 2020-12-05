@@ -25,10 +25,27 @@ class PostList extends Component {
   checkPageType = (
     followingList,
     onProfilePage,
+    onDetailPage,
+    onMyActivity,
     postAuthorId,
+    reviewId,
     signedInUserId
   ) => {
-    if (onProfilePage) {
+    if (onDetailPage){
+      //console.log("onDetailPage");
+      const { medium } = this.props;
+      const reviewedID = medium.imdbID;
+      //console.log(medium.type);
+      return reviewId === reviewedID && postAuthorId !== signedInUserId;
+    }
+    else if (onMyActivity){
+      const { medium } = this.props;
+      const reviewedID = medium.imdbID;
+      //console.log(medium);
+      return reviewId === reviewedID && postAuthorId === signedInUserId;
+    }
+    else if (onProfilePage) {
+      //console.log("onProfilePage");
       const { match } = this.props;
       const userProfileId = match.params.id;
       return postAuthorId === userProfileId;
@@ -50,7 +67,9 @@ class PostList extends Component {
       history,
       updatePostLikes,
       user,
-      onProfilePage
+      onProfilePage,
+      onDetailPage,
+      onMyActivity
     } = this.props;  
     console.log("getUser", getUser);
     console.log("user", user);
@@ -65,7 +84,10 @@ class PostList extends Component {
           (this.checkPageType(
             following,
             onProfilePage,
+            onDetailPage,
+            onMyActivity,
             post.authorId,
+            post.reviewId,
             user.user_info.id,
             history
           ) ? (
@@ -80,6 +102,11 @@ class PostList extends Component {
                 likesCount={post.likesCount}
                 signedInUserId={user.user_info.id}
                 text={post.text}
+                reviewId={post.reviewId}
+                reviewTitle={post.reviewTitle}
+                type={post.type}
+                date={post.date}
+                rating={post.rating}
                 timestamp={post.timestamp}
                 addComment={(action, commenterId, postId, text, timestamp) =>
                   addComment(action, commenterId, postId, text, timestamp)
@@ -116,7 +143,9 @@ PostList.defaultProps = {
       pathname: ''
     }
   },
-  onProfilePage: false
+  onProfilePage: false,
+  onDetailPage: false,
+  onMyActivity: false
 };
 
 PostList.propTypes = {
@@ -132,12 +161,19 @@ PostList.propTypes = {
     })
   }),
   onProfilePage: PropTypes.bool,
+  onDetailPage: PropTypes.bool,
+  onMyActivity: PropTypes.bool,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       authorId: PropTypes.string.isRequired,
       comments: PropTypes.array,
       likers: PropTypes.array.isRequired,
+      reviewId: PropTypes.array,
+      reviewTitle: PropTypes.string,
+      type: PropTypes.string,
+      date: PropTypes.date,
+      rating: PropTypes.number,
       likesCount: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,
       timestamp: PropTypes.number.isRequired

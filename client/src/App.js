@@ -34,7 +34,6 @@ export const history = createBrowserHistory();
 const App = () => {
   console.log("HISTORY");
   console.log(history);
-  
   return (
     <div>
 
