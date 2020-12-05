@@ -172,7 +172,7 @@ class ProfilePage extends Component {
         e.preventDefault();
         const { updateUser, signedInUser } = this.props;
         const { bio, email, name, showEmail } = this.state;
-        updateUser(bio, email, name, signedInUser.userId, showEmail);
+        updateUser(bio, email, name, signedInUser.user_info.id, showEmail);
         this.setState({
             displayedBio: bio,
             displayedEmail: email,
@@ -200,7 +200,6 @@ class ProfilePage extends Component {
             showEmailSavedResult
         } = this.state;
 
-        //console.log(following);
 
         return loadingFollowers || loadingFollowing || loadingUser ? (
             <div>
@@ -216,7 +215,7 @@ class ProfilePage extends Component {
                     className={classes.editButton}
                     onClick={this.handleModalOpen}
                     style={{
-                        display: profileId === signedInUser.userId ? 'block' : 'none'
+                        display: profileId === signedInUser.user_info.id ? 'block' : 'none'
                     }}
                 >
                     Edit Profile
@@ -374,7 +373,7 @@ const mapDispatchToProps = dispatch => ({
     getYourFollowers: id => dispatch(getFollowers(id)),
     retrieveUser: userId => dispatch(getUser(userId)),
     updateUser: (bio, email, name, id, showEmail) =>
-    dispatch(updateCurrentUser(bio, email, name, id, showEmail))
+        dispatch(updateCurrentUser(bio, email, name, id, showEmail))
 });
 
 export default compose(

@@ -2,7 +2,8 @@ import axios from 'axios';
 
 import {
   ADD_MEDIA,
-  GET_MEDIA
+  GET_MEDIA,
+  UPDATE_MEDIA_LIKES
 } from './actionTypes';
 
 const server = axios.create({
@@ -29,3 +30,12 @@ export const getMedia = id => async (dispatch) => {
     payload: result.data
   });
 };
+
+export const updateMediaLikes = (action, postId, likerId) => dispatch =>{
+  console.log("liked");
+server.patch(`/api/web/av/edit/${postId}`, { action, id: likerId }).then(res =>
+    dispatch({
+      type: UPDATE_MEDIA_LIKES,
+      payload: res.data
+    }))
+  };

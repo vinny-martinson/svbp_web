@@ -15,14 +15,21 @@ export const postPost = async (req, res) => {
     comments: [],
     authorId: req.body.authorId,
     likers: [],
+    type: req.body.type || null,
+    reviewId: req.body.reviewId  || null,
+    reviewTitle: req.body.reviewTitle || null,
+    rating: req.body.rating  || null,
+    date: req.body.date  || null,
     likesCount: 0,
     timestamp: new Date().getTime()
   });
 
   try {
     const post = await newPost.save();
+    console.log(res);
     return res.status(201).json(post);
   } catch (err) {
+    console.log(err);
     return res.status(400).send(err);
   }
 };

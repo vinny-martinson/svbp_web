@@ -9,7 +9,7 @@ const server = axios.create({
 
 
 export const registerUser = (user, history) => (dispatch) => {
-  axios
+  server
     .post('/api/web/users/signup', user)
     .then((res) => {
       history.push('/login');
@@ -20,7 +20,7 @@ export const registerUser = (user, history) => (dispatch) => {
 };
 
 export const loginUser = user => (dispatch) => {
-  axios
+  server
     .post('/api/web/users/signin', user)
     .then((res) => {
       const { token } = res.data;
@@ -55,7 +55,7 @@ export const updateCurrentUser = (
   userId,
   showEmail
 ) => (dispatch) => {
-  server.patch(`/users/${userId}`, { bio, email, name, showEmail })
+  server.patch(`/api/web/users/${userId}`, { bio, email, name, showEmail })
     .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);

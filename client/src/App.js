@@ -30,6 +30,7 @@ import Tab from './components/Tab';
 export const history = createHistory();
 
 const App = () => {
+  console.log(history);
   return (
     <div>
 

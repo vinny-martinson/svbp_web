@@ -12,11 +12,11 @@ import {
 } from './actionTypes';
 
 const server = axios.create({
-  baseURL: 'https://meedien.herokuapp.com:' + process.env.PORT
+  baseURL: 'http://localhost:3001'
 })
 
 export const getPosts = () => dispatch =>
-axios.get('/api/web/posts').then(res => 
+  server.get('/api/web/posts').then(res =>
     dispatch({
       type: GET_POSTS,
       payload: res.data
@@ -35,6 +35,25 @@ export const createPost = (text, user) => dispatch =>
       payload: res.data
     }));
 
+export const createReview = (text, user, date, rating, medium) => dispatch =>  {
+console.log(medium.type);
+console.log(medium.reviewTitle);
+  server.post('/api/web/posts', {
+    text,
+    author: user.user_info.username,
+    authorId: user.user_info.id,
+    avatarColor: user.user_info.avatarColor,
+    date,
+    rating,
+    type: medium.type,
+    reviewId: medium.imdbID,
+    reviewTitle: medium.title
+  }).then(res =>
+    dispatch({
+      type: CREATE_POST,
+      payload: res.data
+    }));
+  }
 
 export const editPost = (id, text, author) => dispatch =>
   server.patch(`/api/web/posts/${id}`, { id, text, author }).then(res =>
@@ -70,7 +89,7 @@ export const editComment = (action, commentId, postId, text) => dispatch =>
     }));
 
 export const updatePostLikes = (action, postId, likerId) => dispatch =>
-axios.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
+  server.patch(`/api/web/posts/${postId}`, { action, id: likerId }).then(res =>
     dispatch({
       type: UPDATE_POST_LIKES,
       payload: res.data
