@@ -16,9 +16,14 @@ import TVIcon from '../../assets/television-icon.png';
 import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
+
 import TabNav from '../../components/TabNav'; 
 import { NavLink } from 'react-router-dom';
 import SearchField from 'react-search-field';
+
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 
 const theme = createMuiTheme({
     typography: {
@@ -100,6 +105,7 @@ function Home() {
     return (
         
         <div className="App">
+            <Header />
             <div class="container">
                 <div class="crop-height flip">
                     <img class="scale flip" src={Background} />

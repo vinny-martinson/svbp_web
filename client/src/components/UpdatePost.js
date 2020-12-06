@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import compose from 'recompose/compose';
-import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import { createPost } from '../actions/postsActions';
-import Button from '@material-ui/core/Button';
-
-import '../styles/CreatePost.css';
 
 const styles = theme => ({
   button: {
@@ -17,7 +13,7 @@ const styles = theme => ({
   },
   container: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -26,22 +22,23 @@ const styles = theme => ({
   }
 });
 
-export class CreatePost extends Component {
+export class UpdatePost extends Component {
   state = {
-    postText: ''
+    postText: this.props.text
   };
+
   handleChange = (e) => {
     const postText = e.target.value;
     this.setState(() => ({ postText }));
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     const { postText } = this.state;
-    const { dispatch, user } = this.props;
+    const { id, author, updatePost, handleModalClose } = this.props;
     if (!postText.trim()) return;
-    console.log(user);
-    dispatch(createPost(postText, user));
-    this.setState({ postText: '' });
+    updatePost(id, postText, author);
+    handleModalClose();
   };
 
   render() {
@@ -70,24 +67,23 @@ export class CreatePost extends Component {
           className={classes.button}
           type="submit"
         >
-          Post
+          Update
         </Button>
       </form>
     );
   }
 }
 
-CreatePost.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+UpdatePost.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  id: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  updatePost: PropTypes.func.isRequired,
+  handleModalClose: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired
 };
 
-const mapStateToProps = state => ({
-  user: state.authReducer.user
-});
-
 export default compose(
-    withStyles(styles),
-    connect(mapStateToProps)
-  )(CreatePost);
+  withStyles(styles),
+  connect()
+)(UpdatePost);

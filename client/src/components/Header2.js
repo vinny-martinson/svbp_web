@@ -107,7 +107,7 @@ class Header2 extends Component {
                                 open={Boolean(anchorEl)}
                                 onClose={this.handleClose}
                             >
-                                <Link className={classes.link} to={`/profile/${user.id}`}>
+                                <Link className={classes.link} to={`/profile/${user.user_info.id}`}>
                                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                                 </Link>
                                 <MenuItem onClick={this.handleClose}>My account</MenuItem>

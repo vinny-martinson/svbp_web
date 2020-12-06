@@ -1,31 +1,40 @@
 import Post from '../models/PostModel.js';
-import ObjectID from 'mongodb';
+import pkg from 'mongodb';
+
+const { ObjectID } = pkg.ObjectID;
 
 export const getPost = async (req, res) => {
-  Post.find().then(posts => res.json(posts));
-  };
+  const posts = await Post.find();
+  res.status(200).json(posts);
+};
 
-  export const postPost = async (req, res) => {
-    const newPost = new Post({
-      text: req.body.text,
-      author: 'no author assigned'
-    });
+export const postPost = async (req, res) => {
+  const newPost = new Post({
+    text: req.body.text,
+    author: req.body.author || 'Anonymous',
+    avatarColor: req.body.avatarColor || 0,
+    authorId: req.body.authorId,
+    timestamp: new Date().getTime()
+  });
 
-    return newPost
-    .save()
-    .then(post => res.json(post))
-    .catch(e => res.status(400).send(e));
- };
+  try {
+    const post = await newPost.save();
+    return res.status(201).json(post);
+  } catch (err) {
+    return res.status(400).send(err);
+  }
+};
 
- export const deletePost = async (req, res) => {
-  Post.findById(req.params.id)
-  .then(post =>
-    post.remove().then(() =>
-      res.json({
-        success: true
-      })))
-      .catch(e => res.status(404).send(e));
-    };
+export const deletePost = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const post = await Post.findById(req.params.id);
+    await post.remove();
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(404).send(err);
+  }
+};
 
 export const editPost = async (req, res) => {
   const { id } = req.params;
