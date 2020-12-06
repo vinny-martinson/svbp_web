@@ -5,12 +5,19 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import unirest from "unirest"
 
+/** @module  */
+
 function initMongoose() {
   mongoose.connect(config.db.uri, {useNewUrlParser: true});
   let db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
 }
 
+/**
+ * Search into ListenAPI's database.
+ * @method
+ * @param {string} name - Podcast name.
+ */
 export const search = async (req, res) => {
   const search = req.body.name
   console.log(search);

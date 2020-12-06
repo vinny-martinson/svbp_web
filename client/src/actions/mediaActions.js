@@ -6,9 +6,18 @@ import {
   UPDATE_MEDIA_LIKES
 } from './actionTypes';
 
-const server = axios.create({
+let dev = 0 // dev = 1 => LOCAL
+            // dev = 0 => HEROKU
+
+let server_dev = axios.create({
   baseURL: 'http://localhost:3001'
 })
+
+let server_heroku = axios.create({
+  baseURL: ''
+})
+
+let server = (dev) ? server_dev : server_heroku
 
 export const addMedia = (med) => dispatch => {
   console.log(med)

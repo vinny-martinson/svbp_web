@@ -71,7 +71,8 @@ function MediaCard(props) {
                     <Button size="small" color="primary">
                         {media.Type}
                     </Button>
-                    <Link to={{
+                    <Link onClick={() => window.location.href=`/detail`}
+                        to={{
                         pathname: '/detail',
                         state: {
                             media: media

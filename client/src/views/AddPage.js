@@ -60,8 +60,9 @@ class SearchPage extends Component {
     search = async val => {
 
         this.setState({ loading: true });
+        // MUST BE HTTP(S)
         const res = await axios(
-            `http://www.omdbapi.com/?s=${val}&apikey=81c75ea2`
+            `https://www.omdbapi.com/?s=${val}&apikey=81c75ea2`
         );
         const result = await res.data.Search;
         // console.log(result);

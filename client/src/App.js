@@ -1,9 +1,10 @@
 import React from 'react';
 import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
 
-import createHistory from 'history/createBrowserHistory';
+// import createHistory from 'history/createBrowserHistory';
 
-//import createHistory from 'history/createBrowserHistory';
+// import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history'
 
 import Home from "./views/Home/Home"
 import NotFound from "./views/NotFound"
@@ -18,6 +19,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
 import SettingsPage from './views/SettingsPage';
+import PodcastsPage from './views/SpotifyPodcasts';
 import FollowingPage from './views/FollowingPage';
 
 import MainPage from './views/MainPage';
@@ -29,19 +31,18 @@ import AddBookPage from './views/AddBookPage';
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
 
-export const history = createHistory();
+// export const history = createHistory();
+export const history = createBrowserHistory();
 
 const App = () => {
   return (
     <div>
 
         <Router history={history}>
-
       <Switch>
         <Route exact path="/Landing" component={Home} />
-        <Route path="/Feed" component={PostFeed} />
+        <Route path="/" component={PostFeed} />
 
-        <Route exact path="/" component={MainPage} />
         <Route path="/shows/:id" component={DetailPage} />
         <Route path="/add" component={AddPage} />
         <Route path="/books" component={AddBookPage} />
@@ -53,6 +54,7 @@ const App = () => {
         <Route path="/following" component={FollowingPage} />
         <Route path="/discover" component={DiscoverPage} />
         <Route path="/settings" component={SettingsPage} />
+        <Route exact path="/podcasts" component={PodcastsPage} />
         <Route component={NotFound}/>
       </Switch>
       </Router>

@@ -2,8 +2,9 @@ import React from 'react';
 import './Home.css';
 import '../../views/Categories.js';
 import RegisterCard from '../../components/RegisterCard'
+import AboutCard from '../../components/AboutCard'
 import Background from '../../assets/background.jpg';
-import Header from "../../components/Header"
+import Header from "../../components/Header2"
 import { Typography } from '@material-ui/core/';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
@@ -15,9 +16,10 @@ import TVIcon from '../../assets/television-icon.png';
 import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
+import Footer from '../../components/Footer'
 
 import TabNav from '../../components/TabNav'; 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import SearchField from 'react-search-field';
 
 import { connect } from 'react-redux';
@@ -97,10 +99,21 @@ const useStyles = makeStyles({
     }
 });
 
+console.log('-> href ' + window.location.href)
+let token = window.location.href
+let found = token.search("#access_token=");
+console.log('-> found_token? ' + found)
+if (found != -1) {
+    console.log("SAVED!")
+    token = token.split("#access_token=")[1].split("&refresh_token=")[0]
+    localStorage.setItem('spotify_token', token)
+} else { 
+    console.log("No token!");
+}
+
 
 function Home() {
     const classes = useStyles();
-
     return (
         
         <div className="App">
@@ -112,14 +125,17 @@ function Home() {
                 <div className="card">
                     <RegisterCard />
                 </div>
+                <div className="about_card">
+                    <AboutCard />
+                </div>
             </div>
-
-            <SearchField
+            <br/>
+            {/* <SearchField
             placeholder="Search..."
             //onChange={onChange}
             searchText="Search for Books, Tv shows, Podcasts, Movies, or Music"
             classNames="test-class"
-            />
+            /> */}
 
             <TabNav> 
        <div label="Music"> 
@@ -427,8 +443,10 @@ function Home() {
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
         </Typography>
+
+        <Footer/>
         <Placeholder/>
-   
+
         </div>
         
     );

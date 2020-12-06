@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 export const FolderListItems = ({ user }) => (
   <div>
-   <Link style={{ textDecoration: 'none' }} to="/">
+   <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/`} to="/">
       <ListItem button>
         <ListItemIcon>
           <HomeIcon />
@@ -22,7 +22,7 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Home" />
       </ListItem>
     </Link>
-    <Link style={{ textDecoration: 'none' }} to={`/profile/${user.user_info.id}`}>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/profile/${user.user_info.id}`} to={`/profile/${user.user_info.id}`}>
       <ListItem button>
         <ListItemIcon>
           <FaceIcon />
@@ -30,7 +30,7 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Profile" />
       </ListItem>
     </Link>
-    <Link style={{ textDecoration: 'none' }} to="/following">
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/following`} to="/following">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
@@ -38,7 +38,7 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Following" />
       </ListItem>
     </Link>
-    <Link style={{ textDecoration: 'none' }} to="/discover">
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/discover`} to="/discover">
       <ListItem button>
         <ListItemIcon>
           <GroupIcon />
@@ -46,12 +46,36 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Discover" />
       </ListItem>
     </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/feed`} to="/feed">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Feed" />
+      </ListItem>
+    </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/add`} to="/add">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="IMDB" />
+      </ListItem>
+    </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/podcasts`} to="/podcasts">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Podcasts" />
+      </ListItem>
+    </Link>
   </div>
 );
 
 export const otherFolderListItems = (
   <div>
-    <Link style={{ textDecoration: 'none' }} to="/settings">
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/settings`} to="/settings">
       <ListItem button>
         <ListItemIcon>
           <SettingsIcon />

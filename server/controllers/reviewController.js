@@ -7,13 +7,25 @@ import cookieParser from 'cookie-parser';
 import request from 'request'; 
 import Review from '../models/ReviewModel.js';
 
+/** @module  */
 
+/**
+ * Initializes the MongoDB for database operations.
+ * @global
+ */
 function initMongoose() {
   mongoose.connect(config.db.uri, { useNewUrlParser: true });
   let db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
 }
 
+/**
+ * Saves a review.
+ * @method
+ * @param {string} comment - Review comment.
+ * @param {string} media_id - Media ID.
+ * @param {string} username - User's login credential.
+ */
 export const save = async (req, res) => {
 
   let comment = req.body.comment;

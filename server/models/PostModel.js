@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+/**
+ * Post Database Schema.
+ * @global
+ */
 const PostSchema = mongoose.Schema({
   text: {
     type: String,

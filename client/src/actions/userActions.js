@@ -8,12 +8,27 @@ import {
   UPDATE_FOLLOWING
 } from './actionTypes';
 
-const server = axios.create({
-    baseURL: 'http://localhost:3001'
-  })
+/** @module  */
+
+let dev = 0 // dev = 1 => LOCAL
+            // dev = 0 => HEROKU
+
+let server_dev = axios.create({
+  baseURL: 'http://localhost:3001'
+})
+
+let server_heroku = axios.create({
+  baseURL: ''
+})
+
+let server = (dev) ? server_dev : server_heroku
 
 /* eslint-disable import/prefer-default-export */
 
+/** 
+ * Get following for a user
+ * @method
+ */
 export const getFollowing = userId => async (dispatch) => {
   const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({
@@ -23,6 +38,10 @@ export const getFollowing = userId => async (dispatch) => {
 
 };
 
+/** 
+ * Get specific User
+ * @method
+ */
 export const getUser = userId => async (dispatch) => {
   const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({
@@ -31,6 +50,10 @@ export const getUser = userId => async (dispatch) => {
   });
 };
 
+/** 
+ * Get all users
+ * @method
+ */
 export const getAllUsers = () => async (dispatch) => {
   const result = await server.get('/api/web/users');
   return dispatch({
@@ -39,6 +62,10 @@ export const getAllUsers = () => async (dispatch) => {
   });
 };
 
+/** 
+ * Follow another user
+ * @method
+ */
 export const followUser = (signedInUserId, idToFollow) => async (dispatch) => {
   console.log("signed: " + signedInUserId);
   console.log("to follow:" + idToFollow);
@@ -61,6 +88,10 @@ export const followUser = (signedInUserId, idToFollow) => async (dispatch) => {
   });
 };
 
+/** 
+ * Unfollow user
+ * @method
+ */
 export const unfollowUser = (
   signedInUserId,
   idToUnfollow
@@ -87,6 +118,10 @@ export const unfollowUser = (
   });
 };
 
+/** 
+ * Get followers for a user
+ * @method
+ */
 export const getFollowers = userId => async (dispatch) => {
   const result = await server.get(`/api/web/users/profile/${userId}`);
   return dispatch({

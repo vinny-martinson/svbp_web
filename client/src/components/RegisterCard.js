@@ -64,10 +64,9 @@ button: {
   background: "#FF7D63",
   borderColor: "#FFFFFF",
   borderRadius: "20px",
-  marginLeft: "1em",
   alignSelf: "center",
   color: "#FFFFFF",
-  marginLeft: "5.5em"
+  marginLeft: "7em"
 },
 pos: {
   marginBottom: 12,
@@ -95,9 +94,9 @@ export default function RegisterCard() {
                   New Here?
         </Typography>
                 <Typography variant="h6" className={classes.subtitle}>
-                  Create account!
+                  {/* Create account! */}
         </Typography>
-                <InputBase
+                {/* <InputBase
                   placeholder="Username"
                   classes={{
                     root: classes.inputRoot,
@@ -120,10 +119,10 @@ export default function RegisterCard() {
                     input: classes.inputInput,
                   }}
                   inputProps={{ 'aria-label': 'search' }}
-                />
+                /> */}
               </CardContent>
               <CardActions>
-                <Button size="medium" variant="contained" className={classes.button}>Sign Up</Button>
+                <Button size="medium" href="/signup" variant="contained" className={classes.button}>Sign Up</Button>
               </CardActions>
             </Card>
           </Grid>

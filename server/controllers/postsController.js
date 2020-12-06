@@ -3,11 +3,29 @@ import pkg from 'mongodb';
 
 const { ObjectID } = pkg.ObjectID;
 
+/** @module  */
+
+
+/**
+ * Get all posts.
+ * @method
+ */
 export const getPost = async (req, res) => {
   const posts = await Post.find().sort({ timestamp: -1 });
   res.status(200).json(posts);
 };
 
+/**
+ * Creat new post.
+ * @method
+ * @param {string} text - Post text
+ * @param {string} avatarColor - Avatar.
+ * @param {string} comments - String comments.
+ * @param {string} authorId - Author.
+ * @param {string} likers - Who liked this post.
+ * @param {string} likesCount - Number of likes.
+ * @param {string} timestamp - Time and data.
+ */
 export const postPost = async (req, res) => {
   const newPost = new Post({
     text: req.body.text,
@@ -26,7 +44,7 @@ export const postPost = async (req, res) => {
 
   try {
     const post = await newPost.save();
-    console.log(res);
+    console.log(post);
     return res.status(201).json(post);
   } catch (err) {
     console.log(err);
@@ -34,6 +52,11 @@ export const postPost = async (req, res) => {
   }
 };
 
+/**
+ * Delete post.
+ * @method
+ * @param {string} id - Post ID
+ */
 export const deletePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -44,6 +67,12 @@ export const deletePost = async (req, res) => {
   }
 };
 
+/**
+ * Edit post.
+ * @method
+ * @param {string} id - Post id
+ * @param {string} action - Like, unline, add, delete.
+ */
 export const editPost = async (req, res) => {
   const { id } = req.params;
 

@@ -89,7 +89,9 @@ class Login extends Component {
       password
     };
     const { signInUser } = this.props;
+    console.log('==>1', signInUser)
     signInUser(user);
+    console.log('==>2', user)
   };
 
   render() {
