@@ -90,13 +90,14 @@ export const addMedia = async (req, res) => {
  */
 export const getMedia = async (req, res) => {
   try {
-    const medium = await Media.findOne({ imdbID: id });
+    const medium = await Media.findOne({ imdbID: req.params.id });
     if (medium) {
       res.json({ medium });
     } else {
       res.status(404).json({ message: 'medium not found' });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ err });
   }
 };

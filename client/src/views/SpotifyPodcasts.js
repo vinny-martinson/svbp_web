@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 
-
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Header2 from '../components/Header2';
 import MediaCard from '../components/ShowSpotifyPodcastCard';
+import Button from '@material-ui/core/Button';
 
 const code = localStorage.getItem('spotify_token')
 const styles = theme => ({
@@ -20,6 +20,9 @@ const styles = theme => ({
     },
     bar: {
         margin: 1,
+    },
+    refresh_button : {
+        marginRight: "5%"
     },
     center: {
         display: "flex",
@@ -66,10 +69,18 @@ class SearchPage extends Component {
                     value={this.state.value}
                     fullWidth
                     InputAdornment="Icon"
-                    label="Search" variant="filled"
+                    label="Search Podcasts in Spotify" variant="filled"
                     onChange={e => this.onChangeHandler(e)}
                     placeholder="Search..."
                 />
+                <Button
+                    href="http://localhost:3001/api/web/spotify/auth"
+                    variant="contained"
+                    color="primary"
+                    className={classes.refresh_button}
+                >
+                    Refresh Spotify
+                </Button>
                 </div>
                 <Grid 
                     container 
@@ -77,7 +88,8 @@ class SearchPage extends Component {
                     justify="space-evenly" 
                     alignItems="stretch"
                     style= {{   
-                                marginTop: "1%"
+                                marginTop: "1%",
+                                margin: "1% !important"
                             }}
                 >
 

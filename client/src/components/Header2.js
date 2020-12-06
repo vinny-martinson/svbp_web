@@ -82,7 +82,10 @@ class Header2 extends Component {
 
     render() {
         let { classes, logoutUser, user } = this.props;
-        // user = {"user_info": 1}
+        // Dont ask me why
+        const logged_in1 = localStorage.getItem('jwtToken')
+        const logged_in2 = localStorage.getItem('user-token')
+        const logged_in3 = localStorage.getItem('user_logged')
         const { anchorEl } = this.state;
         return (
             <div className={classes.root}>
@@ -93,7 +96,35 @@ class Header2 extends Component {
                         <Typography variant="h6" className={classes.title}>
                         </Typography>
 
-                        <div className={classes.search}>
+                        
+                        { (logged_in1) ?
+                        <div>
+                            <Button
+                                aria-owns={anchorEl ? 'right-menu' : null}
+                                aria-haspopup="true"
+                                className={classes.menuButton}
+                                onClick={this.handleClick}
+                            >
+                                {`Welcome, ${user.user_info.username}!`}
+                            </Button>
+                            
+                            <Menu
+                                id="right-menu"
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={this.handleClose}
+                            >
+                                <Link className={classes.link} onClick={() => window.location.href=`/profile/${user.user_info.id}`} to={`/profile/${user.user_info.id}`}>
+                                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                                </Link>
+                                <Link className={classes.link} onClick={() => window.location.href=`/discover`} to="/discover">
+                                    <MenuItem onClick={this.handleClose}>Discover</MenuItem>
+                                </Link>
+                                <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                            </Menu>
+                        </div> : 
+                            <>
+                            <div className={classes.search}>
                             <InputBase
                             placeholder="Email address"
                             classes={{
@@ -111,33 +142,8 @@ class Header2 extends Component {
                             inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                        <Button variant="contained" className={classes.button}>Login</Button>
-
-                        <div>
-                            <Button
-                                aria-owns={anchorEl ? 'right-menu' : null}
-                                aria-haspopup="true"
-                                className={classes.menuButton}
-                                onClick={this.handleClick}
-                            >
-                                {user.username}
-                            </Button>
-                            
-                            <Menu
-                                id="right-menu"
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={this.handleClose}
-                            >
-                                <Link className={classes.link} to={`/profile/${user.user_info.id}`}>
-                                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                </Link>
-                                <Link className={classes.link} to="/discover">
-                                    <MenuItem onClick={this.handleClose}>Discover</MenuItem>
-                                </Link>
-                                <MenuItem onClick={logoutUser}>Logout</MenuItem>
-                            </Menu>
-                        </div>                    </Toolbar>
+                        <Button variant="contained" className={classes.button}>Login</Button></> }
+                        </Toolbar>
                 </AppBar>
             </div>
         );

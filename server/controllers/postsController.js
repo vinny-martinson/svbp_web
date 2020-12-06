@@ -12,7 +12,11 @@ const { ObjectID } = pkg.ObjectID;
  */
 export const getPost = async (req, res) => {
   const posts = await Post.find().sort({ timestamp: -1 });
-  res.status(200).json(posts);
+  if (posts) {
+    res.status(200).json(posts);
+  } else {
+    console.log("Error in getPosts");
+  }
 };
 
 /**
