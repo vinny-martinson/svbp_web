@@ -20,6 +20,7 @@ import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
 import SettingsPage from './views/SettingsPage';
 import PodcastsPage from './views/SpotifyPodcasts';
+import SongsPage from './views/SpotifySongs';
 import FollowingPage from './views/FollowingPage';
 
 import MainPage from './views/MainPage';
@@ -52,6 +53,7 @@ const App = () => {
         <Route exact path="/following" component={FollowingPage} />
         <Route exact path="/discover" component={DiscoverPage} />
         <Route exact path="/podcasts" component={PodcastsPage} />
+        <Route exact path="/songs" component={SongsPage} />
         <Route exact path="/settings" component={SettingsPage} />
         <Route component={NotFound}/>
       </Switch>
