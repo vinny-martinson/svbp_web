@@ -12,10 +12,25 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Header2 from '../components/Header2';
 import BookCard from '../components/BookCard';
+import { createMuiTheme } from '@material-ui/core/';
+import { CssBaseline } from '@material-ui/core/';
+import Typography from '@material-ui/core/Typography';
+import { ThemeProvider } from '@material-ui/core/';
 
-
+import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
 import Loading from '../components/Loading';
 
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: ['Montserrat'].join(','),
+        h5: {
+            "fontWeight": 800,
+        },
+        h6: {
+            "fontWeight": 400,
+        },
+    }
+});
 
 const styles = theme => ({
     root: {
@@ -27,7 +42,14 @@ const styles = theme => ({
     center: {
         display: "flex",
         alignItems: "center"
-    }
+    },
+    title: {
+        textAlign: "center",
+        marginTop: "2rem",
+        fontSize: 36,
+        color: "#2138A0",
+        left: "10%"
+    },
 });
 class SearchBookPage extends Component {
     state = {
@@ -66,7 +88,12 @@ class SearchBookPage extends Component {
         console.log(this.state.search);
         return this.state.loading ? (
             <div>
+                <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <Header2 />
+                <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
+                        {"Books"}
+                </Typography>
                 <div className={classes.center}>
                     <TextField
                         disable
@@ -84,10 +111,13 @@ class SearchBookPage extends Component {
                     />
                 </div>
                 <Loading />
-                
+                </ThemeProvider>
             </div>
+            
         ) : (
             <div>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <Header2 />
                 <div className={classes.center}>
                     <TextField
@@ -124,7 +154,9 @@ class SearchBookPage extends Component {
                     )) : console.log("empty")}
 
                 </Grid>
-            </div>);
+                </ThemeProvider>
+            </div>
+            );
     }
 }
 

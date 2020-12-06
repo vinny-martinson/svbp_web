@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 
-
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,8 +11,27 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Header2 from '../components/Header2';
 import MediaCard from '../components/ShowSpotifyPodcastCard';
+import { createMuiTheme } from '@material-ui/core/';
+import { CssBaseline } from '@material-ui/core/';
+import Typography from '@material-ui/core/Typography';
+import { ThemeProvider } from '@material-ui/core/';
 
-const code = localStorage.getItem('spotify_token')
+import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
+
+const code = localStorage.getItem('spotify_token');
+
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: ['Montserrat'].join(','),
+        h5: {
+            "fontWeight": 800,
+        },
+        h6: {
+            "fontWeight": 400,
+        },
+    }
+});
+
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -24,7 +42,14 @@ const styles = theme => ({
     center: {
         display: "flex",
         alignItems: "center"
-    }
+    },
+    title: {
+        textAlign: "center",
+        marginTop: "2rem",
+        fontSize: 36,
+        color: "#2138A0",
+        left: "10%"
+    },
 });
 class SearchPage extends Component {
     state = {
@@ -55,7 +80,12 @@ class SearchPage extends Component {
         const { classes, getSearch } = this.props;
         return (
             <div>
+                <ThemeProvider theme={theme}>
+                <CssBaseline />
                 <Header2 />
+                <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
+                        {"Music & Podcasts"}
+                </Typography>
                 <div className={classes.center}>
                 <TextField
                     style= {{   marginLeft: "3%",
@@ -94,6 +124,7 @@ class SearchPage extends Component {
                     )) : console.log("empty")}
 
                 </Grid>
+                </ThemeProvider>
             </div>
         );
     }
