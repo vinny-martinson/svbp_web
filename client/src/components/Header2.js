@@ -160,6 +160,7 @@ class Header2 extends Component {
                             <InputBase
                             onChange={(event) => this.setState({password: event.target.value})}
                             placeholder="Password"
+                            type="password"
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
