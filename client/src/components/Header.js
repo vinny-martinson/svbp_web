@@ -22,6 +22,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { UserContext } from '../Context/UserContext';
 
 //not logged in
 const styles = theme => ({
@@ -65,12 +66,15 @@ const styles = theme => ({
 
 
 class Header extends Component {
+  static contextType = UserContext;
 
+  
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      currentUser: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

@@ -89,7 +89,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = this.state;
+    const { email, password, currentUser } = this.state;
     const user = {
       email,
       password
@@ -99,7 +99,7 @@ class Login extends Component {
       signInUser(user);
       currentUser.loggedIn = true;
     } else {
-
+      console.log("User Alerady logged in");
     }
   };
 

@@ -135,7 +135,7 @@ class Home extends Component {
         return (
             <div className="App">
                
-                <Header />
+                {/* <Header /> */}
                 <div class="container">
                     <div class="crop-height flip">
                         <img class="scale flip" src={Background} />
