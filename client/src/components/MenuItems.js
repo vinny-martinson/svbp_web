@@ -66,7 +66,6 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="IMDB" />
       </ListItem>
     </Link>
-    {(spotify_active) ? 
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/podcasts`} to="/podcasts">
       <ListItem button>
         <ListItemIcon>
@@ -74,7 +73,7 @@ export const FolderListItems = ({ user }) => (
         </ListItemIcon>
         <ListItemText primary="Podcasts" />
       </ListItem>
-    </Link> : ""}
+    </Link>
   </div>
 );
 
