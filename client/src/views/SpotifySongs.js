@@ -10,29 +10,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Header2 from '../components/Header2';
-import MediaCard from '../components/ShowSpotifyPodcastCard';
-import { createMuiTheme } from '@material-ui/core/';
-import { CssBaseline } from '@material-ui/core/';
-import Typography from '@material-ui/core/Typography';
-import { ThemeProvider } from '@material-ui/core/';
-
-import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
-
-const code = localStorage.getItem('spotify_token');
-
-const theme = createMuiTheme({
-    typography: {
-        fontFamily: ['Montserrat'].join(','),
-        h5: {
-            "fontWeight": 800,
-        },
-        h6: {
-            "fontWeight": 400,
-        },
-    }
-});
+import SongCard from '../components/ShowSpotifySongCard';
 import Button from '@material-ui/core/Button';
 
+const code = localStorage.getItem('spotify_token')
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -46,14 +27,7 @@ const styles = theme => ({
     center: {
         display: "flex",
         alignItems: "center"
-    },
-    title: {
-        textAlign: "center",
-        marginTop: "2rem",
-        fontSize: 36,
-        color: "#2138A0",
-        left: "10%"
-    },
+    }
 });
 class SearchPage extends Component {
     state = {
@@ -68,9 +42,10 @@ class SearchPage extends Component {
         this.setState({ loading: true });
         // MUST BE HTTP(S)
         const res = await axios(
-            'http://localhost:3001/api/web/spotify/search?code=' + code + '&media=' + val + '&type=show'
+            'http://localhost:3001/api/web/spotify/search?code=' + code + '&media=' + val + '&type=track'
         );
-        const result = await res.data.body.shows;
+        console.log('=> tracks', res)
+        const result = await res.data.body.tracks;
         // console.log(result);
         this.setState({ search: result, loading: false });
     };
@@ -84,12 +59,7 @@ class SearchPage extends Component {
         const { classes, getSearch } = this.props;
         return (
             <div>
-                <ThemeProvider theme={theme}>
-                <CssBaseline />
                 <Header2 />
-                <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
-                        {"Music & Podcasts"}
-                </Typography>
                 <div className={classes.center}>
                 <TextField
                     style= {{   marginLeft: "3%",
@@ -100,7 +70,7 @@ class SearchPage extends Component {
                     value={this.state.value}
                     fullWidth
                     InputAdornment="Icon"
-                    label="Search Podcasts in Spotify" variant="filled"
+                    label="Search Songs in Spotify" variant="filled"
                     onChange={e => this.onChangeHandler(e)}
                     placeholder="Search..."
                 />
@@ -124,20 +94,19 @@ class SearchPage extends Component {
                             }}
                 >
 
-                    {this.state.search ? (this.state.search.items.map((show) =>
+                    {this.state.search ? (this.state.search.items.map((track) =>
                         <Grid item xs={3}>
-                            <MediaCard
+                            <SongCard
                                 // title={show.Title}
                                 // year={show.Year}
                                 // poster={show.Poster}
                                 // type={show.Type}
-                                media={show}
+                                media={track}
                             />
                         </Grid>
                     )) : console.log("empty")}
 
                 </Grid>
-                </ThemeProvider>
             </div>
         );
     }

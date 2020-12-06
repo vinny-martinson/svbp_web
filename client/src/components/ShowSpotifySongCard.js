@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
+import PodcastCover from '../assets/spotify_podcasts_cover.png';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
 import { addMedia } from '../actions/mediaActions';
@@ -58,12 +59,12 @@ function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={media.Poster}
-                        title={media.Title}
+                        image={media.album.images[0].url}
+                        title={media.name}
                     />
                     <CardContent>
                         <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                            {media.Title} ({media.Year})
+                            {`${media.name} from ${media.album.name}, by ${media.artists[0].name}`} 
                         </Typography>
                     </CardContent>
                 </CardActionArea>
@@ -71,9 +72,9 @@ function MediaCard(props) {
                     <Button size="small" color="primary">
                         {media.Type}
                     </Button>
-                    <Link onClick={() => window.location.href=`/detail?media_id=${media.imdbID}`}
+                    <Link onClick={() => window.location.href=`/detail`}
                         to={{
-                        pathname: `/detail?media_id=${media.imdbID}`,
+                        pathname: '/detail',
                         state: {
                             media: media
                         }

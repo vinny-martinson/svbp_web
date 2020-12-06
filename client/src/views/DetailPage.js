@@ -215,10 +215,12 @@ class DetailPage extends Component {
             } = this.props;
 
             this.setState({ loading: true });
-            const media = this.props.location.state.media;
+            // const media = this.props.location.state.media;
+
+            const media_id = window.location.href.split("media_id=")[1]
 
             const res = await axios(
-                `http://www.omdbapi.com/?i=${media.imdbID}&apikey=81c75ea2`
+                `http://www.omdbapi.com/?i=${media_id}&apikey=81c75ea2`
             );
             const result = await res.data;
             this.setState({ details: result });
@@ -296,7 +298,8 @@ class DetailPage extends Component {
             usuario
         } = this.props;
 
-        const media = this.props.location.state.media;
+        // const media = this.props.location.state.media;
+        const media = this.state.details;
         const {
             loading,
             medium,
@@ -309,7 +312,6 @@ class DetailPage extends Component {
         } = this.state;
 
         console.log(medium);
-
 
         return (
             loading ? (

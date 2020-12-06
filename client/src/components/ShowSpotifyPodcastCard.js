@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
+import PodcastCover from '../assets/spotify_podcasts_cover.png';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
 import { addMedia } from '../actions/mediaActions';
@@ -58,7 +59,7 @@ function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        // image={media.Poster}
+                        image={PodcastCover}
                         title={media.name}
                     />
                     <CardContent>

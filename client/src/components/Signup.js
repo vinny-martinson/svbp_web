@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { registerUser } from '../actions/authActions';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   layout: {
@@ -135,9 +136,9 @@ class Signup extends Component {
               </form>
               <Typography className={classes.footer} variant="body1">
                 {'Already have an account? '}
-                <NavLink to="/login" className={classes.link}>
+                <Link to="/login" onClick={() => window.location.href=`/login`} className={classes.link}>
                   Log In
-                </NavLink>
+                </Link>
               </Typography>
             </Paper>
           </main>

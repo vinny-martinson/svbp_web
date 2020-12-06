@@ -73,7 +73,7 @@ class UserCard extends Component {
             {listedUser.username}
           </Typography>
           <CardActions>
-            <Link className={classes.link} to={`/profile/${listedUser._id}`}>
+            <Link className={classes.link} onClick={() => window.location.href=`/profile/${listedUser._id}`} to={`/profile/${listedUser._id}`}>
               <Button size="small" color="primary">
                 View
               </Button>

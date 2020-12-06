@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { loginUser } from '../actions/authActions';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   layout: {
@@ -71,12 +72,14 @@ class Login extends Component {
   componentDidMount = () => {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/');
+      window.location.href='/'
     }
   };
 
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/');
+      window.location.href='/'
     }
   };
   /* eslint-enable react/destructuring-assignment, react/prop-types */
@@ -141,9 +144,9 @@ class Login extends Component {
             </form>
             <Typography className={classes.footer} variant="body1">
               {"Don't have an account? "}
-              <NavLink to="/signup" className={classes.link}>
+              <Link to="/signup" onClick={() => window.location.href=`/signup`} className={classes.link}>
                 Sign Up
-              </NavLink>
+              </Link>
             </Typography>
           </Paper>
         </main>

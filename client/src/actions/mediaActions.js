@@ -24,7 +24,9 @@ export const addMedia = (med) => dispatch => {
   server.post('/api/web/av/get', {
     imdbID: med.imdbID,
     title: med.Title,
-    type: med.Type
+    type: med.Type,
+    poster: med.Poster,
+    year: med.Year
   }).then(res =>
     dispatch({
       type: ADD_MEDIA,
