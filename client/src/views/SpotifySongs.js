@@ -12,6 +12,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Header2 from '../components/Header2';
 import SongCard from '../components/ShowSpotifySongCard';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const code = localStorage.getItem('spotify_token')
 const styles = theme => ({
@@ -21,7 +26,7 @@ const styles = theme => ({
     bar: {
         margin: 1,
     },
-    refresh_button : {
+    refresh_button: {
         marginRight: "5%"
     },
     center: {
@@ -34,7 +39,8 @@ class SearchPage extends Component {
         search: null,
         loading: false,
         value: '',
-        open: false
+        open: false,
+        openDialog: false
     };
 
     search = async val => {
@@ -55,64 +61,96 @@ class SearchPage extends Component {
         this.setState({ value: e.target.value });
     };
 
+    handleClose = () => {
+        this.setState( {openDialog: false} );
+    };
+
+    componentDidMount = () => {
+        if (!localStorage.spotify_token) {
+            this.setState({ openDialog: true });
+        }
+    };
+
     render() {
         const { classes, getSearch } = this.props;
-        return (
+        return (this.state.openDialog ? (
             <div>
                 <Header2 />
                 <div className={classes.center}>
-                <TextField
-                    style= {{   marginLeft: "3%",
+                    <TextField
+                        disabled
+                        style={{
+                            marginLeft: "3%",
+                            marginRight: "3%",
+                            marginTop: "1%"
+                        }}
+                        className={classes.bar}
+                        value={this.state.value}
+                        fullWidth
+                        InputAdornment="Icon"
+                        label="Search Songs in Spotify" variant="filled"
+                        onChange={e => this.onChangeHandler(e)}
+                        placeholder="Search..."
+                    />
+                </div>
+            </div>
+        ) : (
+                <div>
+                    <Header2 />
+                    <div className={classes.center}>
+                        <TextField
+                            style={{
+                                marginLeft: "3%",
                                 marginRight: "3%",
                                 marginTop: "1%"
                             }}
-                    className={classes.bar}
-                    value={this.state.value}
-                    fullWidth
-                    InputAdornment="Icon"
-                    label="Search Songs in Spotify" variant="filled"
-                    onChange={e => this.onChangeHandler(e)}
-                    placeholder="Search..."
-                />
-                <Button
-                    href="http://localhost:3001/api/web/spotify/auth"
-                    variant="contained"
-                    color="primary"
-                    className={classes.refresh_button}
-                >
-                    Refresh Spotify
+                            className={classes.bar}
+                            value={this.state.value}
+                            fullWidth
+                            InputAdornment="Icon"
+                            label="Search Songs in Spotify" variant="filled"
+                            onChange={e => this.onChangeHandler(e)}
+                            placeholder="Search..."
+                        />
+                        <Button
+                            href="http://localhost:3001/api/web/spotify/auth"
+                            variant="contained"
+                            color="primary"
+                            className={classes.refresh_button}
+                        >
+                            Refresh Spotify
                 </Button>
+                    </div>
+                    <Grid
+                        container
+                        spacing={3}
+                        justify="space-evenly"
+                        alignItems="stretch"
+                        style={{
+                            marginTop: "1%",
+                            margin: "1% !important"
+                        }}
+                    >
+
+                        {this.state.search ? (this.state.search.items.map((track) =>
+                            <Grid item xs={3}>
+                                <SongCard
+                                    // title={show.Title}
+                                    // year={show.Year}
+                                    // poster={show.Poster}
+                                    // type={show.Type}
+                                    media={track}
+                                />
+                            </Grid>
+                        )) : console.log("empty")}
+
+                    </Grid>
                 </div>
-                <Grid 
-                    container 
-                    spacing={3} 
-                    justify="space-evenly" 
-                    alignItems="stretch"
-                    style= {{   
-                                marginTop: "1%",
-                                margin: "1% !important"
-                            }}
-                >
-
-                    {this.state.search ? (this.state.search.items.map((track) =>
-                        <Grid item xs={3}>
-                            <SongCard
-                                // title={show.Title}
-                                // year={show.Year}
-                                // poster={show.Poster}
-                                // type={show.Type}
-                                media={track}
-                            />
-                        </Grid>
-                    )) : console.log("empty")}
-
-                </Grid>
-            </div>
-        );
+            ));
     }
 }
 
-SearchPage.propTypes= {
+SearchPage.propTypes = {
     classes: PropTypes.object.isRequired,
     getSearch: PropTypes.func.isRequired
 }

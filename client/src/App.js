@@ -26,6 +26,7 @@ import FollowingPage from './views/FollowingPage';
 import MainPage from './views/MainPage';
 import DetailPage from './views/DetailPage';
 import DetailBookPage from './views/DetailBookPage';
+import DetailPodcastPage from './views/DetailPodcastPage';
 import AddPage from './views/AddPage';
 import AddBookPage from './views/AddBookPage';
 
@@ -49,6 +50,7 @@ const App = () => {
         <Route exact path="/books" component={AddBookPage} />
         <Route exact path="/detail" component={DetailPage} />
         <Route exact path="/bookdetail" component={DetailBookPage} />
+        <Route exact path="/podcastdetail" component={DetailPodcastPage} />
         <Route exact path="/Login" component={Login} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/profile/:id" component={ProfilePage} />

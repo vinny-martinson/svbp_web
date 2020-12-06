@@ -16,7 +16,7 @@ import { CssBaseline } from '@material-ui/core/';
 import PodcastCover from '../assets/spotify_podcasts_cover.png';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
-import { addMedia } from '../actions/mediaActions';
+import { addPodcast } from '../actions/mediaActions';
 
 const theme = createMuiTheme({
     typography: {
@@ -59,7 +59,7 @@ function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={PodcastCover}
+                        image={media.images[0].url}
                         title={media.name}
                     />
                     <CardContent>
@@ -71,11 +71,11 @@ function MediaCard(props) {
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary">
-                        {media.Type}
+                        Podcast
                     </Button>
-                    <Link onClick={() => window.location.href=`/detail`}
+                    <Link onClick={() => window.location.href=`/podcastdetail`}
                         to={{
-                        pathname: '/detail',
+                        pathname: '/podcastdetail',
                         state: {
                             media: media
                         }
@@ -85,7 +85,7 @@ function MediaCard(props) {
                         color="primary" 
                         onClick={() => {
                             console.log("clicked");
-                            dispatch(addMedia(media));
+                            dispatch(addPodcast(media));
                         }}>
                         More...
                     </Button>
@@ -102,7 +102,7 @@ MediaCard.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    addMedia: media => dispatch(addMedia(media)),
+    addPodcast: media => dispatch(addPodcast(media)),
 });
 
 export default 
