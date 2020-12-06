@@ -116,6 +116,7 @@ export const signin = async (req, res) => {
     email
   });
   if (!user) {
+    console.log("Could not find user:", {email, password})
     return res.status(400).json({
       message: "User does not exist!"
     });

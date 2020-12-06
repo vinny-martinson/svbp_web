@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import LeftMenu from './LeftMenu';
 import { Link } from 'react-router-dom';
+import compose from 'recompose/compose';
+import { loginUser } from '../actions/authActions';
 
 //logged in
 const styles = {
@@ -59,18 +61,37 @@ const styles = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    logoutUser: () => dispatch(logoutUser())
+    logoutUser: () => dispatch(logoutUser()),
+    signInUser: user => dispatch(loginUser(user))
 });
 
 const mapStateToProps = state => ({
     user: state.authReducer.user
 });
 
+
+
 class Header2 extends Component {
 
     state = {
-        anchorEl: null
+        anchorEl: null,
+        email: '',
+        password: ''
     };
+
+    handleSubmitLogin = () => {
+        const email = this.state.email
+        const password = this.state.password
+
+        const user = {
+            email,
+            password
+        };
+        const { signInUser } = this.props;
+        console.log('==>1', signInUser)
+        signInUser(user);
+        console.log('==>2', user)
+    }
 
     handleClick = (event) => {
         this.setState({ anchorEl: event.currentTarget });
@@ -87,6 +108,8 @@ class Header2 extends Component {
         const logged_in2 = localStorage.getItem('user-token')
         const logged_in3 = localStorage.getItem('user_logged')
         const { anchorEl } = this.state;
+
+        
         return (
             <div className={classes.root}>
                 <AppBar position="static" className={classes.bar}>
@@ -126,6 +149,7 @@ class Header2 extends Component {
                             <>
                             <div className={classes.search}>
                             <InputBase
+                            onChange={(event) => this.setState({email: event.target.value})}
                             placeholder="Email address"
                             classes={{
                                 root: classes.inputRoot,
@@ -134,6 +158,7 @@ class Header2 extends Component {
                             inputProps={{ 'aria-label': 'search' }}
                             />
                             <InputBase
+                            onChange={(event) => this.setState({password: event.target.value})}
                             placeholder="Password"
                             classes={{
                                 root: classes.inputRoot,
@@ -142,7 +167,7 @@ class Header2 extends Component {
                             inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                        <Button variant="contained" className={classes.button}>Login</Button></> }
+                        <Button variant="contained" onClick={this.handleSubmitLogin} className={classes.button}>Login</Button></> }
                         </Toolbar>
                 </AppBar>
             </div>
@@ -153,7 +178,8 @@ class Header2 extends Component {
 Header2.propTypes = {
     classes: PropTypes.object.isRequired,
     logoutUser: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    signInUser: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header2));
