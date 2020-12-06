@@ -1,4 +1,5 @@
 //dependencies
+import newrelic from 'newrelic'
 import path from 'path';
 import express from 'express';
 import mongoose from 'mongoose';
@@ -9,15 +10,23 @@ import usersRouter from './routes/usersRouter.js';
 import podcastsRouter from './routes/podcastsRouter.js';
 import spotifyRouter from './routes/spotifyRouter.js';
 import postRouter from './routes/postsRouter.js';
+import imdbRouter from './routes/imdbRouter.js';
+import mediaRouter from './routes/mediaRouter.js';
+
+
+import saveMediaRouter from './routes/saveMediaRouter.js';
+import reviewRouter from './routes/reviewRouter.js';
+
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-//connect to database
+/** connect to database */
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(() => {
 	console.log(`Successfully connected to mongoose database.`)
 });
 
-//initialize app
+//
+/** initialize app */
 const app = express();
 
 //enable request logging for development debugging
@@ -43,15 +52,26 @@ app.use('/api/web/users', usersRouter);
 app.use('/api/web/podcasts', podcastsRouter);
 app.use('/api/web/spotify', spotifyRouter);
 app.use('/api/web/posts', postRouter);
+app.use('/api/web/av', mediaRouter);
+app.use('/api/web/imdb', imdbRouter);
 
-app.use(express.static('./public'))
-   .use(cors())
-   .use(cookieParser());
+app.use('/api/web/save_media', saveMediaRouter);
+app.use('/api/web/reviews', reviewRouter);
+
+
+// app.use(express.static('./public'))
+//    .use(cors())
+//    .use(cookieParser());
+
+app.use('/', express.static('../client/build')).use(cors()).use(cookieParser());
+app.use(express.static('../client/build')).use(cors()).use(cookieParser());
 
 app.all('/*', (req, res) => {
 	// res.status(201).json({message: "nothing here!"});
+	res.sendFile(path.resolve("../client/build/index.html"));
 });
 
-
+/** App PORT */
 const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => console.log(`App now listening on port ${PORT}`));
