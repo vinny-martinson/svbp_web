@@ -19,6 +19,7 @@ import Placeholder from '../../components/Placeholder'
 import TabNav from '../../components/TabNav'; 
 import { NavLink } from 'react-router-dom';
 import SearchField from 'react-search-field';
+import {Cell} from 'react-mdl';
 
 const theme = createMuiTheme({
     typography: {
@@ -108,24 +109,28 @@ function AboutUs() {
                     <RegisterCard />
                 </div>
             </div>
+            <div style={{width: '100%', margin:'auto'}}>
+                <Grid className="landing-grid">
+                <Cell col={12}>
+                    <img src="https://cdn2.iconfinder.com/data/icons/circle-avatars-1/128/050_girl_avatar_profile_woman_suit_student_officer-512.png"
+                    att="avatar"
+                    className="avatar-img"/>
+                     
+                     <div className="banner-text"><h1>About Us</h1>,</div>
+                   
 
-            <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
-                
-                <NavLink
-                        to="/Categories"
-                        activeStyle={{
-                            fontWeight: "bold",
-                            color: "red"
-                        }}
-                        >
-                        About Us
-                        </NavLink> <em> </em> 
-        </Typography>
+                    <div className="banner-text"><h1>Medieen is a webpage which facilitates users the search of podcasts, books,
+movies and tv shows where they can give recommendation to each other in a commented
+platform and where the links to access those are available</h1>,</div>
+                   
+        
+                   </Cell>
+                </Grid>
+            </div>
+           
           
                 
-                    <h1>Medieen is a webpage which facilitates users the search of podcasts, books,
-movies and tv shows where they can give recommendation to each other in a commented
-platform and where the links to access those are available</h1>,
+                    
                         
 
                         

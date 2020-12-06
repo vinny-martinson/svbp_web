@@ -118,3 +118,32 @@ img.icon{
     text-decoration: none;
     font-size: 17px;
   }
+
+  .landing-grid{
+    background: #8A2387;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F27121, #E94057, #8A2387); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+  }
+  .avatar-img{
+      height: 350px;
+      padding-top: 5em;
+  }
+  .banner-text{
+      background-color: black;
+      opacity: .8;
+      width: 75%;
+      margin: auto;
+      border-radius: 10px;
+  }
+
+  .banner-text h1{
+      font-size: 40px;
+      font-weight:bold;
+      color:white;
+  }
+  .img{
+    height: 200px;
+    padding-top: 1em;
+}
+

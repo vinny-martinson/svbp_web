@@ -16,7 +16,7 @@ import TVIcon from '../../assets/television-icon.png';
 import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
-
+import {Cell} from 'react-mdl';
 import TabNav from '../../components/TabNav'; 
 import { NavLink } from 'react-router-dom';
 import SearchField from 'react-search-field';
@@ -427,12 +427,38 @@ function Home() {
                     </Paper>
                 </Grid>
             </Grid>
+            
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
-        </Typography>
+   
+            <Cell col={12}>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/4/4c/Toy_Story_4_poster.jpg"
+                    att="avatar"
+                    className="img"/>
+                   
+                   </Cell>
+
+                   <Cell col={12}>
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Princess_Mononoke_Japanese_poster.png/220px-Princess_Mononoke_Japanese_poster.png"
+                    att="avatar"
+                    className="img"/>
+                   
+                   </Cell>
+
+                   <Cell col={12}>
+                    <img src="https://i.pinimg.com/originals/92/c8/e0/92c8e00b34fcfdeaf605a0647c21adb3.jpg"
+                    att="avatar"
+                    className="img"/>
+                   
+                   </Cell>
+               
+                      
+            </Typography>
+          
+      
 
        
-        <Placeholder/>
+       
         <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 
                 <NavLink
