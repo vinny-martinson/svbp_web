@@ -3,10 +3,26 @@ import jwtDecode from 'jwt-decode';
 import setAuthToken from '../setAuthToken';
 import * as types from './actionTypes';
 
-const server = axios.create({
-    baseURL: 'http://localhost:3001'
-  })
+/** @module  */
 
+let dev = 0 // dev = 1 => LOCAL
+            // dev = 0 => HEROKU
+
+let server_dev = axios.create({
+  baseURL: 'http://localhost:3001'
+})
+
+let server_heroku = axios.create({
+  baseURL: ''
+})
+
+let server = (dev) ? server_dev : server_heroku
+
+
+/** 
+ * Register User
+ * @method
+ */
 export const registerUser = (user, history) => (dispatch) => {
   server
     .post('/api/web/users/signup', user)
@@ -18,6 +34,10 @@ export const registerUser = (user, history) => (dispatch) => {
     });
 };
 
+/** 
+ * Login User
+ * @method
+ */
 export const loginUser = user => (dispatch) => {
   server
     .post('/api/web/users/signin', user)
@@ -34,11 +54,19 @@ export const loginUser = user => (dispatch) => {
     });
 };
 
+/** 
+ * Decode User
+ * @method
+ */
 export const setCurrentUser = decoded => ({
   type: types.SET_CURRENT_USER,
   payload: decoded
 });
 
+/** 
+ * Logout User
+ * @method
+ */
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem('jwtToken');
   setAuthToken(false);
@@ -46,18 +74,25 @@ export const logoutUser = () => (dispatch) => {
   window.location.href = '/login';
 };
 
-export const updateCurrentUser = (bio, email, name, userId) => (dispatch) => {
-  server.patch(`/users/${userId}`, { bio, email, name })
-  .then((res) => {
+
+/** 
+ * Update User
+ * @method
+ */
+export const updateCurrentUser = (
+  bio,
+  email,
+  name,
+  userId,
+  showEmail
+) => (dispatch) => {
+  server.patch(`/api/web/users/${userId}`, { bio, email, name, showEmail })
+    .then((res) => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
       setAuthToken(token);
       const decoded = jwtDecode(token);
       dispatch(setCurrentUser(decoded));
     })
-    .catch(err =>
-      dispatch({
-        type: types.GET_ERRORS,
-        payload: err.response.data
-      }));
+    .catch(err => console.log(err));
 };

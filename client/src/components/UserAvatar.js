@@ -23,8 +23,24 @@ import grey from '@material-ui/core/colors/grey';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 
 class UserAvatar extends Component {
+  state = {
+    avatarColor: 18,
+    name: ''
+  };
+
+  componentDidMount = () => {
+    const { authorId, getUser } = this.props;
+    getUser(authorId).then((res) => {
+      this.setState({
+        avatarColor: res.payload.user.avatarColor,
+        name: res.payload.user.username
+      });
+    });
+  };
+
   render() {
-    const { author, authorId, avatarColor } = this.props;
+    const { authorId } = this.props;
+    const { avatarColor, name } = this.state;
 
     const colorArr = [
         red,
@@ -51,16 +67,16 @@ class UserAvatar extends Component {
       //console.log(author + " " + authorId + " " + avatarColor);
 
       return (
-        <Link style={{ textDecoration: 'none' }} to={`/profile/${authorId}`}>
+        // <Link style={{ textDecoration: 'none' }} to={`/profile/${authorId}`}>
         <Avatar
           aria-label="Initials"
           style={{
             backgroundColor: `${colorArr[avatarColor]}`
           }}
         >
+          {name.charAt(0).toUpperCase()}
           {/* {author.charAt(0).toUpperCase()} */}
         </Avatar>
-      </Link>
     );
   }
 }
@@ -68,7 +84,8 @@ class UserAvatar extends Component {
 UserAvatar.propTypes = {
     author: PropTypes.string.isRequired,
     authorId: PropTypes.string.isRequired,
-    avatarColor: PropTypes.number.isRequired
+    avatarColor: PropTypes.number.isRequired,
+    getUser: PropTypes.func.isRequired
   };
 
 export default UserAvatar;

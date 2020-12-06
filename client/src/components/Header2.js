@@ -16,7 +16,10 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import LeftMenu from './LeftMenu';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
+=======
+>>>>>>> master
 
 //logged in
 const styles = {
@@ -52,9 +55,14 @@ const styles = {
         color: "#FFFFFF"
     },
     menuButton: {
+<<<<<<< HEAD
         background: "white",
         color: '#FF7D63',
         fontSize: '14px',
+=======
+        color: '#fff',
+        fontSize: '18px',
+>>>>>>> master
         marginRight: '-15px',
         textTransform: 'none'
     }
@@ -83,7 +91,12 @@ class Header2 extends Component {
     };
 
     render() {
+<<<<<<< HEAD
         const { classes, logoutUser, user } = this.props;
+=======
+        let { classes, logoutUser, user } = this.props;
+        // user = {"user_info": 1}
+>>>>>>> master
         const { anchorEl } = this.state;
         return (
             <div className={classes.root}>
@@ -94,6 +107,29 @@ class Header2 extends Component {
                         <Typography variant="h6" className={classes.title}>
                         </Typography>
 
+<<<<<<< HEAD
+=======
+                        <div className={classes.search}>
+                            <InputBase
+                            placeholder="Email address"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                            <InputBase
+                            placeholder="Password"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                        <Button variant="contained" className={classes.button}>Login</Button>
+
+>>>>>>> master
                         <div>
                             <Button
                                 aria-owns={anchorEl ? 'right-menu' : null}
@@ -101,9 +137,15 @@ class Header2 extends Component {
                                 className={classes.menuButton}
                                 onClick={this.handleClick}
                             >
+<<<<<<< HEAD
                                 {/* {user.username} */}
                                 {"what"}
                             </Button>
+=======
+                                {user.username}
+                            </Button>
+                            
+>>>>>>> master
                             <Menu
                                 id="right-menu"
                                 anchorEl={anchorEl}
@@ -113,11 +155,20 @@ class Header2 extends Component {
                                 <Link className={classes.link} to={`/profile/${user.user_info.id}`}>
                                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                                 </Link>
+<<<<<<< HEAD
                                 <MenuItem onClick={this.handleClose}>My account</MenuItem>
                                 <MenuItem onClick={logoutUser}>Logout</MenuItem>
                             </Menu>
                         </div>
                     </Toolbar>
+=======
+                                <Link className={classes.link} to="/discover">
+                                    <MenuItem onClick={this.handleClose}>Discover</MenuItem>
+                                </Link>
+                                <MenuItem onClick={logoutUser}>Logout</MenuItem>
+                            </Menu>
+                        </div>                    </Toolbar>
+>>>>>>> master
                 </AppBar>
             </div>
         );

@@ -15,7 +15,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { loginUser } from '../actions/authActions';
+<<<<<<< HEAD
 import { UserContext } from '../Context/UserContext';
+=======
+>>>>>>> master
 
 const styles = theme => ({
   layout: {
@@ -58,12 +61,18 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+<<<<<<< HEAD
   static contextType = UserContext;
 
   state = {
     email: '',
     password: '',
     currentUser: {}
+=======
+  state = {
+    email: '',
+    password: ''
+>>>>>>> master
   };
 
   handleInputChange = (e) => {
@@ -73,8 +82,11 @@ class Login extends Component {
 
   /* eslint-disable react/destructuring-assignment, react/prop-types */
   componentDidMount = () => {
+<<<<<<< HEAD
     const context =this.context;
     this.setState({currentUser: context.currUser});
+=======
+>>>>>>> master
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/');
     }
@@ -89,11 +101,16 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     const { email, password, currentUser } = this.state;
+=======
+    const { email, password } = this.state;
+>>>>>>> master
     const user = {
       email,
       password
     };
+<<<<<<< HEAD
     if (currentUser.loggedIn == false) {
       const { signInUser } = this.props;
       signInUser(user);
@@ -101,13 +118,23 @@ class Login extends Component {
     } else {
       console.log("User Alerady logged in");
     }
+=======
+    const { signInUser } = this.props;
+    console.log('==>1', signInUser)
+    signInUser(user);
+    console.log('==>2', user)
+>>>>>>> master
   };
 
   render() {
     const { classes } = this.props;
 
     return (
+<<<<<<< HEAD
       <React.Fragment>
+=======
+        <React.Fragment>
+>>>>>>> master
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
@@ -162,6 +189,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+<<<<<<< HEAD
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   signInUser: PropTypes.func.isRequired
@@ -182,3 +210,25 @@ export default compose(
     mapDispatchToProps
   )
 )(Login);
+=======
+    classes: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    signInUser: PropTypes.func.isRequired
+  };
+
+  const mapStateToProps = state => ({
+    auth: state.authReducer
+  });
+  
+  const mapDispatchToProps = dispatch => ({
+    signInUser: user => dispatch(loginUser(user))
+  });
+  
+  export default compose(
+    withStyles(styles),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )
+  )(Login);
+>>>>>>> master

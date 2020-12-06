@@ -62,23 +62,22 @@ const styles = theme => ({
     borderWidth: '1px',
     border: "solid",
     borderRadius: "2px",
-  },
-  inputRoot: {
-    flexGrow: 1,
-    marginBottom: "0.5em"
-  },
-  button: {
-    background: "#FF7D63",
-    borderColor: "#FFFFFF",
-    borderRadius: "20px",
-    marginLeft: "1em",
-    alignSelf: "center",
-    color: "#FFFFFF",
-    marginLeft: "5.5em"
-  },
-  pos: {
-    marginBottom: 12,
-  },
+},
+inputRoot: {
+  flexGrow: 1,
+  marginBottom: "0.5em"
+},
+button: {
+  background: "#FF7D63",
+  borderColor: "#FFFFFF",
+  borderRadius: "20px",
+  alignSelf: "center",
+  color: "#FFFFFF",
+  marginLeft: "7em"
+},
+pos: {
+  marginBottom: 12,
+},
 });
 
 

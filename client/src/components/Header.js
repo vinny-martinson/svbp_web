@@ -8,6 +8,7 @@ import { IconButton } from '@material-ui/core/';
 import { InputBase } from '@material-ui/core/';
 import MenuIcon from '@material-ui/icons/Menu';
 import Logo from '../assets/meedien.jpg';
+<<<<<<< HEAD
 import PropTypes from 'prop-types';
 import { loginUser } from '../actions/authActions';
 import { connect } from 'react-redux';
@@ -107,6 +108,44 @@ class Header extends Component {
   // const { user } = this.props;
   // const { anchorEl } = this.state;
   render() {
+=======
+//not logged in
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      width: "100%"
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    inputInput: {
+        background: "#FFFFFF",
+        borderColor: "#BDBDBD",
+        borderWidth: '1px',
+        border: "solid",
+        borderRadius: "6px",
+    },
+    inputRoot: {
+        flexGrow: 1,
+        marginLeft: "1em"
+    },
+    bar: {
+        background: '#3E61FF',
+        width: "100%"
+    },
+    button: {
+        background: "#FF7D63",
+        borderColor: "#FFFFFF",
+        borderWidth: '1px',
+        border: "solid",
+        borderRadius: "20px",
+        marginLeft: "1em",
+        color: "#FFFFFF"
+    }
+>>>>>>> master
     
     const { classes } = this.props;
     return (

@@ -1,5 +1,10 @@
 import jwt from "jsonwebtoken";
 
+/**
+ * JWT Signature Verification.
+ * @global
+ */
+
 // module.exports = {
 export default (req, res, next) => {
 	const authorizationHeaader = req.headers.authorization;

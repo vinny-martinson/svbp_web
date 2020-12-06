@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
+/**
+ * Post Database Schema.
+ * @global
+ */
 const PostSchema = mongoose.Schema({
   text: {
     type: String,
     trim: true,
-    required: true
-  },
-  author: {
-    type: String,
     required: true
   },
   authorId: {
@@ -17,6 +17,38 @@ const PostSchema = mongoose.Schema({
   avatarColor: {
     type: Number,
     required: true
+  },
+  comments: {
+    type: [
+      {
+        commenterId: String,
+        text: String,
+        timestamp: Number
+      }
+    ],
+    required: true
+  },
+  likers: {
+    type: [String],
+  },
+  likesCount: {
+    type: Number,
+    required: true
+  },
+  type: { 
+    type: String,
+  },
+  reviewId: {
+    type: String,
+  },
+  reviewTitle: {
+    type: String
+  },
+  rating: {
+    type: Number
+  },
+  date: {
+    type: Date
   },
   timestamp: {
     type: Number,

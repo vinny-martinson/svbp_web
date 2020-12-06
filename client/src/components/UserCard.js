@@ -34,20 +34,23 @@ const styles = theme => ({
 class UserCard extends Component {
   followThisUser = (signedInUserId, listedUserId) => {
     const { followUser } = this.props;
-    followUser(signedInUserId, listedUserId).then((res) => {
-      console.log('follow', res);
-    });
+    followUser(signedInUserId, listedUserId);
   };
 
   unfollowThisUser = (signedInUserId, listedUserId) => {
     const { unfollowUser } = this.props;
-    unfollowUser(signedInUserId, listedUserId).then((res) => {
-      console.log('unfollow', res);
-    });
+    unfollowUser(signedInUserId, listedUserId);
   };
 
   render() {
-    const { classes, isFollowing, listedUser, signedInUser } = this.props;
+
+    const {
+      classes,
+      getUser,
+      isFollowing,
+      listedUser,
+      signedInUser
+    } = this.props;
 
     return (
       <Card>
@@ -56,6 +59,7 @@ class UserCard extends Component {
             author={listedUser.username}
             authorId={listedUser.id}
             avatarColor={listedUser.avatarColor}
+            getUser={getUser}
             key={listedUser.id}
           />
         </div>
@@ -69,7 +73,7 @@ class UserCard extends Component {
             {listedUser.username}
           </Typography>
           <CardActions>
-            <Link className={classes.link} to={`/profile/${listedUser.id}`}>
+            <Link className={classes.link} to={`/profile/${listedUser._id}`}>
               <Button size="small" color="primary">
                 View
               </Button>
@@ -79,8 +83,8 @@ class UserCard extends Component {
               color="primary"
               onClick={() =>
                 (isFollowing
-                  ? this.unfollowThisUser(signedInUser.userId, listedUser.id)
-                  : this.followThisUser(signedInUser.userId, listedUser.id))
+                  ? this.unfollowThisUser(signedInUser.user_info.id, listedUser._id)
+                  : this.followThisUser(signedInUser.user_info.id, listedUser._id))
               }
             >
               {isFollowing ? 'Unfollow' : 'Follow'}
@@ -95,6 +99,7 @@ class UserCard extends Component {
 UserCard.propTypes = {
   classes: PropTypes.object.isRequired,
   followUser: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
   unfollowUser: PropTypes.func.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   listedUser: PropTypes.shape({
