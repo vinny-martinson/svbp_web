@@ -41,19 +41,19 @@ const App = () => {
         <Router history={history}>
       <Switch>
         <Route exact path="/Landing" component={Home} />
-        <Route path="/" component={PostFeed} />
+        <Route exact path="/" component={PostFeed} />
 
-        <Route path="/shows/:id" component={DetailPage} />
-        <Route path="/add" component={AddPage} />
-        <Route path="/books" component={AddBookPage} />
-        <Route path="/detail" component={DetailPage} />
-        <Route path="/bookdetail" component={DetailBookPage} />
-        <Route path="/Login" component={Login} />
-        <Route path="/Signup" component={Signup} />
-        <Route path="/profile/:id" component={ProfilePage} />
-        <Route path="/following" component={FollowingPage} />
-        <Route path="/discover" component={DiscoverPage} />
-        <Route path="/settings" component={SettingsPage} />
+        <Route exact path="/shows/:id" component={DetailPage} />
+        <Route exact path="/add" component={AddPage} />
+        <Route exact path="/books" component={AddBookPage} />
+        <Route exact path="/detail" component={DetailPage} />
+        <Route exact path="/bookdetail" component={DetailBookPage} />
+        <Route exact path="/Login" component={Login} />
+        <Route exact path="/Signup" component={Signup} />
+        <Route exact path="/profile/:id" component={ProfilePage} />
+        <Route exact path="/following" component={FollowingPage} />
+        <Route exact path="/discover" component={DiscoverPage} />
+        <Route exact path="/settings" component={SettingsPage} />
         <Route exact path="/podcasts" component={PodcastsPage} />
         <Route component={NotFound}/>
       </Switch>

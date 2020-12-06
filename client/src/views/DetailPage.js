@@ -48,7 +48,7 @@ import { getMedia, updateMediaLikes } from '../actions/mediaActions';
 import { getFollowers, getFollowing, getUser } from '../actions/userActions';
 import { createReview } from '../actions/postsActions';
 
-let dev = 0 // dev = 1 => LOCAL
+let dev = 1 // dev = 1 => LOCAL
             // dev = 0 => HEROKU
 
 let server_dev = axios.create({
