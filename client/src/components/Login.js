@@ -15,6 +15,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { loginUser } from '../actions/authActions';
+import { UserContext } from '../Context/UserContext';
 
 const styles = theme => ({
   layout: {
@@ -57,9 +58,12 @@ const styles = theme => ({
 });
 
 class Login extends Component {
+  static contextType = UserContext;
+
   state = {
     email: '',
-    password: ''
+    password: '',
+    currentUser: {}
   };
 
   handleInputChange = (e) => {
@@ -69,6 +73,8 @@ class Login extends Component {
 
   /* eslint-disable react/destructuring-assignment, react/prop-types */
   componentDidMount = () => {
+    const context =this.context;
+    this.setState({currentUser: context.currUser});
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/');
     }
@@ -88,15 +94,20 @@ class Login extends Component {
       email,
       password
     };
-    const { signInUser } = this.props;
-    signInUser(user);
+    if (currentUser.loggedIn == false) {
+      const { signInUser } = this.props;
+      signInUser(user);
+      currentUser.loggedIn = true;
+    } else {
+
+    }
   };
 
   render() {
     const { classes } = this.props;
 
     return (
-        <React.Fragment>
+      <React.Fragment>
         <CssBaseline />
         <main className={classes.layout}>
           <Paper className={classes.paper}>
@@ -151,23 +162,23 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-    classes: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    signInUser: PropTypes.func.isRequired
-  };
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  signInUser: PropTypes.func.isRequired
+};
 
-  const mapStateToProps = state => ({
-    auth: state.authReducer
-  });
-  
-  const mapDispatchToProps = dispatch => ({
-    signInUser: user => dispatch(loginUser(user))
-  });
-  
-  export default compose(
-    withStyles(styles),
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )
-  )(Login);
+const mapStateToProps = state => ({
+  auth: state.authReducer
+});
+
+const mapDispatchToProps = dispatch => ({
+  signInUser: user => dispatch(loginUser(user))
+});
+
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(Login);

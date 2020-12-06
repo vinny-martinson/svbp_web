@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import './Home.css';
 import RegisterCard from '../../components/RegisterCard'
 import Background from '../../assets/background.jpg';
@@ -19,7 +19,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
+import {UserContext} from '../../Context/UserContext';
 import compose from 'recompose/compose';
+
+
 const theme = createMuiTheme({
     typography: {
         fontFamily: ['Montserrat'].join(','),
@@ -96,11 +99,42 @@ const styles = theme => ({
 
 class Home extends Component {
 
+    static contextType = UserContext;
+    constructor(props) {
+        super(props);
+        //Let's declare an empty profile state here.
+        this.state = {
+          profile: {},
+        };
+
+    }
+    componentDidMount() {
+        // const user = this.context
+        // console.log(user);
+        // this._initProfile();
+        // const context = this.context;
+        // console.log(context);
+       
+    }
+
+    _initProfile() {
+        const context = this.context;
+        //Let's fill the context with some value! You can get it from db too.
+        const profileData = {
+          fullName: 'John Doe',
+          username: 'johndoe',
+        //   email: '123',
+        }
+        //Call our setProfile method that we declared in App Component.
+        context.setCurrUser(profileData);
+      }
+    
     render() {
         const {classes} = this.props;
-
+        // const {profile} = this.state;
         return (
             <div className="App">
+               
                 <Header />
                 <div class="container">
                     <div class="crop-height flip">
@@ -161,6 +195,10 @@ class Home extends Component {
         </Typography>
 
                 <Placeholder />
+                <div>
+                    <h1>testing</h1>
+        {/* <h1>{profile}</h1> */}
+                </div>
             </div>
         );
     }
