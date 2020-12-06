@@ -54,6 +54,22 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Feed" />
       </ListItem>
     </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/add`} to="/add">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="IMDB" />
+      </ListItem>
+    </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/podcasts`} to="/podcasts">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Podcasts" />
+      </ListItem>
+    </Link>
   </div>
 );
 

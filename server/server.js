@@ -1,5 +1,5 @@
 //dependencies
-// import newrelic from 'newrelic'
+import newrelic from 'newrelic'
 import path from 'path';
 import express from 'express';
 import mongoose from 'mongoose';

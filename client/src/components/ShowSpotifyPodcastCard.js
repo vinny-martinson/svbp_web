@@ -58,12 +58,13 @@ function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={media.Poster}
-                        title={media.Title}
+                        // image={media.Poster}
+                        title={media.name}
                     />
                     <CardContent>
                         <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                            {media.Title} ({media.Year})
+                            {media.name} 
+                            {/* ({media.Year}) */}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
