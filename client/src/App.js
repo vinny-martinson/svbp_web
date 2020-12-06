@@ -22,7 +22,9 @@ import FollowingPage from './views/FollowingPage';
 
 import MainPage from './views/MainPage';
 import DetailPage from './views/DetailPage';
+import DetailBookPage from './views/DetailBookPage';
 import AddPage from './views/AddPage';
+import AddBookPage from './views/AddBookPage';
 
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
@@ -30,7 +32,6 @@ import Tab from './components/Tab';
 export const history = createHistory();
 
 const App = () => {
-  console.log(history);
   return (
     <div>
 
@@ -43,7 +44,9 @@ const App = () => {
         <Route exact path="/" component={MainPage} />
         <Route path="/shows/:id" component={DetailPage} />
         <Route path="/add" component={AddPage} />
+        <Route path="/books" component={AddBookPage} />
         <Route path="/detail" component={DetailPage} />
+        <Route path="/bookdetail" component={DetailBookPage} />
         <Route path="/Login" component={Login} />
         <Route path="/Signup" component={Signup} />
         <Route path="/profile/:id" component={ProfilePage} />

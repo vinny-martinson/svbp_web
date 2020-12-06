@@ -23,6 +23,19 @@ export const addMedia = (med) => dispatch => {
     }));
 };
 
+export const addBook = (med) => dispatch => {
+  console.log(med)
+  server.post('/api/web/av/get', {
+    imdbID: med.industryIdentifiers[0].identifier,
+    title: med.title,
+    type: "Book"
+  }).then(res =>
+    dispatch({
+      type: ADD_MEDIA,
+      payload: res.data
+    }));
+};
+
 export const getMedia = id => async (dispatch) => {
   const result = await server.get(`/api/web/av/get/${id}`);
   return dispatch({
