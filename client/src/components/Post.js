@@ -161,7 +161,7 @@ class Post extends Component {
               </div>
             )
           }
-          title={((type === 'movie' || type === 'series') ?  (<Link className={classes.link} to={`/profile/${authorId}`}>
+          title={((type === 'movie' || type === 'series' || type === 'Book') ?  (<Link className={classes.link} to={`/profile/${authorId}`}>
           {name} reviewed {reviewTitle} </Link>): (<Link className={classes.link} to={`/profile/${authorId}`}>
       {name} </Link>))}
           subheader={relativeTime}

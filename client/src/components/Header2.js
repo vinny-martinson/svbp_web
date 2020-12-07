@@ -130,7 +130,6 @@ class Header2 extends Component {
                             >
                                 {`Welcome, ${user.user_info.username}!`}
                             </Button>
-                            
                             <Menu
                                 id="right-menu"
                                 anchorEl={anchorEl}

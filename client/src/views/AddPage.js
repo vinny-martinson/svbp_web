@@ -4,15 +4,31 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import PropTypes from 'prop-types';
 
-
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { createMuiTheme } from '@material-ui/core/';
+import { CssBaseline } from '@material-ui/core/';
+import Typography from '@material-ui/core/Typography';
+import { ThemeProvider } from '@material-ui/core/';
+
+import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
 import Header2 from '../components/Header2';
 import MediaCard from '../components/ShowCard';
 
+const theme = createMuiTheme({
+    typography: {
+        fontFamily: ['Montserrat'].join(','),
+        h5: {
+            "fontWeight": 800,
+        },
+        h6: {
+            "fontWeight": 400,
+        },
+    }
+});
 
 const styles = theme => ({
     root: {
@@ -24,7 +40,14 @@ const styles = theme => ({
     center: {
         display: "flex",
         alignItems: "center"
-    }
+    },
+    title: {
+        textAlign: "center",
+        marginTop: "2rem",
+        fontSize: 36,
+        color: "#2138A0",
+        left: "10%"
+    },
 });
 class SearchPage extends Component {
     state = {
@@ -54,52 +77,55 @@ class SearchPage extends Component {
     render() {
         const { classes, getSearch } = this.props;
         return (
-            <div>
-                <Header2 />
-                <div className={classes.center}>
-                <TextField
-                    style= {{   marginLeft: "3%",
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <div>
+                    <Header2 />
+                    <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
+                        {"TV & Film"}
+                </Typography>
+                    <div className={classes.center}>
+                        <TextField
+                            style={{
+                                marginLeft: "3%",
                                 marginRight: "3%",
                                 marginTop: "1%"
                             }}
-                    className={classes.bar}
-                    value={this.state.value}
-                    fullWidth
-                    InputAdornment="Icon"
-                    label="Search" variant="filled"
-                    onChange={e => this.onChangeHandler(e)}
-                    placeholder="Search..."
-                />
+                            className={classes.bar}
+                            value={this.state.value}
+                            fullWidth
+                            InputAdornment="Icon"
+                            label="Search" variant="filled"
+                            onChange={e => this.onChangeHandler(e)}
+                            placeholder="Search..."
+                        />
+                    </div>
+                    <Grid
+                        container
+                        spacing={3}
+                        justify="space-evenly"
+                        alignItems="stretch"
+                        style={{
+                            marginTop: "1%"
+                        }}
+                    >
+
+                        {this.state.search ? (this.state.search.map((show) =>
+                            <Grid item xs={3}>
+                                <MediaCard
+                                    media={show}
+                                />
+                            </Grid>
+                        )) : console.log("empty")}
+
+                    </Grid>
                 </div>
-                <Grid 
-                    container 
-                    spacing={3} 
-                    justify="space-evenly" 
-                    alignItems="stretch"
-                    style= {{   
-                                marginTop: "1%"
-                            }}
-                >
-
-                    {this.state.search ? (this.state.search.map((show) =>
-                        <Grid item xs={3}>
-                            <MediaCard
-                                // title={show.Title}
-                                // year={show.Year}
-                                // poster={show.Poster}
-                                // type={show.Type}
-                                media={show}
-                            />
-                        </Grid>
-                    )) : console.log("empty")}
-
-                </Grid>
-            </div>
+            </ThemeProvider>
         );
     }
 }
 
-SearchPage.propTypes= {
+SearchPage.propTypes = {
     classes: PropTypes.object.isRequired,
     getSearch: PropTypes.func.isRequired
 }
