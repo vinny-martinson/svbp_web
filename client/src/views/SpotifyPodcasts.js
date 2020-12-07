@@ -16,6 +16,7 @@ import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/';
+import Button from '@material-ui/core/Button';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
 
@@ -33,7 +34,6 @@ const theme = createMuiTheme({
     }
 });
 
-import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
