@@ -95,7 +95,7 @@ const styles = theme => ({
       },
     divImg: {
         position: "absolute",
-        width: "300px",
+        width: "120%",
         top: "-5%",
         left: "10%",
         height: "120%"
@@ -106,7 +106,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 36,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
     },
     activity: {
         textAlign: "center",
@@ -127,7 +127,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 19,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
 
     },
     plot: {
@@ -135,7 +135,7 @@ const styles = theme => ({
         fontSize: 14,
         top: "1rem",
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)',
+        left: 'calc(9% + 400px)',
         maxWidth: "55%"
 
     },
@@ -149,20 +149,20 @@ const styles = theme => ({
     type: {
         position: "relative",
         top: "1.1 rem",
-        left: 'calc(9% + 300px)',
+        left: 'calc(9% + 400px)',
         backgroundColor: 'rgba(254, 224, 90, 1)',
         marginRight: "12px"
     },
     log: {
         position: "relative",
         top: "1rem",
-        left: 'calc(20% + 300px)',
+        left: 'calc(20% + 400px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     like: {
         position: "relative",
         top: "1rem",
-        left: 'calc(28% + 350px)',
+        left: 'calc(28% + 450px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     container: {
@@ -208,10 +208,10 @@ class DetailPodcastPage extends Component {
 
             this.setState({ loading: true });
 
-            const media = this.props.location.state.media;
+            const media_id = window.location.href.split("media_id=")[1]
 
-            const response = await server.get(`/api/web/av/get/${media.id}`);
-            console.log(response);
+            const response = await server.get(`/api/web/av/get/${media_id}`);
+            console.log(response.data);
             const resultado = await response.data.medium;
             this.setState({
                 medium: resultado,
@@ -277,7 +277,7 @@ class DetailPodcastPage extends Component {
             usuario
         } = this.props;
 
-        const media = this.props.location.state.media;
+        //const media = this.props.location.state.media;
         const {
             loading,
             medium,
@@ -289,12 +289,11 @@ class DetailPodcastPage extends Component {
             inputValue
         } = this.state;
 
-        console.log(media);
         console.log(medium.likesCount);
         console.log(medium.likers)
 
         return (
-            loading ? (
+            loading && medium.likers === undefined ? (
                 <div>
                     <Header2 />
                     <Loading />
@@ -309,26 +308,23 @@ class DetailPodcastPage extends Component {
                                     <div className={classes.root}>
                                         <div className={classes.divImg}>
                                             <img className={classes.image}
-                                                src={media.imageLinks.thumbnail} />
+                                                src={medium.poster} />
                                         </div>
                                         <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                                            {media.title.toUpperCase()}
+                                            {medium.title}
                                         </Typography>
                                         <Typography variant="h6" className={classes.subtitle} color="textSecondary" gutterBottom>
-                                            By {media.authors[0]}
+                                            By {medium.author}
                                         </Typography>
                                         
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {media.printType}
+                                            Podcast
                                         </Button>
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {media.categories[0]}
-                                        </Button>
-                                        <Button variant="contained" size="small" className={classes.type}>
-                                            {media.pageCount} pages
+                                            {medium.pages} episodes
                                         </Button>
                                         <Typography variant="body1" className={classes.plot} color="textSecondary" gutterBottom>
-                                            {media.description}
+                                            {medium.description}
                                         </Typography>
                                         <Button
                                             startIcon={<AssignmentIcon />}
@@ -340,15 +336,11 @@ class DetailPodcastPage extends Component {
                                             Log
                             </Button>
                                         <Button
-                                            comment this
                                             startIcon={
                                                 (medium.likers.includes(usuario.user_info.id)) ? <FavoriteIcon /> : <FavoriteBorderIcon />
                                             }
                                             variant="contained"
                                             size="small"
-                                            // style={
-                                            //     (medium.likers.includes(usuario.user_info.id)) ? { backgroundColor: '#ffffff' } : null
-                                            // }
                                             className={classes.like}
                                             onClick={() => {
                                                 (medium.likers.includes(usuario.user_info.id)
@@ -397,7 +389,7 @@ class DetailPodcastPage extends Component {
                                                     variant="h5"
                                                     className={classes.logTitle}
                                                 >
-                                                    Log Book
+                                                    Log Podcast
                                                 </Typography>
 
                                                 <Rating
@@ -422,7 +414,7 @@ class DetailPodcastPage extends Component {
                                                     margin="normal"
                                                     id="date"
                                                     name="date"
-                                                    label="Date Watched"
+                                                    label="Date Listened"
                                                     value={selectedDate}
                                                     inputValue={inputValue}
                                                     onChange={this.handleDateChange}
@@ -473,7 +465,7 @@ DetailPodcastPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    usuario: state.authReducer.user
+                            usuario: state.authReducer.user
 });
 
 

@@ -95,7 +95,7 @@ const styles = theme => ({
       },
     divImg: {
         position: "absolute",
-        width: "300px",
+        width: "120%",
         top: "-5%",
         left: "10%",
         height: "120%"
@@ -106,7 +106,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 36,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
     },
     activity: {
         textAlign: "center",
@@ -127,7 +127,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 19,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
 
     },
     plot: {
@@ -135,7 +135,7 @@ const styles = theme => ({
         fontSize: 14,
         top: "1rem",
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)',
+        left: 'calc(9% + 400px)',
         maxWidth: "55%"
 
     },
@@ -148,21 +148,22 @@ const styles = theme => ({
     },
     type: {
         position: "relative",
-        top: "1.1 rem",
-        left: 'calc(9% + 300px)',
+        top: "1.5 rem",
+        marginTop: "1rem",
+        left: 'calc(9% + 400px)',
         backgroundColor: 'rgba(254, 224, 90, 1)',
         marginRight: "12px"
     },
     log: {
         position: "relative",
         top: "1rem",
-        left: 'calc(20% + 300px)',
+        left: 'calc(20% + 400px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     like: {
         position: "relative",
         top: "1rem",
-        left: 'calc(28% + 350px)',
+        left: 'calc(28% + 450px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     container: {
@@ -188,7 +189,7 @@ const styles = theme => ({
     },
 });
 
-class DetailBookPage extends Component {
+class DetailPodcastPage extends Component {
 
     state = {
         loading: true,
@@ -228,6 +229,18 @@ class DetailBookPage extends Component {
         this.setState({ medium: likes.data })
 
     };
+
+    msToTime(duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+          seconds = Math.floor((duration / 1000) % 60),
+          minutes = Math.floor((duration / (1000 * 60)) % 60),
+          hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;        
+        return hours + ":" + minutes + ":" + seconds;
+      }
 
     handleModalOpen = () => {
         this.setState({ modalOpen: true });
@@ -313,18 +326,15 @@ class DetailBookPage extends Component {
                                         <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
                                             {medium.title}
                                         </Typography>
-                                        <Typography variant="h6" className={classes.subtitle} color="textSecondary" gutterBottom>
-                                            By {medium.author}
-                                        </Typography>
-                                        
+                                                                                
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.type}
+                                            Episode
                                         </Button>
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.genre}
+                                            {medium.publishedDate}
                                         </Button>
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.pages} pages
+                                            {this.msToTime(medium.pages)}
                                         </Button>
                                         <Typography variant="body1" className={classes.plot} color="textSecondary" gutterBottom>
                                             {medium.description}
@@ -392,7 +402,7 @@ class DetailBookPage extends Component {
                                                     variant="h5"
                                                     className={classes.logTitle}
                                                 >
-                                                    Log Book
+                                                    Log Episode
                                                 </Typography>
 
                                                 <Rating
@@ -417,7 +427,7 @@ class DetailBookPage extends Component {
                                                     margin="normal"
                                                     id="date"
                                                     name="date"
-                                                    label="Date Read"
+                                                    label="Date Listened"
                                                     value={selectedDate}
                                                     inputValue={inputValue}
                                                     onChange={this.handleDateChange}
@@ -462,7 +472,7 @@ class DetailBookPage extends Component {
     }
 }
 
-DetailBookPage.propTypes = {
+DetailPodcastPage.propTypes = {
                             dispatch: PropTypes.func.isRequired,
     usuario: PropTypes.object.isRequired,
 };
@@ -476,4 +486,4 @@ export default
     compose(
         withStyles(styles),
         connect(mapStateToProps)
-    )(DetailBookPage);
+    )(DetailPodcastPage);

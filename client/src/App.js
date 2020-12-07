@@ -20,13 +20,17 @@ import Signup from './components/Signup'
 import DiscoverPage from './views/DiscoverPage';
 import SettingsPage from './views/SettingsPage';
 import PodcastsPage from './views/SpotifyPodcasts';
-import SongsPage from './views/SpotifySongs';
+import MusicPage from './views/SpotifyMusic';
 import FollowingPage from './views/FollowingPage';
 
 import MainPage from './views/MainPage';
 import DetailPage from './views/DetailPage';
 import DetailBookPage from './views/DetailBookPage';
 import DetailPodcastPage from './views/DetailPodcastPage';
+import DetailEpisodePage from './views/DetailEpisodePage';
+import DetailSongPage from './views/DetailSongPage';
+import DetailAlbumPage from './views/DetailAlbumPage';
+
 import AddPage from './views/AddPage';
 import AddBookPage from './views/AddBookPage';
 
@@ -49,14 +53,17 @@ const App = () => {
         <Route exact path="/add" component={AddPage} />
         <Route exact path="/books" component={AddBookPage} />
         <Route exact path="/detail" component={DetailPage} />
-        <Route exact path="/bookdetail" component={DetailBookPage} />
-        <Route exact path="/podcastdetail" component={DetailPodcastPage} />
+        <Route exact path="/book" component={DetailBookPage} />
+        <Route exact path="/podcast" component={DetailPodcastPage} />
+        <Route exact path="/episode" component={DetailEpisodePage} />
+        <Route exact path="/song" component={DetailSongPage} />
+        <Route exact path="/album" component={DetailAlbumPage} />
         <Route exact path="/Login" component={Login} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/profile/:id" component={ProfilePage} />
         <Route exact path="/following" component={FollowingPage} />
         <Route exact path="/discover" component={DiscoverPage} />
-        <Route exact path="/songs" component={SongsPage} />
+        <Route exact path="/music" component={MusicPage} />
         <Route exact path="/settings" component={SettingsPage} />
         <Route exact path="/podcasts" component={PodcastsPage} />
         <Route component={NotFound}/>
