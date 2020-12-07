@@ -362,7 +362,9 @@ function Home() {
                                 color: "red"
                             }}
                             >
-                            Books
+                            <Link onClick={() => window.location.href=`/books`} to={`/books`}>
+                                Books
+                            </Link>
                             </NavLink> <em> </em> 
 
                          </Typography>

@@ -9,6 +9,11 @@ import GroupIcon from '@material-ui/icons/GroupAdd';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import SettingsVoiceIcon from '@material-ui/icons/SettingsVoice';
+import LocalMoviesIcon from '@material-ui/icons/LocalMovies';
+import RssFeedIcon from '@material-ui/icons/RssFeed';
+
 
 import { Link } from 'react-router-dom';
 
@@ -53,7 +58,7 @@ export const FolderListItems = ({ user }) => (
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/feed`} to="/feed">
       <ListItem button>
         <ListItemIcon>
-          <GroupIcon />
+          <RssFeedIcon />
         </ListItemIcon>
         <ListItemText primary="Feed" />
       </ListItem>
@@ -61,15 +66,23 @@ export const FolderListItems = ({ user }) => (
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/add`} to="/add">
       <ListItem button>
         <ListItemIcon>
-          <GroupIcon />
+          <LocalMoviesIcon />
         </ListItemIcon>
-        <ListItemText primary="IMDB" />
+        <ListItemText primary="Movies & TV Shows" />
+      </ListItem>
+    </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/books`} to="/books">
+      <ListItem button>
+        <ListItemIcon>
+          <MenuBookIcon />
+        </ListItemIcon>
+        <ListItemText primary="Books" />
       </ListItem>
     </Link>
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/podcasts`} to="/podcasts">
       <ListItem button>
         <ListItemIcon>
-          <GroupIcon />
+          <SettingsVoiceIcon />
         </ListItemIcon>
         <ListItemText primary="Podcasts" />
       </ListItem>
