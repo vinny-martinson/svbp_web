@@ -65,7 +65,6 @@ const App = () => {
         <Route exact path="/discover" component={DiscoverPage} />
         <Route exact path="/music" component={MusicPage} />
         <Route exact path="/settings" component={SettingsPage} />
-        <Route exact path="/podcasts" component={PodcastsPage} />
         <Route component={NotFound}/>
       </Switch>
       </Router>
