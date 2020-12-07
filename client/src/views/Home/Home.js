@@ -2,13 +2,17 @@ import React from 'react';
 import './Home.css';
 import '../../views/Categories.js';
 import './AboutUs.js';
+import Card from "./Card";
+import Card1 from "./Card1";
+import Card2 from "./Card2";
+import Card3 from "./Card3";
 import RegisterCard from '../../components/RegisterCard'
 import Background from '../../assets/background.jpg';
 import Header from "../../components/Header"
 import { Typography } from '@material-ui/core/';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { Grid, Paper } from '@material-ui/core/';
 import BookIcon from '../../assets/book-icon.png';
 import FilmIcon from '../../assets/film-icon.png';
@@ -20,6 +24,10 @@ import {Cell} from 'react-mdl';
 import TabNav from '../../components/TabNav'; 
 import { NavLink } from 'react-router-dom';
 import SearchField from 'react-search-field';
+
+import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
+
 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -59,6 +67,10 @@ const useStyles = makeStyles({
         marginLeft: "1em",
         marginTop: "0.5em"
     },
+    title2: {
+        fontSize: 32,
+        color: "#2138A0"
+    },
     category: {
         align: "right",
         fontSize: 24,
@@ -95,12 +107,39 @@ const useStyles = makeStyles({
         background: "linear-gradient(304.84deg, #5776FF -18.57%, #FF947E 102.99%)",
         maxWidth: "180px",
         maxHeight: "180px"
-    }
+    },
+    root: {
+        maxWidth: 400,
+      },
+      media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+      },
+      expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+          duration: theme.transitions.duration.shortest,
+        }),
+      },
+      expandOpen: {
+        transform: 'rotate(180deg)',
+      },
+      avatar: {
+        backgroundColor: red[500],
+      },
+
 });
 
 
 function Home() {
     const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+      };
+    
 
     return (
         
@@ -115,12 +154,6 @@ function Home() {
                 </div>
             </div>
 
-            <SearchField
-            placeholder="Search..."
-            //onChange={onChange}
-            searchText="Search for Books, Tv shows, Podcasts, Movies, or Music"
-            classNames="test-class"
-            />
 
             <TabNav> 
        <div label="Music"> 
@@ -225,7 +258,7 @@ function Home() {
             color: "red"
         }}
         >
-        Radio,
+        Radio
         </NavLink><em> </em> 
        </div> 
 
@@ -273,11 +306,11 @@ function Home() {
             color: "red"
         }}
         >
-        Reality Show,
+        Reality Show
         </NavLink> <em> </em>  
        </div> 
 
-       <div label="Books"> 
+       <div label="Audio-books"> 
        <NavLink
         to="/https://www.spotify.com/us/"
         activeStyle={{
@@ -330,7 +363,7 @@ function Home() {
             color: "red"
         }}
         >
-        Horror,
+        Horror
         </NavLink> <em> </em> 
        </div> 
             </TabNav> 
@@ -346,10 +379,7 @@ function Home() {
                         <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                         <NavLink
                             to="/Categories"
-                            activeStyle={{
-                                fontWeight: "bold",
-                                color: "red"
-                            }}
+                            className="link"
                             >
                             Books
                             </NavLink> <em> </em> 
@@ -363,13 +393,11 @@ function Home() {
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                     <NavLink
                         to="/Categories"
-                        activeStyle={{
-                            fontWeight: "bold",
-                            color: "red"
-                        }}
-                        >
-                        Movies
-                        </NavLink> <em> </em> 
+                    className="link"
+                    
+                    >
+                    Movies
+                    </NavLink>
 
                          </Typography>
                         <img class="icon scale" src={FilmIcon} />
@@ -380,10 +408,7 @@ function Home() {
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                     <NavLink
                     to="/Categories"
-                    activeStyle={{
-                        fontWeight: "bold",
-                        color: "red"
-                    }}
+                    className="link"
                     >
                     TV
                     </NavLink> <em> </em> 
@@ -397,10 +422,7 @@ function Home() {
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                     <NavLink
                         to="/Categories"
-                    activeStyle={{
-                        fontWeight: "bold",
-                        color: "red"
-                    }}
+                        className="link"
                     >
                     Podcast
                     </NavLink> <em> </em> 
@@ -414,10 +436,7 @@ function Home() {
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
                     <NavLink
                         to="/Categories"
-                        activeStyle={{
-                            fontWeight: "bold",
-                            color: "red"
-                        }}
+                        className="link"
                         >
                         Music
                         </NavLink> <em> </em> 
@@ -430,43 +449,45 @@ function Home() {
             
             <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 Popular reviews
-   
-            <Cell col={12}>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/4/4c/Toy_Story_4_poster.jpg"
-                    att="avatar"
-                    className="img"/>
-                   
-                   </Cell>
+            
+            <Grid container spacing={1} className={classes.gridContainer}>
+             <Grid item xs={2} sm={6} md={3}>
+            <Card>
+            </Card>
+            </Grid>
+           
 
-                   <Cell col={12}>
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Princess_Mononoke_Japanese_poster.png/220px-Princess_Mononoke_Japanese_poster.png"
-                    att="avatar"
-                    className="img"/>
-                   
-                   </Cell>
+            <Grid item xs={2} sm={6} md={3}>
+            <Card1>
+            </Card1>
+            </Grid>
 
-                   <Cell col={12}>
-                    <img src="https://i.pinimg.com/originals/92/c8/e0/92c8e00b34fcfdeaf605a0647c21adb3.jpg"
-                    att="avatar"
-                    className="img"/>
-                   
-                   </Cell>
+             <Grid item xs={2} sm={6} md={3}>
+            <Card2>
+            </Card2>
+            </Grid>
+    
+              
+             <Grid item xs={2} sm={6} md={3}>
+            <Card3>
+            </Card3>
+            </Grid>
+           
+             
+            
+            </Grid>
+           
                
+        
                       
             </Typography>
-          
-      
 
-       
        
         <Typography variant="h5" className={classes.title} color="textSecondary" align="left" gutterBottom>
                 
                 <NavLink
                         to="/AboutUs"
-                        activeStyle={{
-                            fontWeight: "bold",
-                            color: "red"
-                        }}
+                        className={classes.title2}
                         >
                         About Us
                         </NavLink> <em> </em> 
