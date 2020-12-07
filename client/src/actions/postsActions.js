@@ -36,7 +36,8 @@ export const getPosts = () => dispatch =>
     dispatch({
       type: GET_POSTS,
       payload: res.data
-    }));
+    }),
+  );
 
 /** 
  * Create new post

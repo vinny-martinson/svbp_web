@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/authActions';
 import LeftMenu from './LeftMenu';
 import { Link } from 'react-router-dom';
+import compose from 'recompose/compose';
+import { loginUser } from '../actions/authActions';
 
 //logged in
 const styles = {
@@ -59,18 +61,37 @@ const styles = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    logoutUser: () => dispatch(logoutUser())
+    logoutUser: () => dispatch(logoutUser()),
+    signInUser: user => dispatch(loginUser(user))
 });
 
 const mapStateToProps = state => ({
     user: state.authReducer.user
 });
 
+
+
 class Header2 extends Component {
 
     state = {
-        anchorEl: null
+        anchorEl: null,
+        email: '',
+        password: ''
     };
+
+    handleSubmitLogin = () => {
+        const email = this.state.email
+        const password = this.state.password
+
+        const user = {
+            email,
+            password
+        };
+        const { signInUser } = this.props;
+        console.log('==>1', signInUser)
+        signInUser(user);
+        console.log('==>2', user)
+    }
 
     handleClick = (event) => {
         this.setState({ anchorEl: event.currentTarget });
@@ -82,8 +103,13 @@ class Header2 extends Component {
 
     render() {
         let { classes, logoutUser, user } = this.props;
-        // user = {"user_info": 1}
+        // Dont ask me why
+        const logged_in1 = localStorage.getItem('jwtToken')
+        const logged_in2 = localStorage.getItem('user-token')
+        const logged_in3 = localStorage.getItem('user_logged')
         const { anchorEl } = this.state;
+
+        
         return (
             <div className={classes.root}>
                 <AppBar position="static" className={classes.bar}>
@@ -93,6 +119,8 @@ class Header2 extends Component {
                         <Typography variant="h6" className={classes.title}>
                         </Typography>
 
+                        
+                        { (logged_in1) ?
                         <div>
                             <Button
                                 aria-owns={anchorEl ? 'right-menu' : null}
@@ -100,7 +128,7 @@ class Header2 extends Component {
                                 className={classes.menuButton}
                                 onClick={this.handleClick}
                             >
-                                {user.username}
+                                {`Welcome, ${user.user_info.username}!`}
                             </Button>
                             <Menu
                                 id="right-menu"
@@ -108,15 +136,39 @@ class Header2 extends Component {
                                 open={Boolean(anchorEl)}
                                 onClose={this.handleClose}
                             >
-                                <Link className={classes.link} to={`/profile/${user.user_info.id}`}>
+                                <Link className={classes.link} onClick={() => window.location.href=`/profile/${user.user_info.id}`} to={`/profile/${user.user_info.id}`}>
                                     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
                                 </Link>
-                                <Link className={classes.link} to="/discover">
+                                <Link className={classes.link} onClick={() => window.location.href=`/discover`} to="/discover">
                                     <MenuItem onClick={this.handleClose}>Discover</MenuItem>
                                 </Link>
                                 <MenuItem onClick={logoutUser}>Logout</MenuItem>
                             </Menu>
-                        </div>                    </Toolbar>
+                        </div> : 
+                            <>
+                            <div className={classes.search}>
+                            <InputBase
+                            onChange={(event) => this.setState({email: event.target.value})}
+                            placeholder="Email address"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                            <InputBase
+                            onChange={(event) => this.setState({password: event.target.value})}
+                            placeholder="Password"
+                            type="password"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </div>
+                        <Button variant="contained" onClick={this.handleSubmitLogin} className={classes.button}>Login</Button></> }
+                        </Toolbar>
                 </AppBar>
             </div>
         );
@@ -126,7 +178,8 @@ class Header2 extends Component {
 Header2.propTypes = {
     classes: PropTypes.object.isRequired,
     logoutUser: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    signInUser: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Header2));

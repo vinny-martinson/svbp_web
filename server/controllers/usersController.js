@@ -3,6 +3,7 @@ import User from '../models/UserModel.js';
 import config from '../config/config.js';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import request from 'request'
 
 /** @module  */
 
@@ -104,18 +105,29 @@ export const signup = async (req, res) => {
   signJWT(payload, res)
 };
 
+const check_IP = async => {
+  request('https://ipinvestigator.expeditedaddons.com/?api_key=3A4PW5E0KCZ40R28I9YU8297FOS6GV611XDMNTQ37LBHJ5&ip=68.10.149.45', function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  if (response.statusCode === 200) {
+    console.log('Response:', body);
+  }
+});
+}
+
 /**
  * Sign in based on email and if password is correct.
  * @method
  * @param {string} email - Email.
  */
 export const signin = async (req, res) => {
+  // check_IP()
   const email = req.body.email;
   const password = req.body.password;
   let user = await User.findOne({
     email
   });
   if (!user) {
+    console.log("Could not find user:", {email, password})
     return res.status(400).json({
       message: "User does not exist!"
     });

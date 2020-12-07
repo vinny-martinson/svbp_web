@@ -20,7 +20,7 @@ import Footer from '../../components/Footer'
 import TabNav from '../../components/TabNav'; 
 import { NavLink, useParams } from 'react-router-dom';
 import SearchField from 'react-search-field';
-
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -114,7 +114,6 @@ if (found != -1) {
 function Home() {
     const classes = useStyles();
     return (
-        
         <div className="App">
             <Header />
             <div class="container">
@@ -377,7 +376,9 @@ function Home() {
                             color: "red"
                         }}
                         >
+                        <Link onClick={() => window.location.href=`/add`} to={`/add`}>
                         Movies
+                        </Link>
                         </NavLink> <em> </em> 
 
                          </Typography>
@@ -394,7 +395,9 @@ function Home() {
                         color: "red"
                     }}
                     >
-                    TV
+                    <Link onClick={() => window.location.href=`/add`} to={`/add`}>
+                        TV
+                    </Link>
                     </NavLink> <em> </em> 
 
                          </Typography>
@@ -411,7 +414,9 @@ function Home() {
                         color: "red"
                     }}
                     >
-                    Podcast
+                    <Link onClick={() => window.location.href=`/podcasts`} to={`/podcasts`}>
+                        Podcasts
+                        </Link>
                     </NavLink> <em> </em> 
 
                          </Typography>
@@ -421,15 +426,10 @@ function Home() {
                 <Grid item xs={2}>
                     <Paper className={classes.paper}>
                     <Typography variant="h5" className={classes.category} color="textSecondary" align="left" gutterBottom>
-                    <NavLink
-                        to="/Categories"
-                        activeStyle={{
-                            fontWeight: "bold",
-                            color: "red"
-                        }}
-                        >
+                    
+                        <Link onClick={() => window.location.href=`/songs`} to={`/songs`}>
                         Music
-                        </NavLink> <em> </em> 
+                        </Link>
 
                          </Typography>
                         <img class="icon scale" src={MusicIcon} />

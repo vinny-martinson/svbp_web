@@ -12,6 +12,9 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Link } from 'react-router-dom';
 
+const logged_in1 = localStorage.getItem('jwtToken')
+const spotify_active = localStorage.getItem('spotify_token')
+
 export const FolderListItems = ({ user }) => (
   <div>
    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/`} to="/">
@@ -22,6 +25,7 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Home" />
       </ListItem>
     </Link>
+    {(logged_in1) ? 
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/profile/${user.user_info.id}`} to={`/profile/${user.user_info.id}`}>
       <ListItem button>
         <ListItemIcon>
@@ -29,7 +33,7 @@ export const FolderListItems = ({ user }) => (
         </ListItemIcon>
         <ListItemText primary="Profile" />
       </ListItem>
-    </Link>
+    </Link> : ""}
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/following`} to="/following">
       <ListItem button>
         <ListItemIcon>
