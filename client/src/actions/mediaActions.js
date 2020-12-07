@@ -105,7 +105,8 @@ export const addSong = (med) => dispatch => {
 };
 
 export const addAlbum = (med) => dispatch => {
-  console.log(med)
+  console.log("TRYING TO ADD")
+  console.log(med.artists)
   server.post('/api/web/av/get', {
     imdbID: med.id,
     title: med.name,

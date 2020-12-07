@@ -213,7 +213,7 @@ class DetailSongPage extends Component {
             const media_id = window.location.href.split("media_id=")[1]
 
             const response = await server.get(`/api/web/av/get/${media_id}`);
-            console.log(response.data);
+            console.log("==> details album page", response);
             const resultado = await response.data.medium;
             this.setState({
                 medium: resultado,

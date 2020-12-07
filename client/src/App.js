@@ -46,8 +46,8 @@ const App = () => {
 
         <Router history={history}>
       <Switch>
-        <Route exact path="/Landing" component={Home} />
-        <Route exact path="/" component={PostFeed} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/feed" component={PostFeed} />
 
         <Route exact path="/shows/:id" component={DetailPage} />
         <Route exact path="/add" component={AddPage} />
@@ -64,6 +64,7 @@ const App = () => {
         <Route exact path="/following" component={FollowingPage} />
         <Route exact path="/discover" component={DiscoverPage} />
         <Route exact path="/music" component={MusicPage} />
+        <Route exact path="/podcasts" component={PodcastsPage} />
         <Route exact path="/settings" component={SettingsPage} />
         <Route component={NotFound}/>
       </Switch>

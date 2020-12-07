@@ -3,7 +3,8 @@ import './Home.css';
 import '../../views/Categories.js';
 import RegisterCard from '../../components/RegisterCard'
 import Background from '../../assets/background.jpg';
-import Header from "../../components/Header"
+import Header from "../../components/Header2"
+import AboutCard from '../../components/AboutCard'
 import { Typography } from '@material-ui/core/';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
@@ -16,7 +17,6 @@ import PodIcon from '../../assets/headphones-icon.png';
 import MusicIcon from '../../assets/note-icon.png';
 import Placeholder from '../../components/Placeholder'
 import Footer from '../../components/Footer'
-
 import TabNav from '../../components/TabNav'; 
 import { NavLink, useParams } from 'react-router-dom';
 import SearchField from 'react-search-field';
@@ -122,6 +122,9 @@ function Home() {
                 </div>
                 <div className="card">
                     <RegisterCard />
+                </div>
+                <div className="about_card">
+                    <AboutCard />
                 </div>
             </div>
             <br/>

@@ -81,6 +81,7 @@ class SearchPage extends Component {
         console.log('=> tracks', res)
         const result = await res.data.body.tracks;
         const al = await res.data.body.albums;
+        console.log("ALBUM=>", al)
         this.setState({ search: result, albums: al, loading: false });
     };
 
