@@ -95,7 +95,7 @@ const styles = theme => ({
       },
     divImg: {
         position: "absolute",
-        width: "300px",
+        width: "120%",
         top: "-5%",
         left: "10%",
         height: "120%"
@@ -106,7 +106,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 36,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
     },
     activity: {
         textAlign: "center",
@@ -127,7 +127,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 19,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
 
     },
     plot: {
@@ -135,7 +135,7 @@ const styles = theme => ({
         fontSize: 14,
         top: "1rem",
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)',
+        left: 'calc(9% + 400px)',
         maxWidth: "55%"
 
     },
@@ -149,20 +149,20 @@ const styles = theme => ({
     type: {
         position: "relative",
         top: "1.1 rem",
-        left: 'calc(9% + 300px)',
+        left: 'calc(9% + 400px)',
         backgroundColor: 'rgba(254, 224, 90, 1)',
         marginRight: "12px"
     },
     log: {
         position: "relative",
         top: "1rem",
-        left: 'calc(20% + 300px)',
+        left: 'calc(20% + 400px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     like: {
         position: "relative",
         top: "1rem",
-        left: 'calc(28% + 350px)',
+        left: 'calc(28% + 450px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     container: {
@@ -188,7 +188,7 @@ const styles = theme => ({
     },
 });
 
-class DetailBookPage extends Component {
+class DetailPodcastPage extends Component {
 
     state = {
         loading: true,
@@ -318,13 +318,10 @@ class DetailBookPage extends Component {
                                         </Typography>
                                         
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.type}
+                                            Podcast
                                         </Button>
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.genre}
-                                        </Button>
-                                        <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.pages} pages
+                                            {medium.pages} episodes
                                         </Button>
                                         <Typography variant="body1" className={classes.plot} color="textSecondary" gutterBottom>
                                             {medium.description}
@@ -392,7 +389,7 @@ class DetailBookPage extends Component {
                                                     variant="h5"
                                                     className={classes.logTitle}
                                                 >
-                                                    Log Book
+                                                    Log Podcast
                                                 </Typography>
 
                                                 <Rating
@@ -417,7 +414,7 @@ class DetailBookPage extends Component {
                                                     margin="normal"
                                                     id="date"
                                                     name="date"
-                                                    label="Date Read"
+                                                    label="Date Listened"
                                                     value={selectedDate}
                                                     inputValue={inputValue}
                                                     onChange={this.handleDateChange}
@@ -462,7 +459,7 @@ class DetailBookPage extends Component {
     }
 }
 
-DetailBookPage.propTypes = {
+DetailPodcastPage.propTypes = {
                             dispatch: PropTypes.func.isRequired,
     usuario: PropTypes.object.isRequired,
 };
@@ -476,4 +473,4 @@ export default
     compose(
         withStyles(styles),
         connect(mapStateToProps)
-    )(DetailBookPage);
+    )(DetailPodcastPage);

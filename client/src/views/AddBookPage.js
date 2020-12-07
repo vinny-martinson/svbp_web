@@ -57,7 +57,8 @@ class SearchBookPage extends Component {
         loading: false,
         value: '',
         open: false,
-        timeout: 0
+        timeout: 0,
+        searching: false,
     };
 
     search = async val => {
@@ -68,6 +69,7 @@ class SearchBookPage extends Component {
         ` https://www.googleapis.com/books/v1/volumes?q=${val}`
         ).then(function(result){
             //const result = res.data.items;
+            console.log(result.data.items)
             self.setState({ search: result.data.items, loading: false });
         })
         
@@ -79,14 +81,14 @@ class SearchBookPage extends Component {
         this.timeout = setTimeout(() => {
             //search function
             this.search(e.target.value);
-          }, 300);
+          }, 400);
         this.setState({ value: e.target.value });
     };
 
     render() {
         const { classes, getSearch } = this.props;
         console.log(this.state.search);
-        return this.state.loading ? (
+        return this.state.loading || this.state.searching ? (
             <div>
                 <ThemeProvider theme={theme}>
                 <CssBaseline />
@@ -96,7 +98,7 @@ class SearchBookPage extends Component {
                 </Typography>
                 <div className={classes.center}>
                     <TextField
-                        disable
+                        disabled
                         style={{
                             marginLeft: "3%",
                             marginRight: "3%",
@@ -119,6 +121,9 @@ class SearchBookPage extends Component {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <Header2 />
+                <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
+                        {"Books"}
+                </Typography>
                 <div className={classes.center}>
                     <TextField
                         style={{
@@ -146,11 +151,18 @@ class SearchBookPage extends Component {
                 >
 
                     {this.state.search ? (this.state.search.map((book) =>
-                        <Grid item xs={3}>
-                            <BookCard
-                                media={book.volumeInfo}
-                            />
-                        </Grid>
+                        ((book) ? 
+                            (<Grid item xs={3}>
+                                <BookCard
+                                    media={book.volumeInfo}
+                                />
+                            </Grid>)
+                            :
+                            (<div>
+
+                            </div>)
+                        )
+                        
                     )) : console.log("empty")}
 
                 </Grid>

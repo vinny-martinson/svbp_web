@@ -12,7 +12,13 @@ const MediaSchema = new mongoose.Schema({
     reviews: [{
       type: mongoose.Schema.Types.ObjectId, ref: 'Post'
     }],
-    type: String
+    type: String,
+    poster: String,
+    genre: String,
+    pages: Number,
+    publishedDate: String,
+    description: String,
+    author: String
   });
 
   export default mongoose.model('Media', MediaSchema);

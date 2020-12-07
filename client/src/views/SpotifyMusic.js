@@ -10,7 +10,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Header2 from '../components/Header2';
-import MediaCard from '../components/ShowSpotifyPodcastCard';
+import SongCard from '../components/ShowSpotifySongCard';
+import AlbumCard from '../components/ShowSpotifyAlbumCard';
+
+import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/';
 import { CssBaseline } from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
@@ -20,11 +23,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
 
-import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
+const code = localStorage.getItem('spotify_token')
 
-const code = localStorage.getItem('spotify_token');
 
 const theme = createMuiTheme({
     typography: {
@@ -63,41 +64,39 @@ const styles = theme => ({
 class SearchPage extends Component {
     state = {
         search: null,
-        episodes: null,
         loading: false,
         value: '',
         open: false,
         openDialog: false,
+        albums: null
     };
 
     search = async val => {
 
-        console.log("search")
         this.setState({ loading: true });
         // MUST BE HTTP(S)
         const res = await axios(
-            'http://localhost:3001/api/web/spotify/search?code=' + code + '&media=' + val + '&type=show,episode'
+            'http://localhost:3001/api/web/spotify/search?code=' + code + '&media=' + val + '&type=track,album'
         );
-        const result = await res.data.body.shows;
-        const resultado = await res.data.body.episodes;
-        console.log(resultado);
-        this.setState({ search: result, loading: false, episodes: resultado });
-    };
-
-    componentDidMount = () => {
-        if (!localStorage.spotify_token) {
-            this.setState({ openDialog: true });
-        }
+        console.log('=> tracks', res)
+        const result = await res.data.body.tracks;
+        const al = await res.data.body.albums;
+        this.setState({ search: result, albums: al, loading: false });
     };
 
     onChangeHandler = async e => {
-        console.log("changing")
         this.search(e.target.value);
         this.setState({ value: e.target.value });
     };
 
     handleClose = () => {
         this.setState({ openDialog: false });
+    };
+
+    componentDidMount = () => {
+        if (!localStorage.spotify_token) {
+            this.setState({ openDialog: true });
+        }
     };
 
     render() {
@@ -108,7 +107,7 @@ class SearchPage extends Component {
                     <CssBaseline />
                     <Header2 />
                     <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
-                        {"Podcasts"}
+                        {"Music"}
                     </Typography>
                     <div className={classes.center}>
                         <TextField
@@ -122,7 +121,8 @@ class SearchPage extends Component {
                             value={this.state.value}
                             fullWidth
                             InputAdornment="Icon"
-                            label="Search Podcasts in Spotify" variant="filled"
+                            label="Search Songs in Spotify" variant="filled"
+                            onChange={e => this.onChangeHandler(e)}
                             placeholder="Search..."
                         />
                     </div>
@@ -160,7 +160,7 @@ class SearchPage extends Component {
                         <CssBaseline />
                         <Header2 />
                         <Typography variant="h5" className={classes.title} color="#2138A0" gutterBottom>
-                            {"Podcasts"}
+                            {"Music"}
                         </Typography>
                         <div className={classes.center}>
                             <TextField
@@ -173,7 +173,7 @@ class SearchPage extends Component {
                                 value={this.state.value}
                                 fullWidth
                                 InputAdornment="Icon"
-                                label="Search Podcasts in Spotify" variant="filled"
+                                label="Search Music in Spotify" variant="filled"
                                 onChange={e => this.onChangeHandler(e)}
                                 placeholder="Search..."
                             />
@@ -190,42 +190,43 @@ class SearchPage extends Component {
                             }}
                         >
 
-                            {this.state.search ? (this.state.search.items.map((show) =>
+                            {this.state.albums ? (this.state.albums.items.map((track) =>
                                 <Grid item xs={3}>
-                                    <MediaCard
+                                    <AlbumCard
                                         // title={show.Title}
                                         // year={show.Year}
                                         // poster={show.Poster}
                                         // type={show.Type}
-                                        media={show}
+                                        media={track}
                                     />
                                 </Grid>
                             )) : console.log("empty")}
 
-                            {this.state.episodes ? (this.state.episodes.items.map((show) =>
-                                <Grid item xs={3}>
-                                    <MediaCard
-                                        // title={show.Title}
-                                        // year={show.Year}
-                                        // poster={show.Poster}
-                                        // type={show.Type}
-                                        media={show}
-                                    />
-                                </Grid>
-                            )) : console.log("empty")}
+                        
 
-                        </Grid>
-                        <Button
-                            href="http://localhost:3001/api/web/spotify/auth"
-                            variant="contained"
-                            color="primary"
-                            style={{margin: "3%"}}
-                            className={classes.refresh_button}
-                        >
-                            Refresh Spotify
+                        {this.state.search ? (this.state.search.items.map((track) =>
+                            <Grid item xs={3}>
+                                <SongCard
+                                    // title={show.Title}
+                                    // year={show.Year}
+                                    // poster={show.Poster}
+                                    // type={show.Type}
+                                    media={track}
+                                />
+                            </Grid>
+                        )) : console.log("empty")}
+                    </Grid>
+                    <Button
+                        href="http://localhost:3001/api/web/spotify/auth"
+                        variant="contained"
+                        color="primary"
+                        style={{ margin: "3%" }}
+                        className={classes.refresh_button}
+                    >
+                        Refresh Spotify
                     </Button>
                     </ThemeProvider>
-                </div>
+                </div >
             ));
     }
 }
