@@ -39,7 +39,82 @@ export const addBook = (med) => dispatch => {
   server.post('/api/web/av/get', {
     imdbID: med.industryIdentifiers[0].identifier,
     title: med.title,
-    type: "Book"
+    type: "Book",
+    poster: med.imageLinks.thumbnail,
+    author: med.authors[0],
+    genre: med.categories[0],
+    pages: med.pageCount,
+    publishedDate: med.publishedDate,
+    description: med.description
+  }).then(res =>
+    dispatch({
+      type: ADD_MEDIA,
+      payload: res.data
+    }));
+};
+
+export const addPodcast = (med) => dispatch => {
+  console.log(med)
+  server.post('/api/web/av/get', {
+    imdbID: med.id,
+    title: med.name,
+    type: med.type,
+    poster: med.images[0].url,
+    author: med.publisher,
+    pages: med.total_episodes,
+    description: med.description
+  }).then(res =>
+    dispatch({
+      type: ADD_MEDIA,
+      payload: res.data
+    }));
+};
+
+export const addEpisode = (med) => dispatch => {
+  console.log(med)
+  server.post('/api/web/av/get', {
+    imdbID: med.id,
+    title: med.name,
+    type: med.type,
+    poster: med.images[0].url,
+    publishedDate: med.release_date,
+    description: med.description,
+    pages: med.duration_ms
+  }).then(res =>
+    dispatch({
+      type: ADD_MEDIA,
+      payload: res.data
+    }));
+};
+
+export const addSong = (med) => dispatch => {
+  console.log(med)
+  server.post('/api/web/av/get', {
+    imdbID: med.id,
+    title: med.name,
+    type: med.type,
+    poster: med.album.images[0].url,
+    description: med.album.name,
+    author: med.artists[0].name,
+    pages: med.duration_ms,
+  }).then(res =>
+    dispatch({
+      type: ADD_MEDIA,
+      payload: res.data
+    }));
+};
+
+export const addAlbum = (med) => dispatch => {
+  console.log(med)
+  server.post('/api/web/av/get', {
+    imdbID: med.id,
+    title: med.name,
+    type: med.type,
+    poster: med.images[0].url,
+    //description: med.album.name,
+    author: med.artists[0].name,
+    pages: med.total_tracks,
+    publishedDate: med.release_date
   }).then(res =>
     dispatch({
       type: ADD_MEDIA,

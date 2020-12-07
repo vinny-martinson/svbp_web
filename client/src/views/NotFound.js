@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Header from '../components/Header2';
+import Loading from '../components/Loading'
 
 const styles = {
   container: {
@@ -26,13 +27,7 @@ const styles = {
 const NotFound = ({ classes }) => (
   <div>
     <Header />
-    <Paper className={classes.container}>
-      <Typography variant="display4">404</Typography>
-      <Typography variant="headline">Page Not Found</Typography>
-      <Typography variant="subheading">
-        Sorry, the page you are looking for seems to be missing.
-      </Typography>
-    </Paper>
+    <Loading />
   </div>
 );
 

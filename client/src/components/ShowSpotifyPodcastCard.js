@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -16,7 +16,7 @@ import { CssBaseline } from '@material-ui/core/';
 import PodcastCover from '../assets/spotify_podcasts_cover.png';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
-import { addMedia } from '../actions/mediaActions';
+import { addPodcast, addEpisode } from '../actions/mediaActions';
 
 const theme = createMuiTheme({
     typography: {
@@ -59,38 +59,59 @@ function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={PodcastCover}
+                        image={media.images[0].url}
                         title={media.name}
                     />
                     <CardContent>
                         <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                            {media.name} 
+                            {media.name}
                             {/* ({media.Year}) */}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary">
-                        {media.Type}
+                        {(media.type === "show" ? "Podcast" : media.type)}
                     </Button>
-                    <Link onClick={() => window.location.href=`/detail`}
-                        to={{
-                        pathname: '/detail',
+                    {(media.type === "show" ? 
+                    (<Link onClick={() => window.location.href = `/podcast?media_id=${media.id}`}
+                    to={{
+                        pathname: `/podcast?media_id=${media.id}`,
                         state: {
                             media: media
                         }
                     }}>
-                    <Button 
-                        size="small" 
-                        color="primary" 
+                    <Button
+                        size="small"
+                        color="primary"
                         onClick={() => {
                             console.log("clicked");
-                            dispatch(addMedia(media));
+                            dispatch(addPodcast(media));
                         }}>
                         More...
-                    </Button>
-                    </Link>
-                </CardActions> 
+                </Button>
+                </Link>)
+                    :
+                    (<Link onClick={() => window.location.href = `/episode?media_id=${media.id}`}
+                    to={{
+                        pathname: `/episode?media_id=${media.id}`,
+                        state: {
+                            media: media
+                        }
+                    }}>
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => {
+                            console.log("clicked");
+                            dispatch(addEpisode(media));
+                        }}>
+                        More...
+                </Button>
+                </Link>)
+                    )}
+                    
+                </CardActions>
             </Card>
         </ThemeProvider>
     );
@@ -102,11 +123,12 @@ MediaCard.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    addMedia: media => dispatch(addMedia(media)),
+    addPodcast: media => dispatch(addPodcast(media)),
+    addEpisode: media => dispatch(addEpisode(media)),
 });
 
-export default 
+export default
     connect(
         mapDispatchToProps
     )
-(MediaCard);
+        (MediaCard);

@@ -95,7 +95,7 @@ const styles = theme => ({
       },
     divImg: {
         position: "absolute",
-        width: "300px",
+        width: "120%",
         top: "-5%",
         left: "10%",
         height: "120%"
@@ -106,7 +106,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 36,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
     },
     activity: {
         textAlign: "center",
@@ -127,7 +127,7 @@ const styles = theme => ({
         position: "relative",
         fontSize: 19,
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)'
+        left: 'calc(9% + 400px)'
 
     },
     plot: {
@@ -135,7 +135,7 @@ const styles = theme => ({
         fontSize: 14,
         top: "1rem",
         color: "#FFFFFF",
-        left: 'calc(9% + 300px)',
+        left: 'calc(9% + 400px)',
         maxWidth: "55%"
 
     },
@@ -148,21 +148,23 @@ const styles = theme => ({
     },
     type: {
         position: "relative",
-        top: "1.1 rem",
-        left: 'calc(9% + 300px)',
+        top: "1 rem",
+        left: 'calc(9% + 400px)',
         backgroundColor: 'rgba(254, 224, 90, 1)',
         marginRight: "12px"
     },
     log: {
         position: "relative",
         top: "1rem",
-        left: 'calc(20% + 300px)',
+        left: 'calc(9% + 300px)',
+        marginTop: "50px",
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     like: {
         position: "relative",
         top: "1rem",
-        left: 'calc(28% + 350px)',
+        marginTop: "50px",
+        left: 'calc(9% + 350px)',
         backgroundColor: 'rgba(255, 125, 99, 1)'
     },
     container: {
@@ -188,7 +190,7 @@ const styles = theme => ({
     },
 });
 
-class DetailBookPage extends Component {
+class DetailSongPage extends Component {
 
     state = {
         loading: true,
@@ -250,6 +252,24 @@ class DetailBookPage extends Component {
         this.setState({ review: e.target.value });
 
     }
+
+    msToTime(duration) {
+        var milliseconds = parseInt((duration % 1000) / 100),
+          seconds = Math.floor((duration / 1000) % 60),
+          minutes = Math.floor((duration / (1000 * 60)) % 60),
+          hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+      
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        if (hours > 0){
+            return hours + ":" + minutes + ":" + seconds;
+        }
+        else {
+            return minutes + " min " + seconds + " sec";
+        }        
+        
+      }
 
     handleOnSubmit = (e) => {
         e.preventDefault();
@@ -314,21 +334,15 @@ class DetailBookPage extends Component {
                                             {medium.title}
                                         </Typography>
                                         <Typography variant="h6" className={classes.subtitle} color="textSecondary" gutterBottom>
-                                            By {medium.author}
+                                            By {medium.author} | From {medium.description}
                                         </Typography>
                                         
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.type}
+                                            Song
                                         </Button>
                                         <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.genre}
+                                        {this.msToTime(medium.pages)}
                                         </Button>
-                                        <Button variant="contained" size="small" className={classes.type}>
-                                            {medium.pages} pages
-                                        </Button>
-                                        <Typography variant="body1" className={classes.plot} color="textSecondary" gutterBottom>
-                                            {medium.description}
-                                        </Typography>
                                         <Button
                                             startIcon={<AssignmentIcon />}
                                             variant="contained"
@@ -392,7 +406,7 @@ class DetailBookPage extends Component {
                                                     variant="h5"
                                                     className={classes.logTitle}
                                                 >
-                                                    Log Book
+                                                    Log Podcast
                                                 </Typography>
 
                                                 <Rating
@@ -417,7 +431,7 @@ class DetailBookPage extends Component {
                                                     margin="normal"
                                                     id="date"
                                                     name="date"
-                                                    label="Date Read"
+                                                    label="Date Listened"
                                                     value={selectedDate}
                                                     inputValue={inputValue}
                                                     onChange={this.handleDateChange}
@@ -462,7 +476,7 @@ class DetailBookPage extends Component {
     }
 }
 
-DetailBookPage.propTypes = {
+DetailSongPage.propTypes = {
                             dispatch: PropTypes.func.isRequired,
     usuario: PropTypes.object.isRequired,
 };
@@ -476,4 +490,4 @@ export default
     compose(
         withStyles(styles),
         connect(mapStateToProps)
-    )(DetailBookPage);
+    )(DetailSongPage);

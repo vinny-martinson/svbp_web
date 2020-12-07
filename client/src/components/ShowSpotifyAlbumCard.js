@@ -16,7 +16,7 @@ import { CssBaseline } from '@material-ui/core/';
 import PodcastCover from '../assets/spotify_podcasts_cover.png';
 
 import AirBnBCereal from '../assets/AirbnbCerealExtraBold.ttf'
-import { addSong } from '../actions/mediaActions';
+import { addAlbum } from '../actions/mediaActions';
 
 const theme = createMuiTheme({
     typography: {
@@ -59,7 +59,7 @@ function MediaCard(props) {
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
-                        image={media.album.images[0].url}
+                        image={media.images[0].url}
                         title={media.name}
                     />
                     <CardContent>
@@ -70,11 +70,11 @@ function MediaCard(props) {
                 </CardActionArea>
                 <CardActions>
                     <Button size="small" color="primary">
-                        Song
+                        Album
                     </Button>
-                    <Link onClick={() => window.location.href = `/song?media_id=${media.id}`}
+                    <Link onClick={() => window.location.href = `/album?media_id=${media.id}`}
                     to={{
-                        pathname: `/song?media_id=${media.id}`,
+                        pathname: `/album?media_id=${media.id}`,
                         state: {
                             media: media
                         }
@@ -84,7 +84,7 @@ function MediaCard(props) {
                         color="primary" 
                         onClick={() => {
                             console.log("clicked");
-                            dispatch(addSong(media));
+                            dispatch(addAlbum(media));
                         }}>
                         More...
                     </Button>
@@ -101,7 +101,7 @@ MediaCard.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    addSong: media => dispatch(addSong(media)),
+    addAlbum: media => dispatch(addAlbum(media)),
 });
 
 export default 

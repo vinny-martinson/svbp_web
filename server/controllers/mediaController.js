@@ -65,7 +65,13 @@ export const addMedia = async (req, res) => {
         reviews: [],
         likers: [],
         likesCount: 0,
-        type: req.body.type
+        type: req.body.type,
+        poster: req.body.poster,
+        genre: req.body.genre,
+        pages: req.body.pages,
+        publishedDate: req.body.publishedDate,
+        description: req.body.description,
+        author: req.body.author
       });
     
       try {

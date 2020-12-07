@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -55,46 +55,61 @@ function BookCard(props) {
     console.log(media);
 
     return (
-        media ?
-        (<ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        image={media.imageLinks.thumbnail}
-                        title={media.title}
-                    />
-                    <CardContent>
-                        <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
-                            {media.title}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        {media.printType}
-                    </Button>
-                    <Link to={{
-                        pathname: '/bookdetail',
-                        state: {
-                            media: media
-                        }
-                    }}>
-                    <Button 
-                        size="small" 
-                        color="primary" 
-                        onClick={() => {
-                            console.log("clicked");
-                            dispatch(addBook(media));
-                        }}>
-                        More...
-                    </Button>
-                    </Link>
-                </CardActions> 
-            </Card>
-        </ThemeProvider>
-    ) : (<Loading/>));
+        (media) ?
+            (<ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Card className={classes.root}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.media}
+                            image={((media.imageLinks === undefined) ? "https://www.virago.co.uk/wp-content/uploads/2018/07/missingbook.png"
+                                : media.imageLinks.thumbnail)
+                            }
+                            title={media.title}
+                        />
+                        <CardContent>
+                            <Typography variant="h5" className={classes.title} color="textSecondary" gutterBottom>
+                                {media.title}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        <Button size="small" color="primary">
+                            {media.printType}
+                        </Button>
+                        {(
+                            (media.industryIdentifiers[0].identifier) ?
+                                (<Link onClick={() => window.location.href = `/book?media_id=${media.industryIdentifiers[0].identifier}`}
+                                    to={{
+                                        pathname: `/book?media_id=${media.industryIdentifiers[0].identifier}`,
+                                        state: {
+                                            media: media
+                                        }
+                                    }}>
+                                        <Button
+                                        size="small"
+                                        color="primary"
+                                        onClick={() => {
+                                            console.log("clicked");
+                                            dispatch(addBook(media));
+                                        }}>
+                                        More...
+                                        </Button>
+                                </Link>)
+                                : 
+                                (<Button
+                                    size="small"
+                                    color="primary"
+                                >
+                                    More...
+                                    </Button>)
+                        )}
+
+                                    
+                </CardActions>
+                </Card>
+            </ThemeProvider>
+            ) : (<Loading />));
 }
 
 BookCard.propTypes = {
@@ -106,8 +121,8 @@ const mapDispatchToProps = dispatch => ({
     addBook: media => dispatch(addBook(media)),
 });
 
-export default 
+export default
     connect(
         mapDispatchToProps
     )
-(BookCard);
+        (BookCard);
