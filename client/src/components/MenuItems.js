@@ -9,6 +9,10 @@ import GroupIcon from '@material-ui/icons/GroupAdd';
 import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
+import MovieIcon from '@material-ui/icons/Movie';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import MicIcon from '@material-ui/icons/Mic';
 
 import { Link } from 'react-router-dom';
 
@@ -50,28 +54,36 @@ export const FolderListItems = ({ user }) => (
         <ListItemText primary="Discover" />
       </ListItem>
     </Link>
-    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/feed`} to="/feed">
-      <ListItem button>
-        <ListItemIcon>
-          <GroupIcon />
-        </ListItemIcon>
-        <ListItemText primary="Feed" />
-      </ListItem>
-    </Link>
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/add`} to="/add">
       <ListItem button>
         <ListItemIcon>
-          <GroupIcon />
+          <MovieIcon />
         </ListItemIcon>
-        <ListItemText primary="IMDB" />
+        <ListItemText primary="TV and Films" />
       </ListItem>
     </Link>
     <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/podcasts`} to="/podcasts">
       <ListItem button>
         <ListItemIcon>
-          <GroupIcon />
+          <MicIcon />
         </ListItemIcon>
         <ListItemText primary="Podcasts" />
+      </ListItem>
+    </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/books`} to="/books">
+      <ListItem button>
+        <ListItemIcon>
+          <MenuBookIcon />
+        </ListItemIcon>
+        <ListItemText primary="Books" />
+      </ListItem>
+    </Link>
+    <Link style={{ textDecoration: 'none' }} onClick={() => window.location.href=`/music`} to="/music">
+      <ListItem button>
+        <ListItemIcon>
+          <MusicNoteIcon />
+        </ListItemIcon>
+        <ListItemText primary="Music" />
       </ListItem>
     </Link>
   </div>

@@ -6,7 +6,7 @@ import { Router, Route, Switch, Redirect, withRouter  } from 'react-router-dom';
 // import createHistory from 'history/createBrowserHistory';
 import { createBrowserHistory } from 'history'
 
-import Home from "./views/Home/Home"
+import Home from "./views/Landing"
 import NotFound from "./views/NotFound"
 import Categories from "./views/Categories"
 import Header from "./components/Header"
@@ -36,6 +36,7 @@ import AddBookPage from './views/AddBookPage';
 
 import TabNav from './components/TabNav';
 import Tab from './components/Tab';
+import SpotifyPodcasts from './views/SpotifyPodcasts';
 
 // export const history = createHistory();
 export const history = createBrowserHistory();
@@ -46,11 +47,11 @@ const App = () => {
 
         <Router history={history}>
       <Switch>
-        <Route exact path="/Landing" component={Home} />
-        <Route exact path="/" component={PostFeed} />
+        <Route exact path="/" component={Home} />
 
         <Route exact path="/shows/:id" component={DetailPage} />
         <Route exact path="/add" component={AddPage} />
+        <Route exact path="/podcasts" component={SpotifyPodcasts} />
         <Route exact path="/books" component={AddBookPage} />
         <Route exact path="/detail" component={DetailPage} />
         <Route exact path="/book" component={DetailBookPage} />

@@ -91,7 +91,23 @@ class Header2 extends Component {
         console.log('==>1', signInUser)
         signInUser(user);
         console.log('==>2', user)
+        //this.props.history.push('/');
+        //window.location.href='/'
     }
+
+    componentDidMount = () => {
+        if (this.props.user.isAuthenticated) {
+          this.props.history.push('/');
+          window.location.href='/'
+        }
+      };
+    
+      componentWillReceiveProps = (nextProps) => {
+        if (nextProps.user.isAuthenticated) {
+          this.props.history.push('/');
+          window.location.href='/'
+        }
+      };
 
     handleClick = (event) => {
         this.setState({ anchorEl: event.currentTarget });
@@ -100,6 +116,7 @@ class Header2 extends Component {
     handleClose = () => {
         this.setState({ anchorEl: null });
     };
+
 
     render() {
         let { classes, logoutUser, user } = this.props;
