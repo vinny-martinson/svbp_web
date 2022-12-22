@@ -36,7 +36,7 @@
     "doxygen": "^0.3.2",
     "express": "^4.17.1",
     "history": "^5.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.10.5",
     "morgan": "^1.10.0",
     "newrelic": "^7.0.2",
